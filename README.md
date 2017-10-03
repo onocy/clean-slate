@@ -1,3 +1,4 @@
 # D:o:ma
-:wavy_dash::wavy_dash::wavy_dash::wavy_dash::wavy_dash::wavy_dash::wavy_dash::wavy_dash::wavy_dash::wavy_dash:    
-Roommate Communication Platform   
+## Roommate Communication Platform   
+
+:busts_in_silhouette: Developers: Ciaran O'brien, Molly O'Neil, Blake Mongeon, Gianluca Artusa, Cuong Lam, Phillip Michalowski
