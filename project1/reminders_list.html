@@ -8,88 +8,111 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>1</title>
+    <title>Reminders</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="https://bootswatch.com/yeti/bootstrap.min.css" rel="stylesheet">
-
-
+    <!-- <link href="https://bootswatch.com/yeti/bootstrap.min.css" rel="stylesheet">-->
+    <!-- try bulma -->
+    <link href="css/reminders_list.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css">
   </head>
 
   <body>
-
-    <!-- Navigation -->
-    <div>
-    </div>
-
-    <!-- Page Content -->
-    <div class="container">
-
-      <!-- Introduction Row -->
-      <h1 class="my-4">About Us
-        <small>It's Nice to Meet You!</small>
-      </h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint, explicabo dolores ipsam aliquam inventore corrupti eveniet quisquam quod totam laudantium repudiandae obcaecati ea consectetur debitis velit facere nisi expedita vel?</p>
-
-      <!-- Team Members Row -->
-      <div class="row">
-        <div class="col-lg-12">
-          <h2 class="my-4">Profiles</h2>
-        </div>
-        <div class="col-lg-4 col-sm-6 text-center mb-4">
-          <img class="rounded-circle img-fluid d-block mx-auto" src="http://placehold.it/200x200" alt="">
-          <h3>John Smith
-            <small>Job Title</small>
-          </h3>
-          <p>...</p>
-        </div>
-        <div class="col-lg-4 col-sm-6 text-center mb-4">
-          <img class="rounded-circle img-fluid d-block mx-auto" src="http://placehold.it/200x200" alt="">
-          <h3>John Smith
-            <small>Job Title</small>
-          </h3>
-          <p>...</p>
-        </div>
-        <div class="col-lg-4 col-sm-6 text-center mb-4">
-          <img class="rounded-circle img-fluid d-block mx-auto" src="http://placehold.it/200x200" alt="">
-          <h3>John Smith
-            <small>Job Title</small>
-          </h3>
-          <p>...</p>
-        </div>
-        <div class="col-lg-4 col-sm-6 text-center mb-4">
-          <img class="rounded-circle img-fluid d-block mx-auto" src="http://placehold.it/200x200" alt="">
-          <h3>John Smith
-            <small>Job Title</small>
-          </h3>
-          <p>...</p>
-        </div>
-        <div class="col-lg-4 col-sm-6 text-center mb-4">
-          <img class="rounded-circle img-fluid d-block mx-auto" src="http://placehold.it/200x200" alt="">
-          <h3>John Smith
-            <small>Job Title</small>
-          </h3>
-          <p>...</p>
-        </div>
-        <div class="col-lg-4 col-sm-6 text-center mb-4">
-          <img class="rounded-circle img-fluid d-block mx-auto" src="http://placehold.it/200x200" alt="">
-          <h3>John Smith
-            <small>Job Title</small>
-          </h3>
-          <p>...</p>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
+    <section class="section">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Our Website 2017</p>
-      </div>
-      <!-- /.container -->
-    </footer>
+        <h1 class="title">Reminders</h1>
+          <div class="box">
+            
+            <article class="media">
+              <div class="media-left">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <div class="media-content">
+                <div class="event">
+                  <p>
+                    <strong>Event</strong>
+                    <br>
+                    <em>Big Bill's House Party</em>
+                  </p>
+                  <small>
+                    <a class="item">
+                      <i class="fa fa-home"></i>
+                    </a>
+                    Apartment 226
+                  </small>
+                  <br>
+                  <small>
+                    <a class="item">
+                      <i class="fa fa-clock-o"></i>
+                    </a>
+                    10/23 at 7pm
+                  </small>
+                </div>
+              </div>
+            </article>
 
+            <article class="media">
+              <div class="media-left">
+                <i class="fa fa-exclamation-triangle"></i>
+              </div>
+              <div class="media-content">
+                <div class="finance">
+                  <p>
+                    <strong>Finance due</strong>
+                    <br>
+                    <em>$20 to Emily</em>
+                  </p>
+                  <small>
+                    <a class="item">
+                      <i class="fa fa-comment"></i>
+                    </a>
+                    Send Message
+                  </small>
+                  <br>
+                  <small>
+                    <a class="item">
+                      <i class="fa fa-dollar"></i>
+                    </a>
+                    Pay Amount
+                  </small>
+                </div>
+              </div>
+            </article>
+
+            <article class="media">
+              <div class="media-left">
+                <i class="fa fa-bell"></i>
+              </div>
+              <div class="media-content">
+                <div class="chore">
+                  <p>
+                    <strong>Chore</strong>
+                    <br>
+                    <em>Clean the toilet</em>
+                  </p>
+                  <small>
+                    <a class="item">
+                      <i class="fa fa-check"></i>
+                    </a>
+                    Complete
+                  </small>
+                  <br>
+                  <small>
+                    <a class="item">
+                      <i class="fa fa-remove"></i>
+                    </a>
+                    Ignore
+                  </small>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+  </body>
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/popper/popper.min.js"></script>
