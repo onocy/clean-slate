@@ -14,7 +14,7 @@ class User(models.Model):
     # homerole
 
     # uncomment out home when Home model is declared
-    # home = models.OneToOneField('Home', on_delete=models.SET_NULL, null=True)
+    home = models.OneToOneField('Home', on_delete=models.SET_NULL, null=True)
 
     # reviews, forums, topics, and posts are one to many relations, so user will be foreign key in those models
     smokes = models.BooleanField(default=False)
@@ -26,3 +26,15 @@ class User(models.Model):
 
     def __str__(self):
         return '%s, %s' % (self.first_name, self.last_name)
+
+class Home(models.Model):
+    name = models.CharField(max_length=100)
+    # I believe that user will be a foreign key in User, therefore, I have not set it here
+
+    # createdBy = models.OneToOneField('User', on_delete=models.SET_NULL, null=True)
+    leaseEnds = models.DateTimeField()
+    # village = models.OneToOneField('Village', on_delete=models.SET_NULL, null=True)
+    # forum = models.OneToOneField('Forum', on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.name
