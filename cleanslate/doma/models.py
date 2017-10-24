@@ -109,7 +109,7 @@ class Topic(models.Model):
         return reverse('user-detail', args=[str(self.id)])
     
 class Village(models.Model):
-    home = models.ForeignKey('Home', on_delete=models.SET_NULL, null=True)
+    #home = models.ForeignKey('Home', on_delete=models.SET_NULL, null=True)(Check this, for relation from 1 to many and many to 1)
     forum = models.ForeignKey('Forum', on_delete=models.SET_NULL, null=True)
    
     def __str__(self):
