@@ -43,7 +43,7 @@ class Topic(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a topic name")
     content = models.CharField(max_length=500)
     
-    posts = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True)
+    #posts = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True) (Check this, for relation from 1 to many and many to 1)
     forum = models.ForeignKey('Forum', on_delete=models.SET_NULL, null=True)
     created_by = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
     created_on = models.DateField()
