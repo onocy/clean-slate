@@ -33,8 +33,33 @@ class Home(models.Model):
 
     # createdBy = models.OneToOneField('User', on_delete=models.SET_NULL, null=True)
     leaseEnds = models.DateTimeField()
-    # village = models.OneToOneField('Village', on_delete=models.SET_NULL, null=True)
+    village = models.OneToOneField('Village', on_delete=models.SET_NULL, null=True)
     # forum = models.OneToOneField('Forum', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name
+
+class Topic(models.Model):
+    title = models.CharField(max_length=200, help_text="Enter a topic name")
+    content = models.CharField(max_length=500)
+    
+    posts = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True)
+    forum = models.ForeignKey('Forum', on_delete=models.SET_NULL, null=True)
+    created_by = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
+    created_on = models.DateField()
+
+    def __str__(self):
+        return self.title
+    
+    def get_absolute_url(self):
+        return reverse('user-detail', args=[str(self.id)])
+    
+class Village(models.Model):
+    home = models.ForeignKey('Home', on_delete=models.SET_NULL, null=True)
+    forum = models.ForeignKey('Forum', on_delete=models.SET_NULL, null=True)
+   
+    def __str__(self):
+        return self.title
+    
+    def get_absolute_url(self):
+        return reverse('user-detail', args=[str(self.id)])
