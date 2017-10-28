@@ -9,12 +9,12 @@ class User(models.Model):
     lastSeen = models.DateField(null=True, blank=True)
     email = models.CharField(max_length=100)
 
-    # make hidden 
+    # make hidden
     password = models.CharField(max_length=100, help_text='Enter your password', null = True, blank = True)
-    
+
     phone = models.CharField(max_length=10, help_text='Enter your phone number', null = True, blank = True)
     bio = models.TextField(max_length=1000, help_text='Enter a brief description of yourself')
-    # may not be necessary? 
+    # may not be necessary?
     yog = models.CharField(max_length=100, help_text='Enter your graduation date', null = True, blank = True)
     major = models.CharField(max_length=100, null = True, blank = True)
 
@@ -82,21 +82,25 @@ class Forum(models.Model):
 
 class Post(models.Model):
     # Define fields
+    title = models.CharField(max_length = 200, help_text='Enter a post name')
+    content = models.CharField(max_length = 500, help_text='Enter content')
 
+    topic = models.ForeignKey('Topic', on_delete=models.SET_NULL, null=True)
+    posts = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True)
+    created_by = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
+    created_on = models.DateField()
 
     # Define Methods
-    '''
-    def get_absolute_url(self):
-        return reverse('home-detail', args=[str(self.id)])
-
     def __str__(self):
-        return self.name
-    '''
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('post-detail', args=[str(self.id)])
 
 class Topic(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a topic name")
     content = models.CharField(max_length=500)
-    
+
     #posts = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True) (Check this, for relation from 1 to many and many to 1)
     forum = models.ForeignKey('Forum', on_delete=models.SET_NULL, null=True)
     created_by = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
@@ -104,16 +108,16 @@ class Topic(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     def get_absolute_url(self):
         return reverse('user-detail', args=[str(self.id)])
-    
+
 class Village(models.Model):
     home = models.ForeignKey('Home', on_delete=models.SET_NULL, null=True)
     forum = models.ForeignKey('Forum', on_delete=models.SET_NULL, null=True)
-   
+
     def __str__(self):
         return self.title
-    
+
     def get_absolute_url(self):
         return reverse('user-detail', args=[str(self.id)])
