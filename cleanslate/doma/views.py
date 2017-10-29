@@ -9,11 +9,11 @@ def index(request):
     View function for home page of site.
     """
     # Generate counts of some of the main objects
-    num_users=User.objects.all().count()
-    num_villages=Village.objects.all().count()
-    num_posts=Post.objects.all().count()
-    num_topics=Topic.objects.all().count()
-    num_reviews=Reviews.objects.all().count()
+    num_users = User.objects.all().count()
+    num_villages = Village.objects.all().count()
+    num_posts = Post.objects.all().count()
+    num_topics = Topic.objects.all().count()
+    num_reviews = Reviews.objects.all().count()
     
     # Available books (status = 'a')
 #    num_instances_available=BookInstance.objects.filter(status__exact='a').count()
@@ -25,5 +25,5 @@ def index(request):
     return render(
         request,
         'index.html',
-        context={'num_users':num_users,'num_villages':num_villages,'num_posts':num_posts,'num_topics':num_topics}
+        context={'num_users': num_users, 'num_villages': num_villages, 'num_posts': num_posts, 'num_topics': num_topics}
     )
