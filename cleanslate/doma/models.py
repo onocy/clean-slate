@@ -36,7 +36,7 @@ class Home(models.Model):
     address = models.CharField(max_length=100, help_text='Enter your Address', null=True)
     leaseStart = models.DateTimeField(null=True, blank=True)
     leaseEnds = models.DateTimeField()
-    village = models.OneToOneField('Village', on_delete=models.SET_NULL, null=True)
+    village = models.OneToOneField('Village', on_delete=models.SET_NULL, null=True, related_name='home_village')
 
     def get_absolute_url(self):
         return reverse('home-detail', args=[str(self.id)])
@@ -59,21 +59,21 @@ class Topic(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('user-detail', args=[str(self.id)])
+        return reverse('topic-detail', args=[str(self.id)])
 
 
 class Village(models.Model):
-    home = models.ForeignKey('Home', on_delete=models.SET_NULL, null=True)
+    home = models.ForeignKey('Home', on_delete=models.SET_NULL, null=True, related_name='village_home')
     forum = models.ForeignKey('Forum', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('user-detail', args=[str(self.id)])
+        return reverse('village-detail', args=[str(self.id)])
 
 
-class Reviews(models.Model):
+class Review(models.Model):
     # Define fields
     # Define Methods
     '''

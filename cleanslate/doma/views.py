@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from .models import User, Home, Reviews, Forum, Post, Topic, Village
+from .models import User, Home, Review, Forum, Post, Topic, Village
 
 def index(request):
     """
@@ -14,7 +14,7 @@ def index(request):
     num_villages = Village.objects.all().count()
     num_posts = Post.objects.all().count()
     num_topics = Topic.objects.all().count()
-    num_reviews = Reviews.objects.all().count()
+    num_reviews = Review.objects.all().count()
 
     # Available books (status = 'a')
 #    num_instances_available=BookInstance.objects.filter(status__exact='a').count()
