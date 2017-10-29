@@ -98,8 +98,8 @@ class Forum(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length = 200, help_text='Enter a post name')
-    content = models.CharField(max_length = 500, help_text='Enter content')
+    title = models.CharField(max_length=200, help_text='Enter a post name')
+    content = models.CharField(max_length=500, help_text='Enter content')
     topic = models.ForeignKey('Topic', on_delete=models.SET_NULL, null=True)
     posts = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True)
     created_by = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
