@@ -15,9 +15,20 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf.urls import include
 from django.views.generic import RedirectView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', RedirectView.as_view(url='/home-detail', permanent=True))
 ]
+
+urlpatterns += [
+        url(r'^doma/', include('cleanslate.urls')),
+]
+
+urlpatterns += [
+        url(r'^$', RedirectView.as_view(url='/doma/', permanent=True)),
+]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

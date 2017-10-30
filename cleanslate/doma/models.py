@@ -15,7 +15,7 @@ class User(models.Model):
     phone = models.CharField(max_length=10, help_text='Enter your phone number', null=True, blank=True)
     yog = models.CharField(max_length=100, help_text='Enter your graduation date', null=True, blank=True)
     major = models.CharField(max_length=100, null=True, blank=True)
-    role = models.CharField(max_length=1, choices=role_choices, default='u')
+    # role = models.CharField(max_length=1, choices=role_choices, default='u')
 
     status = models.TextField(max_length=1000, help_text='Enter a status for others to view')
     bio = models.TextField(max_length=1000, help_text='Enter a brief description of yourself')
@@ -24,7 +24,7 @@ class User(models.Model):
     lastSeen = models.DateField(null=True, blank=True)
     email = models.EmailField(help_text='Enter your email')
 
-    pet_allergies = models.NullBooleanField(null=True, blank=True, help_text='Are you allergic to pets?')
+    # pet_allergies = models.NullBooleanField(null=True, blank=True, help_text='Are you allergic to pets?')
     home = models.OneToOneField('Home', on_delete=models.SET_NULL, null=True, related_name='user_home')
 
     def is_admin(self):
