@@ -4,22 +4,31 @@ from django.urls import reverse
 
 class User(models.Model):
     # reviews, forums, topics, and posts are one to many relations, so user will be foreign key in those models
+    role_choices = (
+        ('a', 'admin'),
+        ('u', 'user')
+    )
     # make hidden
     password = models.CharField(max_length=100, help_text='Enter your password', null=True, blank=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    status = models.TextField(max_length=1000, help_text='Enter a status for others to view')
-    lastSeen = models.DateField(null=True, blank=True)
-    email = models.CharField(max_length=100)
     phone = models.CharField(max_length=10, help_text='Enter your phone number', null=True, blank=True)
-    bio = models.TextField(max_length=1000, help_text='Enter a brief description of yourself')
     yog = models.CharField(max_length=100, help_text='Enter your graduation date', null=True, blank=True)
     major = models.CharField(max_length=100, null=True, blank=True)
-    role = models.CharField(max_length=1)  # Select?
-    home = models.OneToOneField('Home', on_delete=models.SET_NULL, null=True)
-    smokes = models.BooleanField(default=False)
-    bedtime = models.TimeField(null=True, blank=True)
-    likesAnimals = models.NullBooleanField(null=True, blank=True)
+    role = models.CharField(max_length=1, choices=role_choices, default='u')
+
+    status = models.TextField(max_length=1000, help_text='Enter a status for others to view')
+    bio = models.TextField(max_length=1000, help_text='Enter a brief description of yourself')
+    smokes = models.BooleanField(default=False, help_text='Do you smoke cigarettes?')
+    bedtime = models.TimeField(null=True, blank=True, help_text='What is your usual sleep-time?')
+    lastSeen = models.DateField(null=True, blank=True)
+    email = models.EmailField(help_text='Enter your email')
+
+    pet_allergies = models.NullBooleanField(null=True, blank=True, help_text='Are you allergic to pets?')
+    home = models.OneToOneField('Home', on_delete=models.SET_NULL, null=True, related_name='user_home')
+
+    def is_admin(self):
+        return self.role in 'a'
 
     def get_absolute_url(self):
         return reverse('user-detail', args=[str(self.id)])
@@ -29,9 +38,8 @@ class User(models.Model):
 
 
 class Home(models.Model):
-    # I believe that user will be a foreign key in User, therefore, I have not set it here
-    # createdBy = models.OneToOneField('User', on_delete=models.SET_NULL, null=True)
-    # forum = models.OneToOneField('Forum', on_delete=models.SET_NULL, null=True)
+    createdBy = models.OneToOneField('User', on_delete=models.SET_NULL, null=True, related_name='home_creator')
+    forum = models.OneToOneField('Forum', on_delete=models.CASCADE, null=False, primary_key=True)
     name = models.CharField(max_length=100, help_text='Enter your Home Name')
     address = models.CharField(max_length=100, help_text='Enter your Address', null=True)
     leaseStart = models.DateTimeField(null=True, blank=True)
@@ -42,71 +50,70 @@ class Home(models.Model):
         return reverse('home-detail', args=[str(self.id)])
 
     def __str__(self):
-        return self.name
-
+        return 'Home: %s' % self.name
 
 
 class Topic(models.Model):
-    # posts = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True) (Check this, for relation from 1 to
-    # many and many to 1)
     title = models.CharField(max_length=200, help_text="Enter a topic name")
     content = models.CharField(max_length=500)
-    forum = models.ForeignKey('Forum', on_delete=models.SET_NULL, null=True)
+    forum = models.ForeignKey('Forum', on_delete=models.CASCADE, null=False, primary_key=True)
     created_by = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
     created_on = models.DateField()
 
     def __str__(self):
-        return self.title
+        return 'Topic: %s' % self.title
 
     def get_absolute_url(self):
         return reverse('topic-detail', args=[str(self.id)])
 
 
 class Village(models.Model):
+    title = models.CharField(max_length=200, help_text="Enter a village name")
     home = models.ForeignKey('Home', on_delete=models.SET_NULL, null=True, related_name='village_home')
     forum = models.ForeignKey('Forum', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return self.title
+        return 'Village: %s' % self.title
 
     def get_absolute_url(self):
         return reverse('village-detail', args=[str(self.id)])
 
 
 class Review(models.Model):
-    # Define fields
-    # Define Methods
-    '''
+    reviewed = models.ForeignKey('User', on_delete=models.SET_NULL, null=True, related_name='reviewed_user')
+    reviewedBy = models.ForeignKey('User', on_delete=models.SET_NULL, null=True, related_name='reviewer')
+
     def get_absolute_url(self):
         return reverse('home-detail', args=[str(self.id)])
 
     def __str__(self):
-        return self.name
-    '''
+        return '%s reviewed %s' % (self.reviewedBy, self.reviewed)
 
 
 class Forum(models.Model):
-    # Define fields
-    # Define Methods
-    '''
+    title = models.CharField(max_length=200, help_text="Enter a forum name")
+    #desc?
+    created_by = models.ForeignKey('User', on_delete=models.CASCADE, null=False, primary_key=True)
+    created_on = models.DateField()
+
     def get_absolute_url(self):
-        return reverse('home-detail', args=[str(self.id)])
+        return reverse('forum-detail', args=[str(self.id)])
 
     def __str__(self):
-        return self.name
-    '''
+        return self.title
 
 
 class Post(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a post name')
     content = models.CharField(max_length=500, help_text='Enter content')
     topic = models.ForeignKey('Topic', on_delete=models.SET_NULL, null=True)
-    posts = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True)
-    created_by = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
-    created_on = models.DateField()
+    # What is this one? -michalo
+    # posts = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True)
+    created_by = models.ForeignKey('User', on_delete=models.CASCADE, null=False, primary_key=True, related_name='op')
+    created_on = models.DateTimeField()
     
     def __str__(self):
-        return self.title
+        return 'Post: %s' % self.title
 
     def get_absolute_url(self):
         return reverse('post-detail', args=[str(self.id)])
