@@ -108,7 +108,6 @@ class Post(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a post name')
     content = models.CharField(max_length=500, help_text='Enter content')
     topic = models.ForeignKey('Topic', on_delete=models.SET_NULL, null=True)
-    # posts = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True)
     created_by = models.ForeignKey('User', on_delete=models.CASCADE, null=False, primary_key=True, related_name='op')
     created_on = models.DateTimeField()
 
@@ -121,6 +120,13 @@ class Post(models.Model):
 
 class Transaction(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a transaction name')
+    description = models.CharField(max_length=500, help_text='Enter description')
+    created_on = models.DateField()
+    deadline = models.DateField(help_text='When is this transaction due?')
+    amount = models.IntegerField()
+
+    # debtors
+    # creditors
 
     def __str__(self):
         return 'Transaction: %s' % self.title
@@ -131,6 +137,11 @@ class Transaction(models.Model):
 
 class Chore(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a chore name')
+    description = models.CharField(max_length=500, help_text='Enter description')
+    created_on = models.DateField()
+    deadline = models.DateField(help_text='When is this chore due?')
+
+    #owners
 
     def __str__(self):
         return 'Chore: %s' % self.title
@@ -141,6 +152,11 @@ class Chore(models.Model):
 
 class Reminder(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a reminder name')
+    description = models.CharField(max_length=500, help_text='Enter description')
+    created_on = models.DateField()
+    deadline = models.DateField(help_text='When is this reminder due?')
+
+    # owners
 
     def __str__(self):
         return 'Reminder: %s' % self.title
@@ -149,9 +165,11 @@ class Reminder(models.Model):
         return reverse('reminder-detail', args=[str(self.id)])
 
 
-# Will we be updating the calendar w/ saved data?
 class Event(models.Model):
     title = models.CharField(max_length=200, help_text='Enter an event name')
+    description = models.CharField(max_length=500, help_text='Enter description')
+    created_on = models.DateField()
+    deadline = models.DateField(help_text='When is this event going to occur?')
 
     def __str__(self):
         return 'Event: %s' % self.title
