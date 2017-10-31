@@ -16,15 +16,10 @@ def index(request):
     num_topics = Topic.objects.all().count()
     num_reviews = Review.objects.all().count()
 
-    # Available books (status = 'a')
-#    num_instances_available=BookInstance.objects.filter(status__exact='a').count()
-#    num_authors=Author.objects.count()  # The 'all()' is implied by default.
-#    num_genre = Genre.objects.count()
-#    num_books_computer = Book.objects.filter(summary__icontains='computer').count()
 
     # Render the HTML template index.html with the data in the context variable
     return render(
         request,
-        'base_generic.html',
+        'index.html',
         context={'num_users': num_users, 'num_villages': num_villages, 'num_posts': num_posts, 'num_topics': num_topics}
     )
