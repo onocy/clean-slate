@@ -19,20 +19,19 @@ from django.conf.urls import include
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
-from doma.views import index
+from doma.views import home, profile, calendar, reminders, finance
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^doma/', index, name='doma')
+    url(r'^admin/$', admin.site.urls),
+    url(r'^doma/$', home, name='doma'),
+    url(r'^$', home, name='doma'),
+    url(r'^doma/profile/$', profile, name='profile'),
+    url(r'^doma/reminders/$', reminders, name='reminder'),
+    url(r'^doma/finance/$', finance, name='finance'),
+    url(r'^doma/calendar/$', finance, name='calendar'),
 ]
-#
-# from ..doma.views import index
-#
-# urlpatterns = [
-#     url(r'^$', myapp_views.home, name='home'),
-#     url(r'^doma/$', index, name='contact'),
-#
-# ]
+
+
 
 # urlpatterns += [
 #         url(r'^home/', include('cleanslate.urls')),
