@@ -57,7 +57,7 @@ class Home(models.Model):
 class Topic(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a topic name")
     content = models.CharField(max_length=500)
-    forum = models.ForeignKey('Forum', on_delete=models.CASCADE, null=False, primary_key=True)
+    forum = models.ForeignKey('Forum', on_delete=models.CASCADE, null=False)
     created_by = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
     created_on = models.DateField()
 
@@ -94,7 +94,7 @@ class Review(models.Model):
 class Forum(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a forum name")
     description = models.TextField(max_length=1000, help_text='Enter a description for this forum')
-    created_by = models.ForeignKey('User', on_delete=models.CASCADE, null=False, primary_key=True)
+    created_by = models.ForeignKey('User', on_delete=models.CASCADE, null=False)
     created_on = models.DateField()
 
     def get_absolute_url(self):
@@ -108,7 +108,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a post name')
     content = models.CharField(max_length=500, help_text='Enter content')
     topic = models.ForeignKey('Topic', on_delete=models.SET_NULL, null=True)
-    created_by = models.ForeignKey('User', on_delete=models.CASCADE, null=False, primary_key=True, related_name='op')
+    created_by = models.ForeignKey('User', on_delete=models.CASCADE, null=False, related_name='op')
     created_on = models.DateTimeField()
 
     def __str__(self):

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+  {% block title %}<title>Calendar</title>{% endblock %}
+  {% block extra_head %}
+    <link href="https://bootswatch.com/yeti/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.5.1/fullcalendar.min.css" rel="stylesheet" type='text/css'>
+    {% load static %}
+    <link href="{% static 'css/calendar.css' %}" rel="stylesheet">
+  {% endblock %}
+
+  {% block content %}
+    <div class="container">
+      <div id='calendar'></div>
+      <button onclick="goBack()" class="btn btn-primary center-block">Go Back</button>
+    </div>
+  {% endblock %}
+
+  {% block extra_js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.5.1/fullcalendar.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('#calendar').fullCalendar({
+          events: [
+            {
+              title: 'James',
+              start : '2017-10-02',
+              allDay : true,
+            },
+            {
+              title: 'Peter',
+              start : '2017-10-03',
+              end : '2017-10-05',
+            },
+            {
+              title: 'Conor',
+              start : '2017-10-03',
+              end : '2017-10-06'
+            },
+            {
+              title: 'James',
+              start : '2017-10-15',
+              allDay : true,
+            },
+          ]
+        })
+      });
+      function goBack() {
+        window.history.back()
+      }
+    </script>
+  {% endblock %}
