@@ -19,13 +19,23 @@ from django.conf.urls import include
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
+from doma.views import index
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^doma/', index, name='doma')
 ]
+#
+# from ..doma.views import index
+#
+# urlpatterns = [
+#     url(r'^$', myapp_views.home, name='home'),
+#     url(r'^doma/$', index, name='contact'),
+#
+# ]
 
 # urlpatterns += [
-#         url(r'^doma/', include('cleanslate.urls')),
+#         url(r'^home/', include('cleanslate.urls')),
 # ]
 #
 # urlpatterns += [

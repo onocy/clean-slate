@@ -25,6 +25,6 @@ def index(request):
     # Render the HTML template index.html with the data in the context variable
     return render(
         request,
-        'index.html',
+        'base_generic.html',
         context={'num_users': num_users, 'num_villages': num_villages, 'num_posts': num_posts, 'num_topics': num_topics}
     )
