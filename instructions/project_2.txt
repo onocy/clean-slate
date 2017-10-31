@@ -6,7 +6,8 @@ The goal of this project is to design and implement a data model for your team w
 
 Goal #1: Your team must implement your data model using the object relational mapping (ORM) tools provided by Django. You must also populate your database with mock data to be used by the views. You can use the Django admin interface to do this or programmatically.
 
-Goal #2: Your team must implement URL mappings and routes to link and display your user interface (UI) views from Project 1. Your UI views must use the mock data in your database and Django templates to dynamically render the user interface to your team’s web application.
+Goal #2: Your team must implement URL mappings and routes to link and display your user interface (UI) views from Project
+1. Your UI views must use the mock data in your database and Django templates to dynamically render the user interface to your team’s web application.
 
 Please read the Final Project Specification to understand the requirements for the final submission. This will help guide you in the decisions you make for your data model and its implementation, the user interface, and general design goals.
 
@@ -41,7 +42,10 @@ Task #1: Complete a data model diagram for your team’s application using the n
 
 Task #2: Implement the data model using Django’s ORM in Python. Your data model implementation must match your data model diagram described in Task #1. You must use the sqlite3 database.
 
+
 Task #3: Populate your database with mock data using the Django Admin interface or by adding data programmatically. You must add a sufficient amount of data to your database to adequately populate your application’s user interface.
+
+
 
 Part 1 Details
 Step 1: Complete the data model diagram. We recommend using presentation software such as Keynote, Powerpoint, or Google Slides to complete the diagram as you will need this as part of your final presentation at the end of the semester. You must submit a PDF version of your diagram with this project submission.
@@ -125,8 +129,6 @@ Your application should provide basic navigational features. We should be able t
 You must include a populated database in your submission.
 You must submit a running application.
 
-
-
 Static Assets
 If your application requires static assets such as custom CSS or images you must setup a static route in your application to serve such files. You can review how to do this from past homework assignments. In particular, how to setup the static URL mapping (Creating a Skeleton Website) and how to reference static files in a template (Creating our Homepage).
 
@@ -159,7 +161,6 @@ Submission
 Your submission will include only a link to your team’s Github repository. In your repository you must have:
 
 A folder for your Django application which you created during the project 2 startup.
-
 
 A folder called writeups which contains a PDF named “project-02-writeup.pdf”. The PDF must contain the team writeup and the individual writeup for each team member in a single document.
 

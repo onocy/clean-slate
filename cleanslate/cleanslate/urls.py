@@ -24,11 +24,11 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 ]
 
-urlpatterns += [
-        url(r'^doma/', include('cleanslate.urls')),
-]
-
-urlpatterns += [
-        url(r'^$', RedirectView.as_view(url='/doma/', permanent=True)),
-]
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# urlpatterns += [
+#         url(r'^doma/', include('cleanslate.urls')),
+# ]
+#
+# urlpatterns += [
+#         url(r'^$', RedirectView.as_view(url='/doma/', permanent=True)),
+# ]
+# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
