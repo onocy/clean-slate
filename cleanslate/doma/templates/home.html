@@ -1,24 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "./base.html" %}
 
-  <head>
-
-    <meta charset="utf-8">  	
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"-->
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Doma</title>
-
-    <!-- Bootstrap CSS -->    
-    <link href="https://bootswatch.com/darkly/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="css/Home.css" rel="stylesheet">
-  </head>
-
-  <body class = "blue-grey">
+{% block home %}
+<div class = "blue-grey">
     <div class="container-fluid">
       <h3 class="text-center">Home</h3>
   		<div class="row">
@@ -39,7 +22,7 @@
               <div class="col-sm-4">
                 <div class="card grey lighten-1">
                   <div class="card-content">
-                    <img src="https://images.unsplash.com/photo-1463430144406-394c977562d7?dpr=1&auto=compress,format&fit=crop&w=1052&h=&q=80&cs=tinysrgb&crop=" width="275" height="171" border="0">
+                    <img src="https://images.unsplash.com/photo-1463430144406-394c977562d7?dpr=1&auto=compress,format&fit=crop&w=1052&h=&q=80&cs=tinysrgb&crop=" width="240" height="171" border="0">
                       <p class = "name"><strong>Steve Jordan</strong></p>
                     <br>
                     <p class = "status">On Campus</p>
@@ -61,7 +44,7 @@
               <div class="col-sm-4">
                 <div class="card grey lighten-1">
                   <div class="card-content">
-                      <img src="https://images.unsplash.com/photo-1501813845802-8636dc1073c3?dpr=1&auto=compress,format&fit=crop&w=1020&h=&q=80&cs=tinysrgb&crop=" width="275" height="171" border="0">
+                      <img src="https://images.unsplash.com/photo-1501813845802-8636dc1073c3?dpr=1&auto=compress,format&fit=crop&w=1020&h=&q=80&cs=tinysrgb&crop=" width="240" height="171" border="0">
                       <p class = "name"><strong>Joanne Johnson</strong></p>
                     <br>
                     <p class = "status">Studying</p>
@@ -84,7 +67,7 @@
               <div class="col-sm-4">
                 <div class="card grey lighten-1">
                   <div class="card-content">
-                      <img src="https://images.unsplash.com/photo-1479685894911-37e888d38f0a?dpr=1&auto=compress,format&fit=crop&w=1050&h=&q=80&cs=tinysrgb&crop=" width="275" height="171" border="0">
+                      <img src="https://images.unsplash.com/photo-1479685894911-37e888d38f0a?dpr=1&auto=compress,format&fit=crop&w=1050&h=&q=80&cs=tinysrgb&crop=" width="240" height="171" border="0">
                       <p class = "name"><strong>Bill Smith</strong></p>
                     <br>
                     <p class = "status">At Work</p>
@@ -99,18 +82,6 @@
                 </div>
               </div>
             </div>
-            <!---->
-                
-      <!--/div> this was an extra tag-->
-    </div> <!-- container -->
-
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-
-
-  </body>
-
-</html>
+    </div>
+  </div>
+{% endblock %}

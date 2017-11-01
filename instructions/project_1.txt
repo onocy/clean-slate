@@ -1,0 +1,66 @@
+COMPSCI 326
+Project 1: Mock UI
+
+Overview
+This project will give your team an opportunity to describe an innovative idea for a web application that your team will be developing over the course of the semester. In addition, your team will develop a mock user interface (UI) using HTML and CSS that will show us what your application will look like and some of the data that will be displayed. Naturally, we expect your thoughts and ideas of your project to change during the course of the semester leading to changes in the data your application will support and the interface your users will expect. This and all future projects will be building blocks leading to the final project submission at the end of the semester.
+
+Please read the Final Project Specification to understand the requirements for the final submission.
+
+Part 1: Git and Github
+We will not explicitly cover how to use Git and Github in this course, however, we expect your team to become acquainted with what it is and how to use it. If you are not familiar with Git or github please take the time now to review our supplementary material.
+
+This part of the project is simple. Every team member should create a new github account if you do not already have one. One team member should create a new public github repository and add each of the other team members as collaborators.
+
+Part 2: Project Proposal Document
+Your team must come up with an original and innovative idea for a web application. Your idea can be something entirely new or it can be based off of an existing application but targeting a completely different user base. If your idea is related to other applications you must reference those applications and clearly explain how your application is different.
+
+Your application must be data-driven and include at least four different types of data (excluding user data). For example, an image viewer application that supports only images is not acceptable. A cookbook application that includes data for recipes, ingredients, shopping lists, user comments, and likes is acceptable.
+
+You must submit a 1 page document in 10-point font Helvetica with the following parts:
+
+A title with the team name
+A subtitle with the application name
+A subsubtitle with your team's github repository URL.
+The first section titled Team Overview including the names of each team member and their github usernames.
+The second section titled Innovative Idea which provides a brief paragraph or two describing your application and how it relates to other existing applications. If your application does not relate to an existing application then mention that.
+The third section titled Important Data which provides a brief paragraph or two explaining 5 different types of data your application will support/use.
+The fourth section titled User Interface which provides a brief paragraph or two explaining the major user interface components of your application. You should have at least 5.
+
+Please use the project proposal template to complete this part of Project 1. We expect you to use google docs for this and share the link in the submission.
+
+Part 3: Mock UI
+Your team must collaboratively design and build a mock UI. A mock UI is composed of both a pleasing user interface and the data that fills in that interface. You should have at least 5 separate HTML pages representing the major components of your user interface. You should also include any CSS files that you use for the design of the site.
+
+Your mock UI must use mock data that is hard coded into your HTML document. This data must clearly demonstrate each of the 5 different types of data described in your proposal document.
+
+We highly encourage your team to use an HTML/CSS framework for developing the UI such as Bootstrap, Bulma, Pure, Kube, Materialize, Vuetify, or any other framework of your choice. We do not explicitly cover the use of these frameworks in class, however, with a basic knowledge of HTML and CSS you should be capable of reading the documentation and figuring out how to use it. We highly recommend you use an HTML/CSS framework and Bootstrap in particular. Many of these frameworks do not explicitly require you to download anything, rather, you can easily include links to their resources in the head section of your HTML documents - we recommend that your team chooses this option to simplify your work and expedite the completion of this project work.
+
+You should include all of your work in a folder called project1 in the root directory of your github repository. Inside your project1 folder you should include each of the HTML files and any other supporting files/images.
+
+Rubric
+Part 1 (7 points)
+2 points for each team member who has an account.
+5 points for creating the github repository with each team member as a collaborator.
+
+Part 2 (14 points)
+2 points for the existence of each section.
+3 points for a clearly articulated idea and references to other applications.
+3 points for a clearly articulated list of the 5 supported types of data.
+3 points for a clearly articulated overview of the major UI components.
+3 points for clear writing style and proper use of english grammar.
+
+Part 3 (28 points)
+4 points for a properly setup github repository and project1 folder.
+5 points for the existence of the HTML files that correspond to the major UI components.
+5 points for the use of CSS and/or framework.
+14 points for the implementation of the mock user interface and display of mock data.
+
+Submission
+You must submit to Moodle by the assigned due date the following:
+
+A public link to your project proposal document in google docs.
+Make sure your link is public or you will not be given credit.
+
+
+A link to your team's github repository.
+Make sure your link is public or you will not be given credit.
