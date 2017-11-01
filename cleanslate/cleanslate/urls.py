@@ -32,7 +32,6 @@ urlpatterns = [
 ]
 
 
-
 # urlpatterns += [
 #         url(r'^home/', include('cleanslate.urls')),
 # ]
