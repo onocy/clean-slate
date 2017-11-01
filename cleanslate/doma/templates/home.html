@@ -16,8 +16,9 @@
   		<p class="text-center">Note: the above are filler images for later schedule and to-do-list modules.</p>
   	</div>
     <div class="container">
-        
-            <!--Single element -->
+        	
+        	<!--
+            <!Single element >
             <div class="row">
               <div class="col-sm-4">
                 <div class="card grey lighten-1">
@@ -41,6 +42,7 @@
               
                 <!--Single element -->
             <!--div class="row"-->
+            <!--
               <div class="col-sm-4">
                 <div class="card grey lighten-1">
                   <div class="card-content">
@@ -64,6 +66,7 @@
         
             <!--Single element -->
             <!--div class="row"-->
+            <!--
               <div class="col-sm-4">
                 <div class="card grey lighten-1">
                   <div class="card-content">
@@ -78,9 +81,31 @@
                     <a href="#" class = "black-text">Private Message</a>
                     <a> &#x274D </a>
                   </div>
+                -->
+            <div class="row">
+        	{% for user in users%}
+            <!--Single element -->
+              <div class="col-sm-4">
+                <div class="card grey lighten-1">
+                  <div class="card-content">%
+                    <!--<img src="https://images.unsplash.com/photo-1463430144406-394c977562d7?dpr=1&auto=compress,format&fit=crop&w=1052&h=&q=80&cs=tinysrgb&crop=" width="240" height="171" border="0"> -->
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThiqLJ1Fq31PtKVF8rlGAiO4nHBJL5-inv3upATiCIAQRvyZyL" width="240" height="171" border="0">
+                      <p class = "name"><strong>{{ user.name }}</strong></p>
+                    <br>
+                    <p class = "status">{{ user.status }}</p>
+                    <p class = "time">Last Seen: {{ user.lastSeen }}</p>
+                  </div>
+                  
+                  <div class="card-action">
+                    <a href="#" class = "black-text">Private Message </a>
+                    <a> &#x274D </a>
+                  </div>
+            {% endfor %}
                 
                 </div>
               </div>
+            <!--/div-->
+            <!---->
             </div>
     </div>
   </div>

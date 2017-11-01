@@ -23,3 +23,8 @@ main {
 .time{
     font-size: 1.5em;
 }
+
+.column.small-centered {
+margin-left: auto;
+margin-right: auto;
+float: none !important; }

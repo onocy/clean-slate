@@ -9,7 +9,7 @@ class User(models.Model):
         ('u', 'User')
     )
     # make hidden
-    password = models.CharField(max_length=100, help_text='Enter your password', null=True, blank=True)
+    password = models.CharField(max_length=100, help_text='Enter your password', null=True)
 
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -19,14 +19,14 @@ class User(models.Model):
     role = models.CharField(max_length=1, choices=role_choices, default='u')
 
     status = models.TextField(max_length=1000, help_text='Enter a status for others to view')
-    bio = models.TextField(max_length=1000, help_text='Enter a brief description of yourself')
+    bio = models.TextField(max_length=1000, help_text='Enter a brief description of yourself', blank=True)
     smokes = models.BooleanField(default=False, help_text='Do you smoke cigarettes?')
     bedtime = models.TimeField(null=True, blank=True, help_text='What is your usual sleep-time?')
-    lastSeen = models.DateField(null=True, blank=True)
-    email = models.EmailField(help_text='Enter your email')
+    lastSeen = models.DateField(null=True)
+    email = models.EmailField(help_text='Enter your email', blank=True)
 
     pet_allergies = models.NullBooleanField(null=True, blank=True, help_text='Are you allergic to pets?')
-    home = models.OneToOneField('Home', on_delete=models.SET_NULL, null=True, related_name='user_home')
+    home = models.OneToOneField('Home', on_delete=models.SET_NULL, null=True, blank=True, related_name='user_home')
 
     def is_admin(self):
         return self.role in 'a'
@@ -56,7 +56,7 @@ class Home(models.Model):
 
 class Topic(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a topic name")
-    content = models.CharField(max_length=500)
+    content = models.CharField(max_length=500, blank=True)
     forum = models.ForeignKey('Forum', on_delete=models.CASCADE, null=False, primary_key=True)
     created_by = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
     created_on = models.DateField()
@@ -70,8 +70,8 @@ class Topic(models.Model):
 
 class Village(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a village name")
-    home = models.ForeignKey('Home', on_delete=models.SET_NULL, null=True, related_name='village_home')
-    forum = models.ForeignKey('Forum', on_delete=models.SET_NULL, null=True)
+    home = models.ForeignKey('Home', on_delete=models.SET_NULL, null=True, blank=True, related_name='village_home')
+    forum = models.ForeignKey('Forum', on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return 'Village: %s' % self.title
@@ -82,7 +82,7 @@ class Village(models.Model):
 
 class Review(models.Model):
     reviewed = models.ForeignKey('User', on_delete=models.SET_NULL, null=True, related_name='reviewed_user')
-    reviewedBy = models.ForeignKey('User', on_delete=models.SET_NULL, null=True, related_name='reviewer')
+    reviewedBy = models.ForeignKey('User', on_delete=models.SET_NULL, null=True, blank=True, related_name='reviewer') # added blank option for anonyomous reviews. Maybe changed later
 
     def get_absolute_url(self):
         return reverse('home-detail', args=[str(self.id)])
@@ -94,7 +94,7 @@ class Review(models.Model):
 class Forum(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a forum name")
     description = models.TextField(max_length=1000, help_text='Enter a description for this forum')
-    created_by = models.ForeignKey('User', on_delete=models.CASCADE, null=False, primary_key=True)
+    created_by = models.ForeignKey('User', on_delete=models.CASCADE, null=False)
     created_on = models.DateField()
 
     def get_absolute_url(self):
@@ -108,7 +108,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a post name')
     content = models.CharField(max_length=500, help_text='Enter content')
     topic = models.ForeignKey('Topic', on_delete=models.SET_NULL, null=True)
-    created_by = models.ForeignKey('User', on_delete=models.CASCADE, null=False, primary_key=True, related_name='op')
+    created_by = models.ForeignKey('User', on_delete=models.CASCADE, null=False, related_name='op')
     created_on = models.DateTimeField()
 
     def __str__(self):
