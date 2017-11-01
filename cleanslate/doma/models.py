@@ -57,7 +57,7 @@ class Home(models.Model):
 class Topic(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a topic name")
     content = models.CharField(max_length=500)
-    forum = models.ForeignKey('Forum', on_delete=models.CASCADE, null=False)
+    forum = models.ForeignKey('Forum', on_delete=models.CASCADE, null=False, default=1)
     created_by = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
     created_on = models.DateField()
 
@@ -82,6 +82,7 @@ class Village(models.Model):
 class Review(models.Model):
     reviewed = models.ForeignKey('User', on_delete=models.SET_NULL, null=True, related_name='reviewed_user')
     reviewedBy = models.ForeignKey('User', on_delete=models.SET_NULL, null=True, related_name='reviewer')
+    review = models.TextField(max_length=1000, help_text='Enter your review here', default='')
 
     def get_absolute_url(self):
         return reverse('home-detail', args=[str(self.id)])
