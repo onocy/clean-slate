@@ -39,13 +39,13 @@ class User(models.Model):
 
 
 class Home(models.Model):
-    createdBy = models.ForeignKey('User', null=False, related_name='created_by_user', default=1)
-    forum = models.OneToOneField('Forum', on_delete=models.CASCADE, null=False)
+    created_by = models.ForeignKey('User', null=False, default=1, related_name="home_created_by")
+    forum = models.OneToOneField('Forum', on_delete=models.CASCADE, null=False, default=1)
     name = models.CharField(max_length=100, help_text='Enter your Home Name')
     address = models.CharField(max_length=100, help_text='Enter your Address', null=True)
     leaseStart = models.DateTimeField(null=True, blank=True)
     leaseEnds = models.DateTimeField()
-    village = models.OneToOneField('Village', on_delete=models.SET_NULL, null=True, related_name='home_village')
+    village = models.ForeignKey('Village', on_delete=models.SET_NULL, null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('home-detail', args=[str(self.id)])
@@ -70,8 +70,7 @@ class Topic(models.Model):
 
 class Village(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a village name")
-    home = models.ForeignKey('Home', on_delete=models.SET_NULL, null=True, related_name='village_home')
-    forum = models.ForeignKey('Forum', on_delete=models.SET_NULL, null=True)
+    forum = models.OneToOneField('Forum', on_delete=models.CASCADE, null=False, default=1)
 
     def __str__(self):
         return 'Village: %s' % self.title
@@ -94,7 +93,7 @@ class Review(models.Model):
 class Forum(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a forum name")
     description = models.TextField(max_length=1000, help_text='Enter a description for this forum')
-    created_by = models.ForeignKey('User', on_delete=models.CASCADE, null=False)
+    created_by = models.ForeignKey('User', null=False, default=1, related_name="forum_created_by")
     created_on = models.DateField()
 
     def get_absolute_url(self):
