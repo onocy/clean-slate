@@ -26,7 +26,7 @@ class User(models.Model):
     email = models.EmailField(help_text='Enter your email')
 
     pet_allergies = models.NullBooleanField(null=True, blank=True, help_text='Are you allergic to pets?')
-    home = models.OneToOneField('Home', on_delete=models.SET_NULL, null=True, related_name='user_home')
+    home = models.ForeignKey('Home', on_delete=models.CASCADE, null=True, blank=True)
 
     def is_admin(self):
         return self.role in 'a'
@@ -39,13 +39,13 @@ class User(models.Model):
 
 
 class Home(models.Model):
-    createdBy = models.OneToOneField('User', on_delete=models.SET_NULL, null=True, related_name='home_creator')
-    forum = models.OneToOneField('Forum', on_delete=models.CASCADE, null=False, primary_key=True)
+    created_by = models.ForeignKey('User', null=False, default=1, related_name="home_created_by")
+    forum = models.OneToOneField('Forum', on_delete=models.CASCADE, null=False, default=1)
     name = models.CharField(max_length=100, help_text='Enter your Home Name')
     address = models.CharField(max_length=100, help_text='Enter your Address', null=True)
     leaseStart = models.DateTimeField(null=True, blank=True)
     leaseEnds = models.DateTimeField()
-    village = models.OneToOneField('Village', on_delete=models.SET_NULL, null=True, related_name='home_village')
+    village = models.ForeignKey('Village', on_delete=models.SET_NULL, null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('home-detail', args=[str(self.id)])
@@ -57,7 +57,7 @@ class Home(models.Model):
 class Topic(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a topic name")
     content = models.CharField(max_length=500)
-    forum = models.ForeignKey('Forum', on_delete=models.CASCADE, null=False)
+    forum = models.ForeignKey('Forum', on_delete=models.CASCADE, null=False, default=1)
     created_by = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
     created_on = models.DateField()
 
@@ -70,8 +70,7 @@ class Topic(models.Model):
 
 class Village(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a village name")
-    home = models.ForeignKey('Home', on_delete=models.SET_NULL, null=True, related_name='village_home')
-    forum = models.ForeignKey('Forum', on_delete=models.SET_NULL, null=True)
+    forum = models.OneToOneField('Forum', on_delete=models.CASCADE, null=False, default=1)
 
     def __str__(self):
         return 'Village: %s' % self.title
@@ -83,6 +82,7 @@ class Village(models.Model):
 class Review(models.Model):
     reviewed = models.ForeignKey('User', on_delete=models.SET_NULL, null=True, related_name='reviewed_user')
     reviewedBy = models.ForeignKey('User', on_delete=models.SET_NULL, null=True, related_name='reviewer')
+    review = models.TextField(max_length=1000, help_text='Enter your review here', default='')
 
     def get_absolute_url(self):
         return reverse('home-detail', args=[str(self.id)])
@@ -94,7 +94,7 @@ class Review(models.Model):
 class Forum(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a forum name")
     description = models.TextField(max_length=1000, help_text='Enter a description for this forum')
-    created_by = models.ForeignKey('User', on_delete=models.CASCADE, null=False)
+    created_by = models.ForeignKey('User', null=False, default=1, related_name="forum_created_by")
     created_on = models.DateField()
 
     def get_absolute_url(self):
