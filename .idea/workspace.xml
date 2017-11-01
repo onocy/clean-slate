@@ -2,8 +2,49 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="85004c07-9bab-42ed-a7d8-d63244735b4d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cleanslate/cleanslate/urls.py" afterPath="$PROJECT_DIR$/cleanslate/cleanslate/urls.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/doma.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/markdown-navigator.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/markdown-navigator/profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/cleanslate/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/cleanslate/settings.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/cleanslate/urls.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/cleanslate/wsgi.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/db.sqlite3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/doma/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/doma/admin.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/doma/apps.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/doma/models.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/doma/static/css/home.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/doma/templates/base.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/doma/templates/calendar.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/doma/templates/finance_list.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/doma/templates/home.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/doma/templates/profile.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/doma/templates/reminders_list.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/doma/tests.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/doma/urls.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/doma/views.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cleanslate/manage.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/instructions/final.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/instructions/project_1.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/instructions/project_2.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/project1/calendar.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/project1/css/calendar.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/project1/css/finance_list.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/project1/css/home.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/project1/css/profile.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/project1/css/reminders_list.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/project1/finance_list.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/project1/home.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/project1/profile.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/project1/reminders_list.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/project1/resources/money.jpg" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -82,7 +123,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="finance_list.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="finance_list.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cleanslate/doma/templates/finance_list.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
@@ -112,7 +153,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="calendar.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="calendar.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/project1/calendar.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
@@ -248,19 +289,7 @@
             <path>
               <item name="doma" type="b2602c69:ProjectViewProjectNode" />
               <item name="doma" type="462c0819:PsiDirectoryNode" />
-              <item name="cleanslate" type="462c0819:PsiDirectoryNode" />
-              <item name="doma" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="doma" type="b2602c69:ProjectViewProjectNode" />
-              <item name="doma" type="462c0819:PsiDirectoryNode" />
               <item name="instructions" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="doma" type="b2602c69:ProjectViewProjectNode" />
-              <item name="doma" type="462c0819:PsiDirectoryNode" />
-              <item name="project1" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -363,7 +392,7 @@
       <window_info id="Python Console" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32938388" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -502,6 +531,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -556,14 +588,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="24" column="18" lean-forward="true" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project1/calendar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -640,6 +664,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cleanslate/doma/templates/finance_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project1/calendar.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
