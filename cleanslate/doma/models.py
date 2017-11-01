@@ -26,7 +26,7 @@ class User(models.Model):
     email = models.EmailField(help_text='Enter your email')
 
     pet_allergies = models.NullBooleanField(null=True, blank=True, help_text='Are you allergic to pets?')
-    home = models.OneToOneField('Home', on_delete=models.SET_NULL, null=True, related_name='user_home')
+    home = models.ForeignKey('Home', on_delete=models.CASCADE, null=True, blank=True)
 
     def is_admin(self):
         return self.role in 'a'
@@ -39,8 +39,8 @@ class User(models.Model):
 
 
 class Home(models.Model):
-    createdBy = models.OneToOneField('User', on_delete=models.SET_NULL, null=True, related_name='home_creator')
-    forum = models.OneToOneField('Forum', on_delete=models.CASCADE, null=False, primary_key=True)
+    createdBy = models.ForeignKey('User', null=False, related_name='created_by_user', default=1)
+    forum = models.OneToOneField('Forum', on_delete=models.CASCADE, null=False)
     name = models.CharField(max_length=100, help_text='Enter your Home Name')
     address = models.CharField(max_length=100, help_text='Enter your Address', null=True)
     leaseStart = models.DateTimeField(null=True, blank=True)
