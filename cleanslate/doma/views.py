@@ -66,10 +66,14 @@ def reminders(request):
     View function for reminders (Later- not a separate page)
     """
 
+    events = Event.objects.all()
+    transactions = Transaction.objects.all()
+    chores = Chore.objects.all()
+
     return render(
         request,
         'reminders_list.html',
-        context={}
+        context={'events': events, 'transactions':transactions, 'chores':chores}
     )
 
 
