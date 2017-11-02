@@ -127,6 +127,8 @@ class Transaction(models.Model):
 
     # debtors
     # creditors
+    # change 'amount' issue with whole numbers
+    # transaction split
 
     def __str__(self):
         return 'Transaction: %s' % self.title
