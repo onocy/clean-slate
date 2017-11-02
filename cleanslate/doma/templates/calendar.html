@@ -3,7 +3,6 @@
   {% block title %}<title>Calendar</title>{% endblock %}
 
   {% block extra_head %}
-    <link href="https://bootswatch.com/yeti/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.5.1/fullcalendar.min.css" rel="stylesheet" type='text/css'>
     {% load static %}
     <link href="{% static 'css/calendar.css' %}" rel="stylesheet">
@@ -24,26 +23,13 @@
       $(document).ready(function() {
         $('#calendar').fullCalendar({
           events: [
-            {
-              title: 'James',
-              start : '2017-10-02',
-              allDay : true,
-            },
-            {
-              title: 'Peter',
-              start : '2017-10-03',
-              end : '2017-10-05',
-            },
-            {
-              title: 'Conor',
-              start : '2017-10-03',
-              end : '2017-10-06'
-            },
-            {
-              title: 'James',
-              start : '2017-10-15',
-              allDay : true,
-            },
+            {% for event in events %}
+              {
+                title: '{{ event.title }}',
+                start: '{{ event.created_on }}',
+                end: '{{ event.deadline }}'
+              },
+            {% endfor %}
           ]
         })
       });

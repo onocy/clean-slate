@@ -52,11 +52,12 @@ def calendar(request):
     """
     View function for Calendar
     """
+    events = Event.objects.all()
 
     return render(
         request,
         'calendar.html',
-        context={}
+        context={'events': events}
     )
 
 
