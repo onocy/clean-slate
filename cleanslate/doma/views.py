@@ -39,7 +39,20 @@ def profile(request):
     """
 
     #Import profile information for specific profile based on ID?
+    chosen_user = User.objects.get(id=1)
 
+    first_name = chosen_user.first_name
+    last_name = chosen_user.last_name
+    full_name = first_name + ' ' + last_name
+    status = chosen_user.status
+    bio = chosen_user.bio
+    return render(
+        request,
+        'profile.html',
+        context={'full_name' : full_name
+        , 'status' : status
+        , 'bio': bio}
+    )
 
     return render(
         request,
