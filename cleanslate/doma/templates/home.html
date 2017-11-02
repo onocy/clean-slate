@@ -1,7 +1,17 @@
 {% extends "./base.html" %}
 
-{% block home %}
-<div class = "blue-grey">
+{% block title %}<title>Calendar</title>{% endblock %}
+
+{% block extra_head %}
+    <link href="https://bootswatch.com/yeti/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.5.1/fullcalendar.min.css" rel="stylesheet" type='text/css'>
+    {% load static %}
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+<div class = "white">
     <div class="container-fluid">
       <h3 class="text-center">Home</h3>
   		<div class="row">

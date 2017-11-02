@@ -1,11 +1,14 @@
 {% extends "base.html" %}
+
   {% block title %}<title>Calendar</title>{% endblock %}
+
   {% block extra_head %}
     <link href="https://bootswatch.com/yeti/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.5.1/fullcalendar.min.css" rel="stylesheet" type='text/css'>
     {% load static %}
     <link href="{% static 'css/calendar.css' %}" rel="stylesheet">
   {% endblock %}
+
 
   {% block content %}
     <div class="container">
