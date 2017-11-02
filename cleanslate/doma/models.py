@@ -36,7 +36,7 @@ class User(models.Model):
 
     def __str__(self):
         return '%s, %s' % (self.first_name, self.last_name)
-
+    
 
 class Home(models.Model):
     created_by = models.ForeignKey('User', null=False, default=1, related_name="home_created_by")
