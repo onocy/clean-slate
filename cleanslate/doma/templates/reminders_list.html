@@ -12,7 +12,7 @@
       <div class="container">
         <h1 class="title">Reminders</h1>
           <div class="box">
-
+            {% for event in events %}
             <article class="panel p-3">
               <div class="p-3">
                 <i class="fa fa-calendar"></i>
@@ -20,27 +20,27 @@
               <div class="p-3">
                 <div class="event">
                   <p>
-                    <strong>Event</strong>
-                    <br>
-                    <em>Big Bill's House Party</em>
+                    <strong>{{ event.title }}</strong>
                   </p>
                   <small>
                     <a class="item">
                       <i class="fa fa-home"></i>
                     </a>
-                    Apartment 226
+                    {{ event.description }}
                   </small>
                   <br>
                   <small>
                     <a class="item">
                       <i class="fa fa-clock-o"></i>
                     </a>
-                    10/23 at 7pm
+                    {{ event.deadline }}
                   </small>
                 </div>
               </div>
             </article>
-
+            {% endfor %}
+           
+            {% for transaction in transactions %}
             <article class="panel p-3">
               <div class="p-3">
                 <i class="fa fa-exclamation-triangle"></i>
@@ -48,27 +48,27 @@
               <div class="p-3">
                 <div class="finance">
                   <p>
-                    <strong>Finance due</strong>
-                    <br>
-                    <em>$20 to Emily</em>
+                  <strong>{{ transaction.title }}</strong>
                   </p>
                   <small>
                     <a class="item">
                       <i class="fa fa-comment"></i>
                     </a>
-                    Send Message
+                    {{ transaction.description }}
                   </small>
                   <br>
                   <small>
                     <a class="item">
                       <i class="fa fa-dollar"></i>
                     </a>
-                    Pay Amount
+                    {{ transaction.amount }}
                   </small>
                 </div>
               </div>
             </article>
+            {% endfor %}
 
+            {% for chore in chores %}
             <article class="panel p-3">
               <div class="p-3">
                 <i class="fa fa-bell"></i>
@@ -76,9 +76,9 @@
               <div class="p-3">
                 <div class="chore">
                   <p>
-                    <strong>Chore</strong>
+                  <strong>{{ chore.title }}</strong>
                     <br>
-                    <em>Clean the toilet</em>
+                    <em>{{ chore.description }}</em>
                   </p>
                   <small>
                     <a class="item">
@@ -96,6 +96,7 @@
                 </div>
               </div>
             </article>
+            {% endfor %}
 
           </div>
         </div>
