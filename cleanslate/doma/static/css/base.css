@@ -1,0 +1,15 @@
+.navbar-light .navbar-nav .nav-link {
+  font-size: 18px;
+  color: rgba(255,255,255,0.8);
+  padding: 0px;
+}
+
+.nav-item {
+  padding: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.navbar-light .navbar-brand {
+  color: white;
+}
