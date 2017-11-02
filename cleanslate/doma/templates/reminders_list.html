@@ -1,0 +1,114 @@
+{% extends "./base.html" %}
+
+{% block title %}<title>Reminders</title>{% endblock %}
+
+{% block extra_head %}
+<link href="https://bootswatch.com/yeti/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css">
+{% load static %}
+<link href="{% static 'css/reminders_list.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <section class="section">
+      <div class="container">
+        <h1 class="title">Reminders</h1>
+          <div class="box">
+
+            <article class="media">
+              <div class="media-left">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <div class="media-content">
+                <div class="event">
+                  <p>
+                    <strong>Event</strong>
+                    <br>
+                    <em>Big Bill's House Party</em>
+                  </p>
+                  <small>
+                    <a class="item">
+                      <i class="fa fa-home"></i>
+                    </a>
+                    Apartment 226
+                  </small>
+                  <br>
+                  <small>
+                    <a class="item">
+                      <i class="fa fa-clock-o"></i>
+                    </a>
+                    10/23 at 7pm
+                  </small>
+                </div>
+              </div>
+            </article>
+
+            <article class="media">
+              <div class="media-left">
+                <i class="fa fa-exclamation-triangle"></i>
+              </div>
+              <div class="media-content">
+                <div class="finance">
+                  <p>
+                    <strong>Finance due</strong>
+                    <br>
+                    <em>$20 to Emily</em>
+                  </p>
+                  <small>
+                    <a class="item">
+                      <i class="fa fa-comment"></i>
+                    </a>
+                    Send Message
+                  </small>
+                  <br>
+                  <small>
+                    <a class="item">
+                      <i class="fa fa-dollar"></i>
+                    </a>
+                    Pay Amount
+                  </small>
+                </div>
+              </div>
+            </article>
+
+            <article class="media">
+              <div class="media-left">
+                <i class="fa fa-bell"></i>
+              </div>
+              <div class="media-content">
+                <div class="chore">
+                  <p>
+                    <strong>Chore</strong>
+                    <br>
+                    <em>Clean the toilet</em>
+                  </p>
+                  <small>
+                    <a class="item">
+                      <i class="fa fa-check"></i>
+                    </a>
+                    Complete
+                  </small>
+                  <br>
+                  <small>
+                    <a class="item">
+                      <i class="fa fa-remove"></i>
+                    </a>
+                    Ignore
+                  </small>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+  {% endblock %}
+
+    {% block extra_js %}
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    {% endblock %}
+

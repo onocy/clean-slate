@@ -1,0 +1,95 @@
+{% extends "./base.html" %}
+
+{% block title %}<title>Finance List</title>{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% load static %}
+<link href="{% static 'css/finance_list.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+      <h3 class="text-center">Finance List</h3>
+      <hr>
+        <div id = "list">
+          <ul class = "list-group">
+            <!--Single element -->
+            <li style = "list-style: none">
+            <div class="col s12 m7">
+              <div class="card horizontal">
+                <div class="card-stacked grey lighten-1">
+                  <div class="card-content">
+                    <span> <i class="large material-icons right">error_outline</i></span>
+                    <p class = "item"><strong>Toilet Paper</strong></p>
+                    <p class = "purchaser_name">Bought By: Phillip Michalowski</p>
+                    <p class = "subtext">Repayment Due: 12/25/17</p>
+                    <p>In Debt: <span class = "blue-text debt" >Steve ($2.50), Joe ($2.50)</span></p>
+                    <p class = "payment">$5.00</p>
+                  </div>
+                  <div class="card-action">
+                    <a href="#" class = "red-text">Mark Resolved</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </li>
+            <!---->
+            <!--Single element -->
+            <li style = "list-style: none">
+              <div class="col s12 m7">
+                <div class="card horizontal">
+                  <div class="card-stacked grey lighten-1">
+                    <div class="card-content">
+                      <span> <i class="large material-icons right">check</i></span>
+                      <p class = "item"><strong>House</strong></p>
+                      <p class = "purchaser_name">Bought By: Steve Jobs</p>
+                      <p class = "subtext">Repayment Due: 12/25/17</p>
+                      <p>In Debt: <span class = "blue-text debt" >Pat ($2.50), Woz ($2.50)</span></p>
+                      <p class = "payment"><strike>$200.00</strike></p>
+                    </div>
+                    <div class="card-action">
+                      <a href="#" class = "green-text">Resolved</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!---->
+            <!--Single element -->
+            <li style = "list-style: none">
+              <div class="col s12 m7">
+                <div class="card horizontal">
+                  <div class="card-stacked grey lighten-1">
+                    <div class="card-content">
+                      <span> <i class="large material-icons right">error_outline</i></span>
+                      <p class = "item"><strong>Rent</strong></p>
+                      <p class = "subtext">Payment Due: 12/25/17</p>
+                      <p>In Debt: <span class = "blue-text debt" >Steve ($300), Joe ($300), Phill ($300)</span></p>
+                      <p class = "payment">$900.00</p>
+                    </div>
+                    <div class="card-action">
+                      <a href="#" class = "red-text">Mark Resolved</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!---->
+
+          </ul>
+          <!-- Insert input stuff here-->
+          <button class="btn waves-effect waves-light" type="submit" name="action">New
+            <i class="large material-icons right">add_circle_outline</i>
+          </button>
+      </div>
+    </div>
+  {% endblock %}
+
+    {% block extra_js %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    {% endblock %}
+
