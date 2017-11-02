@@ -30,7 +30,7 @@
                   </small>
                   <br>
                   <small>
-                    <a class="item">
+                    <a class="item" href="{% url 'calendar' %}">
                       <i class="fa fa-clock-o"></i>
                     </a>
                     {{ event.deadline }}
@@ -58,7 +58,7 @@
                   </small>
                   <br>
                   <small>
-                    <a class="item">
+                    <a class="item" href="{% url 'finance' %}">
                       <i class="fa fa-dollar"></i>
                     </a>
                     {{ transaction.amount }}
@@ -73,6 +73,7 @@
               <div class="p-3">
                 <i class="fa fa-bell"></i>
               </div>
+
               <div class="p-3">
                 <div class="chore">
                   <p>
