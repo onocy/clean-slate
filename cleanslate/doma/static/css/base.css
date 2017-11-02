@@ -6,10 +6,8 @@
 
 .nav-item {
   padding: 5px;
-}
-
-nav.navbar.navbar-expand-lg.navbar-light.bg-dark {
-  padding-top: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .navbar-light .navbar-brand {

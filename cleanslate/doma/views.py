@@ -82,8 +82,12 @@ def finance(request):
     View function for reminders (Later- not a separate page)
     """
 
+    finance = Transaction.objects.all()
+
+
+
     return render(
         request,
         'finance_list.html',
-        context={}
+        context={'transactions': finance}
     )
