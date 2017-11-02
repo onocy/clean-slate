@@ -3,11 +3,9 @@
 {% block title %}<title>Reminders</title>{% endblock %}
 
 {% block extra_head %}
-<link href="https://bootswatch.com/yeti/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css">
-{% load static %}
-<link href="{% static 'css/reminders_list.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css">
+  {% load static %}
+  <link href="{% static 'css/reminders_list.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -105,10 +103,6 @@
       </section>
   {% endblock %}
 
-    {% block extra_js %}
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
+  {% block extra_js %}
     <script src="vendor/popper/popper.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    {% endblock %}
-
+  {% endblock %}
