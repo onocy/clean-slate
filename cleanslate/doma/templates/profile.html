@@ -30,7 +30,7 @@
 				<!-- SIDEBAR BUTTONS -->
 				<div class="profile-userbuttons">
 					<button type="button" class="btn btn-success btn-sm">Message</button>
-					<button type="button" class="btn btn-danger btn-sm">Back</button>
+					<button type="button" onclick="goBack()" class="btn btn-danger btn-sm">Back</button>
 				</div>
 				<!-- END SIDEBAR BUTTONS -->
 				<!-- SIDEBAR MENU -->
@@ -56,4 +56,12 @@
 		</div>
 	</div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+    function goBack() {
+      window.history.back()
+    }
+  </script>
 {% endblock %}
