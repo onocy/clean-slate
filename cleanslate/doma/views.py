@@ -37,23 +37,33 @@ def profile(request):
     """
     View function for individual profiles on site.
     """
+    if request.user.is_authenticated:
+        chosen_user = User.objects.get(pk=request.user.id)
 
-    #Import profile information for specific profile based on ID?
-    chosen_user = User.objects.get(pk=request.user.id)
-
-    status = chosen_user.profile.status
-    bio = chosen_user.profile.bio
-    email = chosen_user.profile.email
-    return render(
-        request,
-        'profile.html',
-            context = {
-            'username' : chosen_user.username,
-            'status' : status,
-            'bio': bio,
-            'email': email,
-        }
-    )
+        status = chosen_user.profile.status
+        bio = chosen_user.profile.bio
+        email = chosen_user.profile.email
+        return render(
+            request,
+            'profile.html',
+                context = {
+                'username' : chosen_user.username,
+                'status' : status,
+                'bio': bio,
+                'email': email,
+            }
+        )
+    else:
+        return render(
+            request,
+            'profile.html',
+                context = {
+                'username': "anonymous",
+                'status': "Online",
+                'bio': "This user has no bio",
+                'email': ""
+                }
+        )
 
     return render(
         request,

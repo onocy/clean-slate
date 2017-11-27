@@ -22,11 +22,13 @@
 					<div class="profile-usertitle-name">
 						{{ username }}
 					</div>
-          <p style="font-size:12px">
-            <a href="mailto:{{ email }}?Subject=Hello">
-              {{ email }}
-            </a>
-          </p>
+          {% if email %}
+            <p style="font-size:12px">
+              <a href="mailto:{{ email }}?Subject=Hello">
+                {{ email }}
+              </a>
+            </p>
+          {% endif %}
 					<div class="profile-usertitle-job">
 						{{ status }}
 					</div>
