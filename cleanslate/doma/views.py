@@ -39,7 +39,7 @@ def profile(request):
     """
 
     #Import profile information for specific profile based on ID?
-    chosen_user = User.objects.get(id=1)
+    chosen_user = User.objects.get(id=request.user.id)
 
     first_name = chosen_user.first_name
     last_name = chosen_user.last_name
