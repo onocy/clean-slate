@@ -43,12 +43,16 @@ def profile(request):
 
     status = chosen_user.profile.status
     bio = chosen_user.profile.bio
+    email = chosen_user.profile.email
     return render(
         request,
         'profile.html',
-        context={'username' : chosen_user.username
-        , 'status' : status
-        , 'bio': bio}
+            context = {
+            'username' : chosen_user.username,
+            'status' : status,
+            'bio': bio,
+            'email': email,
+        }
     )
 
     return render(

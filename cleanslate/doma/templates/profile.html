@@ -22,6 +22,11 @@
 					<div class="profile-usertitle-name">
 						{{ username }}
 					</div>
+          <p style="font-size:12px">
+            <a href="mailto:{{ email }}?Subject=Hello">
+              {{ email }}
+            </a>
+          </p>
 					<div class="profile-usertitle-job">
 						{{ status }}
 					</div>
@@ -51,7 +56,7 @@
 		</div>
 		<div class="col-md-9">
             <div class="profile-content">
-			   {{ bio }}.
+			           {{ bio }}
             </div>
 		</div>
 	</div>
