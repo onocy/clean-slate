@@ -19,7 +19,7 @@ from django.conf.urls import include
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
-from doma.views import home, profile, calendar, reminders, finance
+from doma.views import home, profile, calendar, reminders, finance, login
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^doma/reminders/$', reminders, name='reminder'),
     url(r'^doma/finance/$', finance, name='finance'),
     url(r'^doma/calendar/$', calendar, name='calendar'),
+    url(r'^doma/login/$', login, name='login'),
 ]
 
 

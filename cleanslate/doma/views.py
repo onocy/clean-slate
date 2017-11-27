@@ -104,3 +104,13 @@ def finance(request):
         'finance_list.html',
         context={'transactions': finance}
     )
+
+def login(request):
+    """
+    View for Login Page (Can be seperate, but we will have to make sure that works.) 
+    """
+
+    return render(
+        request,
+        'login.html',
+    ) 
