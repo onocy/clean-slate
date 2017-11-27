@@ -104,3 +104,16 @@ def finance(request):
         'finance_list.html',
         context={'transactions': finance}
     )
+
+def edit_chore_deadline(request, pk):
+    chore = get_object_or_404(Chore, pk = pk)
+    if request.method == 'POST':
+        form = EditChoreForm(request.POST)
+        if form.is_valid():
+            chore.deadline = form.cleaned_data['deadline']
+            chore.save()
+            return HttpResponseRedirect(reverse('reminders'))
+    else:
+        proposed_deadline = datetime.date.today() + datetime.timedelta(weeks=1)
+        form = EditChoreForm(initial={'deadline': proposed_deadline,})
+        return render(request, 'doma/chore_edit.html', {'form': form, 'chore': chore})
