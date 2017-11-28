@@ -5,10 +5,6 @@ from django.utils.translation import ugettext_lazy as _
 import datetime #for checking renewal date range.
 from .models import User, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event, Profile
 
-# class UserProfileForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = ('phone', 'yog', 'major', 'role', 'status','bio','smokes','bedtime','lastSeen','email','pet_allergies') #Note that we didn't mention user field here.
 class UserProfileForm(forms.Form):
         phone = forms.CharField(help_text='Enter your phone number')
         yog = forms.CharField(help_text='Enter your graduation date')

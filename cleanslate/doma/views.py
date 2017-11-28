@@ -1,4 +1,8 @@
 from django.shortcuts import render
+from .forms import UserProfileForm
+from django.shortcuts import get_object_or_404
+from .models import Profile
+from django.http import HttpResponse
 
 # Create your views here.
 
@@ -116,10 +120,6 @@ def finance(request):
         context={'transactions': finance}
     )
 
-from .forms import UserProfileForm
-from django.shortcuts import get_object_or_404
-from .models import Profile
-from django.http import HttpResponse
 def EditUserProfileView(request, pk):
     """
     View function for renewing a specific BookInstance by librarian
