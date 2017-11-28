@@ -1,10 +1,20 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
+from .forms import UserProfileForm
+from django.shortcuts import get_object_or_404
+from .models import Profile
+from django.http import HttpResponse
 
 # Create your views here.
-
 from .models import User, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event
+
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
+import datetime
+
+from .forms import EditChoreForm, CreateChoreForm
 
 def home(request):
     """
@@ -116,9 +126,70 @@ def finance(request):
     finance = Transaction.objects.all()
     return render(
         request,
-        'finance_list.html',
+        'profile.html',
             context={
                 'transactions': finance
             }
     )
 
+def EditUserProfileView(request, pk):
+    """
+    View function for renewing a specific BookInstance by librarian
+    """
+    profile=get_object_or_404(Profile, pk = pk)
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST)
+
+        if form.is_valid():
+            profile.phone = form.cleaned_data['phone']
+            profile.yog = form.cleaned_data['yog']
+            profile.major = form.cleaned_data['major']
+            profile.status = form.cleaned_data['status']
+            profile.bio = form.cleaned_data['bio']
+            profile.email = form.cleaned_data['email']
+            profile.save()
+            return HttpResponse('Hurray, saved!')
+    else:
+        form = UserProfileForm()
+
+    return render(request, 'form.html', {'form': form})
+
+def edit_chore_deadline(request, pk):
+    chore = get_object_or_404(Chore, pk = pk)
+    if request.method == 'POST':
+        form = EditChoreForm(request.POST)
+        if form.is_valid():
+            chore.deadline = form.cleaned_data['deadline']
+            chore.save()
+
+            return HttpResponseRedirect(reverse(reminders))
+    else:
+        proposed_deadline = datetime.date.today() + datetime.timedelta(weeks=1)
+        form = EditChoreForm(initial={'deadline': proposed_deadline,})
+    return render(request, 'chore_edit_form.html', {'form': form, 'chore': chore})
+
+def create_chore(request):
+    if request.method == 'POST':
+        form = CreateChoreForm(request.POST)
+        if form.is_valid():
+            chore = Chore.objects.create(title="", description="", created_on="2017-11-27", deadline="2017-12-04")
+            chore.title = form.cleaned_data['title']
+            chore.description = form.cleaned_data['description']
+            chore.created_on = form.cleaned_data['created_on']
+            chore.deadline = form.cleaned_data['deadline']
+            
+            chore.save()
+
+            return HttpResponseRedirect(reverse(reminders))
+    else:
+        proposed_deadline = datetime.date.today() + datetime.timedelta(weeks=1)
+        form = CreateChoreForm(initial={'deadline': proposed_deadline,})
+    return render(request, 'chore_create_form.html', {'form': form})
+
+def delete_chore(request, pk):
+    if request.method == 'POST':
+        chore = get_object_or_404(Chore, pk = pk)
+        chore.delete()
+    
+        return HttpResponseRedirect(reverse(reminders))

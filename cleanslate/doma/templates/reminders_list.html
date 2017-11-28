@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+<a href="{% url 'create-chore' %}">Create a new chore</a>
     <section class="section">
       <div class="container">
         <h1 class="title">Reminders</h1>
@@ -78,6 +79,7 @@
                 <div class="chore">
                   <p>
                   <strong>{{ chore.title }}</strong>
+                  - <a href="{% url 'edit-chore-deadline' chore.id %}">edit</a>, <a href="{% url 'delete-chore' chore.id %}">delete</a>
                     <br>
                     <em>{{ chore.description }}</em>
                   </p>
