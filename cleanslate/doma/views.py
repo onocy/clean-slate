@@ -89,7 +89,7 @@ def calendar(request):
 
 
 @login_required
-def reminders(request):
+def reminders(LoginRequiredMixin, request):
     """
     View function for reminders (Later- not a separate page)
     """
@@ -116,7 +116,7 @@ def finance(request):
     finance = Transaction.objects.all()
     return render(
         request,
-        'finance_list.html',
+        'profile.html',
             context={
                 'transactions': finance
             }

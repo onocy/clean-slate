@@ -10,26 +10,109 @@
 
 {% block content %}
     <div class="container-fluid">
-        {% for user in users %}
+      <h3 class="text-center">Home</h3>
   		<div class="row">
-            <div class="card large col s6">
-                <div class="card-image">
-                  {% load static %}
-					<img class = "img-responsive activator" src="{% static 'img/p1.jpg' %}">
-                    <span class="card-title black-text">{{user.username}}</span>
-                </div>
-                <div class="card-content activator">
-                    <i class="material-icons right">more_vert</i>
-                    <p class = "time">Last Seen: {{ user.profile.lastSeen }}</p>
-                </div>
-                <div class="card-reveal">
-                  <span class="card-title grey-text text-darken-4">{{user.username}}<i class="material-icons right">close</i></span>
-                    <p>{{ user.profile.status }}</p>
-                    <a href="#" class = "blue-text">Private Message </a>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
+  			<div class="col-sm-6 text-center">
+  				<img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?dpr=1&auto=compress,format&fit=crop&w=1952&h=&q=80&cs=tinysrgb&crop=" width="400" height="356" border="100">
 
+  			</div>
+  			<div class="col-sm-6 text-center">
+  				<img src="https://images.unsplash.com/photo-1435527173128-983b87201f4d?dpr=1&auto=compress,format&fit=crop&w=1947&h=&q=80&cs=tinysrgb&crop=" width="400" height="356" border="100">
+  			</div>
+  		</div>
+  		<p class="text-center">Note: the above are filler images for later schedule and to-do-list modules.</p>
+  	</div>
+    <div class="container">
+
+        	<!--
+            <!Single element >
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="card grey lighten-1">
+                  <div class="card-content">
+                    <img src="https://images.unsplash.com/photo-1463430144406-394c977562d7?dpr=1&auto=compress,format&fit=crop&w=1052&h=&q=80&cs=tinysrgb&crop=" width="240" height="171" border="0">
+                      <p class = "name"><strong>Steve Jordan</strong></p>
+                    <br>
+                    <p class = "status">On Campus</p>
+                    <p class = "time">10:30AM-4:00PM</p>
+                  </div>
+
+                  <div class="card-action">
+                    <a href="#" class = "black-text">Private Message </a>
+                    <a> &#x274D </a>
+                  </div>
+
+                </div>
+              </div>
+            <!--/div-->
+            <!---->
+
+                <!--Single element -->
+            <!--div class="row"-->
+            <!--
+              <div class="col-sm-4">
+                <div class="card grey lighten-1">
+                  <div class="card-content">
+                      <img src="https://images.unsplash.com/photo-1501813845802-8636dc1073c3?dpr=1&auto=compress,format&fit=crop&w=1020&h=&q=80&cs=tinysrgb&crop=" width="240" height="171" border="0">
+                      <p class = "name"><strong>Joanne Johnson</strong></p>
+                    <br>
+                    <p class = "status">Studying</p>
+                    <p class = "time">11:15AM-1:00PM</p>
+                  </div>
+
+                  <div class="card-action">
+                    <a href="#" class = "black-text">Private Message</a>
+                    <a> &#x274D </a>
+                  </div>
+
+                </div>
+              </div>
+            <!--div-->
+            <!---->
+
+
+            <!--Single element -->
+            <!--div class="row"-->
+            <!--
+              <div class="col-sm-4">
+                <div class="card grey lighten-1">
+                  <div class="card-content">
+                      <img src="https://images.unsplash.com/photo-1479685894911-37e888d38f0a?dpr=1&auto=compress,format&fit=crop&w=1050&h=&q=80&cs=tinysrgb&crop=" width="240" height="171" border="0">
+                      <p class = "name"><strong>Bill Smith</strong></p>
+                    <br>
+                    <p class = "status">At Work</p>
+                    <p class = "time">10:15AM-1:30PM</p>
+                  </div>
+
+                  <div class="card-action">
+                    <a href="#" class = "black-text">Private Message</a>
+                    <a> &#x274D </a>
+                  </div>
+                -->
+            <div class="row">
+        	{% for user in users%}
+            <!--Single element -->
+              <div class="col-sm-4">
+                <div class="card grey lighten-1">
+                  <div class="card-content">
+                    <!--<img src="https://images.unsplash.com/photo-1463430144406-394c977562d7?dpr=1&auto=compress,format&fit=crop&w=1052&h=&q=80&cs=tinysrgb&crop=" width="240" height="171" border="0"> -->
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThiqLJ1Fq31PtKVF8rlGAiO4nHBJL5-inv3upATiCIAQRvyZyL" width="240" height="171" border="0">
+                      <p class = "name"><strong>{{ user.username }}</strong></p>
+                    <br>
+                    <p class = "status">{{ user.profile.status }}</p>
+                    <p class = "time">Last Seen: {{ user.profile.lastSeen }}</p>
+                  </div>
+
+                  <div class="card-action">
+                    <a href="#" class = "black-text">Private Message </a>
+                    <a> &#x274D </a>
+                  </div>
+
+                </div>
+              </div>
+            {% endfor %}
+            <!--/div-->
+            <!---->
+            </div>
+    </div>
 {% endblock %}
