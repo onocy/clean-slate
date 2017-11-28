@@ -32,6 +32,3 @@ class CreateChoreForm(forms.Form):
     def clean_deadline(self):
         data = self.cleaned_data['deadline']
         return data
-
-class DeleteChoreForm(forms.Form):
-    # don't need anything here
