@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 import datetime
 
-from .forms import EditChoreForm
+from .forms import EditChoreForm, CreateChoreForm
 
 def home(request):
     """
@@ -135,3 +135,21 @@ def edit_chore_deadline(request, pk):
         proposed_deadline = datetime.date.today() + datetime.timedelta(weeks=1)
         form = EditChoreForm(initial={'deadline': proposed_deadline,})
         return render(request, 'chore_edit_form.html', {'form': form, 'chore': chore})
+
+def create_chore_deadline(request):
+    if request.method == 'POST':
+        form = CreateChoreForm(request.POST)
+        if form.is_valid():
+            chore = Chore.objects.create(title="", description="", created_on="2017-11-27", deadline="2017-12-04")
+            chore.title = form.cleaned_data['title']
+            chore.description = form.cleaned_data['description']
+            chore.created_on = form.cleaned_data['created_on']
+            chore.deadline = form.cleaned_data['deadline']
+            
+            chore.save()
+
+            return HttpResponseRedirect(reverse(reminders))
+    else:
+        proposed_deadline = datetime.date.today() + datetime.timedelta(weeks=1)
+        form = CreateChoreForm(initial={'deadline': proposed_deadline,})
+        return render(request, 'chore_create_form.html', {'form': form})
