@@ -1,8 +1,14 @@
 from django.shortcuts import render
 
 # Create your views here.
-
 from .models import User, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event
+
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
+import datetime
+
+from .forms import EditChoreForm
 
 def home(request):
     """
