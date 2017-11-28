@@ -95,7 +95,7 @@ def calendar(request):
 
 
 @login_required
-def reminders(LoginRequiredMixin, request):
+def reminders(request):
     """
     View function for reminders (Later- not a separate page)
     """
