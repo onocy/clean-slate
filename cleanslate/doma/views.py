@@ -140,7 +140,7 @@ def edit_chore_deadline(request, pk):
     else:
         proposed_deadline = datetime.date.today() + datetime.timedelta(weeks=1)
         form = EditChoreForm(initial={'deadline': proposed_deadline,})
-        return render(request, 'chore_edit_form.html', {'form': form, 'chore': chore})
+    return render(request, 'chore_edit_form.html', {'form': form, 'chore': chore})
 
 def create_chore(request):
     if request.method == 'POST':
@@ -158,7 +158,7 @@ def create_chore(request):
     else:
         proposed_deadline = datetime.date.today() + datetime.timedelta(weeks=1)
         form = CreateChoreForm(initial={'deadline': proposed_deadline,})
-        return render(request, 'chore_create_form.html', {'form': form})
+    return render(request, 'chore_create_form.html', {'form': form})
 
 def delete_chore(request, pk):
     if request.method == 'POST':
@@ -166,5 +166,4 @@ def delete_chore(request, pk):
         chore.delete()
     
         return HttpResponseRedirect(reverse(reminders))
-    else:
-        return render(request, 'chore_delete_form.html', {})
+    else: return render(request, 'chore_delete_form.html', {})
