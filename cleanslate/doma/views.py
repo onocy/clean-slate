@@ -136,7 +136,7 @@ def edit_chore_deadline(request, pk):
         form = EditChoreForm(initial={'deadline': proposed_deadline,})
         return render(request, 'chore_edit_form.html', {'form': form, 'chore': chore})
 
-def create_chore_deadline(request):
+def create_chore(request):
     if request.method == 'POST':
         form = CreateChoreForm(request.POST)
         if form.is_valid():
