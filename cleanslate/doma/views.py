@@ -115,3 +115,30 @@ def finance(request):
         'finance_list.html',
         context={'transactions': finance}
     )
+
+from .forms import UserProfileForm
+from django.shortcuts import get_object_or_404
+from .models import Profile
+from django.http import HttpResponse
+def EditUserProfileView(request, pk):
+    """
+    View function for renewing a specific BookInstance by librarian
+    """
+    profile=get_object_or_404(Profile, pk = pk)
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST)
+
+        if form.is_valid():
+            profile.phone = form.cleaned_data['phone']
+            profile.yog = form.cleaned_data['yog']
+            profile.major = form.cleaned_data['major']
+            profile.status = form.cleaned_data['status']
+            profile.bio = form.cleaned_data['bio']
+            profile.email = form.cleaned_data['email']
+            profile.save()
+            return HttpResponse('Hurray, saved!')
+    else:
+        form = UserProfileForm()
+
+    return render(request, 'form.html', {'form': form})
