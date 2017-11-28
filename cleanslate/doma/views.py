@@ -1,4 +1,4 @@
-fom django.shortcuts import render
+from django.shortcuts import render
 
 # Create your views here.
 from .models import User, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event
@@ -155,7 +155,10 @@ def create_chore(request):
         return render(request, 'chore_create_form.html', {'form': form})
 
 def delete_chore(request, pk):
-    chore = get_object_or_404(Chore, pk = pk)
-    chore.delete()
+    if request.method == 'POST':
+        chore = get_object_or_404(Chore, pk = pk)
+        chore.delete()
     
-    return HttpResponseRedirect(reverse(reminders))
+        return HttpResponseRedirect(reverse(reminders))
+    else:
+        return render(request, 'chore_delete_form.html', {})
