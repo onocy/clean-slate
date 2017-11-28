@@ -32,7 +32,7 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    url(r'^doma/accounts/', include('django.contrib.auth.urls')),
+    url(r'^doma/', include('django.contrib.auth.urls')),
 ]
 
 
