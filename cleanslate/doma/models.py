@@ -18,7 +18,6 @@ class Profile(models.Model):
     role = models.CharField(max_length=1, choices=role_choices, default='u')
 
     status = models.TextField(max_length=1000, help_text='Enter a status for others to view')
-    # presence = models.BooleanField(default=False, help_text='Do you smoke cigarettes?')
     bio = models.TextField(max_length=1000, help_text='Enter a brief description of yourself', blank=True)
     smokes = models.BooleanField(default=False, help_text='Do you smoke cigarettes?')
     bedtime = models.TimeField(null=True, blank=True, help_text='What is your usual sleep-time?')
