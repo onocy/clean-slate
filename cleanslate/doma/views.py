@@ -1,6 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
+from .forms import UserProfileForm
+from django.shortcuts import get_object_or_404
+from .models import Profile
+from django.http import HttpResponse
 
 # Create your views here.
 from .models import User, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event
@@ -128,6 +132,29 @@ def finance(request):
             }
     )
 
+def EditUserProfileView(request, pk):
+    """
+    View function for renewing a specific BookInstance by librarian
+    """
+    profile=get_object_or_404(Profile, pk = pk)
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST)
+
+        if form.is_valid():
+            profile.phone = form.cleaned_data['phone']
+            profile.yog = form.cleaned_data['yog']
+            profile.major = form.cleaned_data['major']
+            profile.status = form.cleaned_data['status']
+            profile.bio = form.cleaned_data['bio']
+            profile.email = form.cleaned_data['email']
+            profile.save()
+            return HttpResponse('Hurray, saved!')
+    else:
+        form = UserProfileForm()
+
+    return render(request, 'form.html', {'form': form})
+
 def edit_chore_deadline(request, pk):
     chore = get_object_or_404(Chore, pk = pk)
     if request.method == 'POST':
@@ -166,4 +193,3 @@ def delete_chore(request, pk):
         chore.delete()
     
         return HttpResponseRedirect(reverse(reminders))
-    else: return render(request, 'chore_delete_form.html', {})
