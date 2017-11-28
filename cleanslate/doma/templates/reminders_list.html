@@ -8,11 +8,9 @@
 {% endblock %}
 
 {% block content %}
-<a href="{% url 'create-chore' %}">Create a new chore</a>
-    <section class="section">
-      <div class="container">
-        <h1 class="title">Reminders</h1>
-          <div class="box">
+	<div class="row">
+      <div class = "col s10 pull-s1 push-s1">
+          <div class = "card z-depth-5">
             {% for event in events %}
             <article class="panel p-3">
               <div class="p-3">
@@ -39,6 +37,7 @@
                 </div>
               </div>
             </article>
+
             {% endfor %}
            
             {% for transaction in transactions %}
@@ -70,38 +69,23 @@
             {% endfor %}
 
             {% for chore in chores %}
-            <article class="panel p-3">
-              <div class="p-3">
-                <i class="fa fa-bell"></i>
-              </div>
-
-              <div class="p-3">
-                <div class="chore">
-                  <p>
-                  <strong>{{ chore.title }}</strong>
-                  - <a href="{% url 'edit-chore-deadline' chore.id %}">edit</a>, <a href="{% url 'delete-chore' chore.id %}">delete</a>
-                    <br>
-                    <em>{{ chore.description }}</em>
-                  </p>
-                  <small>
-                    <a class="item">
-                      <i class="fa fa-check"></i>
-                    </a>
-                    Complete
-                  </small>
-                  <br>
-                  <small>
-                    <a class="item">
-                      <i class="fa fa-remove"></i>
-                    </a>
-                    Ignore
-                  </small>
+                 <div class="card">
+                <span class="card-title">{{chore.title}}</span>
+                <button class = "waves-effect waves-light btn-flat"><a href="{% url 'edit-chore-deadline' chore.id %}"></a><i class="material-icons">edit</i></button>
+                  <a class="btn-floating fab waves-effect waves-light teal right" id = "check"><i class="material-icons">check</i></a>
+                 </hr>
+                <div class="card-content">
+                  <p class = "teal-text" id = "deadline">{{chore.deadline}}</p>
+                  <p>{{chore.description}}</p>
                 </div>
               </div>
-            </article>
             {% endfor %}
 
+
+            <div class = "center">
+             <button class = "center btn-floating btn-large waves-effect waves-light teal"><a href="{% url 'create-chore' %}"></a><i class="large material-icons right ">add_circle_outline</i></button>
+            </div>
           </div>
+      </div>
         </div>
-      </section>
   {% endblock %}
