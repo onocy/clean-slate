@@ -118,8 +118,9 @@ def edit_chore_deadline(request, pk):
         if form.is_valid():
             chore.deadline = form.cleaned_data['deadline']
             chore.save()
-            return HttpResponseRedirect(reverse('reminders'))
+
+            return HttpResponseRedirect(reverse(reminders))
     else:
         proposed_deadline = datetime.date.today() + datetime.timedelta(weeks=1)
         form = EditChoreForm(initial={'deadline': proposed_deadline,})
-        return render(request, 'doma/chore_edit_form.html', {'form': form, 'chore': chore})
+        return render(request, 'chore_edit_form.html', {'form': form, 'chore': chore})
