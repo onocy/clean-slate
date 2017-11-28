@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 
 # Create your views here.
@@ -78,6 +80,7 @@ def profile(request):
     )
 
 
+@login_required
 def calendar(request):
     """
     View function for Calendar
@@ -91,7 +94,8 @@ def calendar(request):
     )
 
 
-def reminders(request):
+@login_required
+def reminders(LoginRequiredMixin, request):
     """
     View function for reminders (Later- not a separate page)
     """
@@ -103,23 +107,25 @@ def reminders(request):
     return render(
         request,
         'reminders_list.html',
-        context={'events': events, 'transactions':transactions, 'chores':chores}
+        context={
+                'events': events,
+                'transactions':transactions,
+                'chores':chores
+            }
     )
 
-
+@login_required
 def finance(request):
     """
     View function for reminders (Later- not a separate page)
     """
-
     finance = Transaction.objects.all()
-
-
-
     return render(
         request,
-        'finance_list.html',
-        context={'transactions': finance}
+        'profile.html',
+            context={
+                'transactions': finance
+            }
     )
 
 def edit_chore_deadline(request, pk):
