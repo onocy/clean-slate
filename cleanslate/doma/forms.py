@@ -8,6 +8,9 @@ class EditChoreForm(forms.Form):
 
     def clean_deadline(self):
         data = self.cleaned_data['deadline']
+        # Check date is not in past. 
+        if data < datetime.date.today():
+            raise ValidationError(_('Invalid date - deadline cannot be in the past'))
         return data
 
 class CreateChoreForm(forms.Form):
