@@ -1,8 +1,14 @@
 from django.shortcuts import render
 
 # Create your views here.
-
 from .models import User, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event
+
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
+import datetime
+
+from .forms import EditChoreForm, CreateChoreForm
 
 def home(request):
     """
@@ -115,3 +121,35 @@ def finance(request):
         'finance_list.html',
         context={'transactions': finance}
     )
+
+def edit_chore_deadline(request, pk):
+    chore = get_object_or_404(Chore, pk = pk)
+    if request.method == 'POST':
+        form = EditChoreForm(request.POST)
+        if form.is_valid():
+            chore.deadline = form.cleaned_data['deadline']
+            chore.save()
+
+            return HttpResponseRedirect(reverse(reminders))
+    else:
+        proposed_deadline = datetime.date.today() + datetime.timedelta(weeks=1)
+        form = EditChoreForm(initial={'deadline': proposed_deadline,})
+        return render(request, 'chore_edit_form.html', {'form': form, 'chore': chore})
+
+def create_chore(request):
+    if request.method == 'POST':
+        form = CreateChoreForm(request.POST)
+        if form.is_valid():
+            chore = Chore.objects.create(title="", description="", created_on="2017-11-27", deadline="2017-12-04")
+            chore.title = form.cleaned_data['title']
+            chore.description = form.cleaned_data['description']
+            chore.created_on = form.cleaned_data['created_on']
+            chore.deadline = form.cleaned_data['deadline']
+            
+            chore.save()
+
+            return HttpResponseRedirect(reverse(reminders))
+    else:
+        proposed_deadline = datetime.date.today() + datetime.timedelta(weeks=1)
+        form = CreateChoreForm(initial={'deadline': proposed_deadline,})
+        return render(request, 'chore_create_form.html', {'form': form})
