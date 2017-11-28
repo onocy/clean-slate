@@ -14,7 +14,8 @@
 			<div class="profile-sidebar">
 				<!-- SIDEBAR USERPIC -->
 				<div class="profile-userpic">
-					<img src="http://lorempixel.com/100/100/people/9/" class="img-responsive" alt="">
+					{% load static %}
+					<img src="{% static 'img/face.jpg' %}" class="img-responsive" alt="">
 				</div>
 				<!-- END SIDEBAR USERPIC -->
 				<!-- SIDEBAR USER TITLE -->
@@ -22,13 +23,13 @@
 					<div class="profile-usertitle-name">
 						{{ username }}
 					</div>
-          {% if email %}
-            <p style="font-size:12px">
-              <a href="mailto:{{ email }}?Subject=Hello">
-                {{ email }}
-              </a>
-            </p>
-          {% endif %}
+				  {% if email %}
+					<p style="font-size:12px">
+					  <a href="mailto:{{ email }}?Subject=Hello">
+						{{ email }}
+					  </a>
+					</p>
+				  {% endif %}
 					<div class="profile-usertitle-job">
 						{{ status }}
 					</div>
@@ -37,7 +38,7 @@
 				<!-- SIDEBAR BUTTONS -->
 				<div class="profile-userbuttons">
 					<button type="button" class="btn btn-success btn-sm">Message</button>
-					<button type="button" onclick="goBack()" class="btn btn-danger btn-sm">Back</button>
+					<button type="button" onclick="goBack()" class="btn btn-danger btn-sm text-center">Back</button>
 				</div>
 				<!-- END SIDEBAR BUTTONS -->
 				<!-- SIDEBAR MENU -->
@@ -46,12 +47,12 @@
 						<li class="active">
 							<a href="#">
 							  Overview
-              </a>
+              				</a>
 						</li>
 						<li>
   						<a href="#">
   							Finance History
-              </a>
+              			</a>
 						</li>
 					</ul>
 				</div>
@@ -59,9 +60,14 @@
 			</div>
 		</div>
 		<div class="col-md-9">
-      <div class="profile-content">
-			  {{ bio }}
-      </div>
+
+			  	<div class="profile-content">
+					{% if bio %}
+					  <p style = "color: black">{{ bio }}<p>
+					{% else %}
+					<p> <a class="nav-link" href="{% url 'login' %}">Login</a> to see content</p>
+					{% endif %}
+			  	</div>
 		</div>
 	</div>
 </div>
