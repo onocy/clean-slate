@@ -79,7 +79,7 @@
                 <div class="chore">
                   <p>
                   <strong>{{ chore.title }}</strong>
-                  - <a href="{% url 'edit-chore-deadline' chore.id %}">edit</a>, <a href=''>delete</a>
+                  - <a href="{% url 'edit-chore-deadline' chore.id %}">edit</a>, <a href="{% url 'delete-chore' chore.id %}">delete</a>
                     <br>
                     <em>{{ chore.description }}</em>
                   </p>
