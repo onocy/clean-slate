@@ -16,6 +16,7 @@ import datetime
 
 from .forms import EditChoreForm, CreateChoreForm
 
+@login_required
 def home(request):
     """
     View function for home page of site.
@@ -149,7 +150,10 @@ def EditUserProfileView(request, pk):
             profile.bio = form.cleaned_data['bio']
             profile.email = form.cleaned_data['email']
             profile.save()
-            return HttpResponse('Hurray, saved!')
+            return render(
+                request,
+                'profile.html',
+                context={})
     else:
         form = UserProfileForm()
 
@@ -178,7 +182,7 @@ def create_chore(request):
             chore.description = form.cleaned_data['description']
             chore.created_on = form.cleaned_data['created_on']
             chore.deadline = form.cleaned_data['deadline']
-            
+
             chore.save()
 
             return HttpResponseRedirect(reverse(reminders))
@@ -191,5 +195,5 @@ def delete_chore(request, pk):
     if request.method == 'POST':
         chore = get_object_or_404(Chore, pk = pk)
         chore.delete()
-    
+
         return HttpResponseRedirect(reverse(reminders))
