@@ -22,9 +22,9 @@ from django.conf.urls.static import static
 from doma.views import home, profile, calendar, reminders, finance, EditUserProfileView
 
 urlpatterns = [
+    url(r'^$', home, name='doma'),
     url(r'^admin/', admin.site.urls),
     url(r'^doma/$', home, name='doma'),
-    url(r'^$', home, name='doma'),
     url(r'^doma/profile/$', profile, name='profile'),
     url(r'^doma/reminders/$', reminders, name='reminder'),
     url(r'^doma/finance/$', finance, name='finance'),
@@ -36,12 +36,3 @@ urlpatterns += [
     url(r'^doma/', include('django.contrib.auth.urls')),
 ]
 
-
-# urlpatterns += [
-#         url(r'^home/', include('cleanslate.urls')),
-# ]
-#
-# urlpatterns += [
-#         url(r'^$', RedirectView.as_view(url='/doma/', permanent=True)),
-# ]
-# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

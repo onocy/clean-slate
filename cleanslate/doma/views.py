@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from .forms import UserProfileForm
 from django.shortcuts import get_object_or_404
@@ -76,6 +78,7 @@ def profile(request):
     )
 
 
+@login_required
 def calendar(request):
     """
     View function for Calendar
@@ -89,6 +92,7 @@ def calendar(request):
     )
 
 
+@login_required
 def reminders(request):
     """
     View function for reminders (Later- not a separate page)
@@ -101,23 +105,25 @@ def reminders(request):
     return render(
         request,
         'reminders_list.html',
-        context={'events': events, 'transactions':transactions, 'chores':chores}
+        context={
+                'events': events,
+                'transactions':transactions,
+                'chores':chores
+            }
     )
 
-
+@login_required
 def finance(request):
     """
     View function for reminders (Later- not a separate page)
     """
-
     finance = Transaction.objects.all()
-
-
-
     return render(
         request,
         'finance_list.html',
-        context={'transactions': finance}
+            context={
+                'transactions': finance
+            }
     )
 
 def EditUserProfileView(request, pk):
@@ -142,3 +148,4 @@ def EditUserProfileView(request, pk):
         form = UserProfileForm()
 
     return render(request, 'form.html', {'form': form})
+
