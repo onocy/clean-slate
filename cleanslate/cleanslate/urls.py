@@ -22,7 +22,7 @@ from django.conf.urls.static import static
 from doma.views import home, profile, calendar, reminders, finance, edit_chore_deadline, create_chore, delete_chore, EditUserProfileView
 
 urlpatterns = [
-    url(r'^$', home, name='doma'),
+    url(r'^$', home, name='doma/login/'),
     url(r'^admin/', admin.site.urls),
     url(r'^doma/$', home, name='doma'),
     url(r'^doma/profile/$', profile, name='profile'),
