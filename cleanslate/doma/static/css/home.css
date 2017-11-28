@@ -1,6 +1,9 @@
 .card-action{
     color: red;
 }
+p{
+    color: black;
+}
 
 body {
     display: flex;
@@ -25,6 +28,7 @@ main {
 }
 
 .column.small-centered {
-margin-left: auto;
-margin-right: auto;
-float: none !important; }
+    margin-left: auto;
+    margin-right: auto;
+    float: none !important;
+}
