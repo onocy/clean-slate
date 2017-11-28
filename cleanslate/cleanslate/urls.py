@@ -38,4 +38,3 @@ urlpatterns = [
 urlpatterns += [
     url(r'^doma/', include('django.contrib.auth.urls')),
 ]
-
