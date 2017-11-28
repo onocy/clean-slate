@@ -13,6 +13,7 @@ div {
 /* Profile sidebar */
 .profile-sidebar {
   padding: 20px 0 10px 0;
+  background: #fff;
 }
 
 .profile-userpic img {
@@ -87,6 +88,7 @@ div {
 }
 
 .profile-usermenu ul li a:hover {
+  background-color: #fafcfd;
   color: #5b9bd1;
 }
 
