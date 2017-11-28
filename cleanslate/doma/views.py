@@ -1,4 +1,4 @@
-from django.shortcuts import render
+fom django.shortcuts import render
 
 # Create your views here.
 from .models import User, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event
@@ -153,3 +153,9 @@ def create_chore(request):
         proposed_deadline = datetime.date.today() + datetime.timedelta(weeks=1)
         form = CreateChoreForm(initial={'deadline': proposed_deadline,})
         return render(request, 'chore_create_form.html', {'form': form})
+
+def delete_chore(request, pk):
+    chore = get_object_or_404(Chore, pk = pk)
+    chore.delete()
+    
+    return HttpResponseRedirect(reverse(reminders))
