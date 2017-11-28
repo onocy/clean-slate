@@ -32,6 +32,10 @@ urlpatterns = [
     url(r'^doma/chore/(?P<pk>[-\w]+)/edit/$', edit_chore_deadline, name = 'edit-chore-deadline'),
 ]
 
+urlpatterns += [
+    url(r'^doma/', include('django.contrib.auth.urls')),
+]
+
 
 # urlpatterns += [
 #         url(r'^home/', include('cleanslate.urls')),
