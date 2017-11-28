@@ -126,7 +126,7 @@ def finance(request):
     finance = Transaction.objects.all()
     return render(
         request,
-        'profile.html',
+        'finance_list.html',
             context={
                 'transactions': finance
             }
