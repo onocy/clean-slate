@@ -1,3 +1,4 @@
+from django import forms
 
 class EditChoreForm(forms.Form):
     deadline = forms.DateField(help_text = 'When is this chore due?')
