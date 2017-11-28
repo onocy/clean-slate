@@ -31,6 +31,10 @@ urlpatterns = [
     url(r'^doma/calendar/$', calendar, name='calendar'),
 ]
 
+urlpatterns += [
+    url(r'^doma/', include('django.contrib.auth.urls')),
+]
+
 
 # urlpatterns += [
 #         url(r'^home/', include('cleanslate.urls')),

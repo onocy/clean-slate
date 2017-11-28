@@ -1,18 +1,17 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
-
-class User(models.Model):
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     # reviews, forums, topics, and posts are one to many relations, so user will be foreign key in those models
     role_choices = (
         ('a', 'Admin'),
         ('u', 'User')
     )
     # make hidden
-    password = models.CharField(max_length=100, help_text='Enter your password', null=True)
-
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
     phone = models.CharField(max_length=10, help_text='Enter your phone number', null=True, blank=True)
     yog = models.CharField(max_length=100, help_text='Enter your graduation date', null=True, blank=True)
     major = models.CharField(max_length=100, null=True, blank=True)
@@ -32,14 +31,23 @@ class User(models.Model):
         return self.role in 'a'
 
     def get_absolute_url(self):
-        return reverse('user-detail', args=[str(self.id)])
+        return reverse('profile-detail', args=[str(self.id)])
 
     def __str__(self):
-        return '%s, %s' % (self.first_name, self.last_name)
-    
+        return '%s' % (self.user.username)
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
+
 
 class Home(models.Model):
-    created_by = models.ForeignKey('User', null=False, default=1, related_name="home_created_by")
+    created_by = models.ForeignKey('Profile', null=False, default=1, related_name="home_created_by")
     forum = models.OneToOneField('Forum', on_delete=models.CASCADE, null=False, default=1)
     name = models.CharField(max_length=100, help_text='Enter your Home Name')
     address = models.CharField(max_length=100, help_text='Enter your Address', null=True)
@@ -58,7 +66,7 @@ class Topic(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a topic name")
     content = models.CharField(max_length=500, blank= True)
     forum = models.ForeignKey('Forum', on_delete=models.CASCADE, null=False, default=1)
-    created_by = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
+    created_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True)
     created_on = models.DateField()
 
     def __str__(self):
@@ -80,8 +88,8 @@ class Village(models.Model):
 
 
 class Review(models.Model):
-    reviewed = models.ForeignKey('User', on_delete=models.SET_NULL, null=True, related_name='reviewed_user')
-    reviewedBy = models.ForeignKey('User', on_delete=models.SET_NULL, null=True, blank=True, related_name='reviewer') # added blank option for anonyomous reviews. Maybe changed later
+    reviewed = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, related_name='reviewed_user')
+    reviewedBy = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='reviewer') # added blank option for anonyomous reviews. Maybe changed later
     review = models.TextField(max_length=1000, help_text='Enter your review here', default='')
 
     def get_absolute_url(self):
@@ -94,7 +102,7 @@ class Review(models.Model):
 class Forum(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a forum name")
     description = models.TextField(max_length=1000, help_text='Enter a description for this forum')
-    created_by = models.ForeignKey('User', null=False, default=1, related_name="forum_created_by")
+    created_by = models.ForeignKey('Profile', null=False, default=1, related_name="forum_created_by")
     created_on = models.DateField()
 
     def get_absolute_url(self):
@@ -108,7 +116,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a post name')
     content = models.CharField(max_length=500, help_text='Enter content')
     topic = models.ForeignKey('Topic', on_delete=models.SET_NULL, null=True)
-    created_by = models.ForeignKey('User', on_delete=models.CASCADE, null=False, related_name='op')
+    created_by = models.ForeignKey('Profile', on_delete=models.CASCADE, null=False, related_name='op')
     created_on = models.DateTimeField()
 
     def __str__(self):

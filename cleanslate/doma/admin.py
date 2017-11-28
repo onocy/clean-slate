@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import User
+from .models import Profile
 from .models import Home
 from .models import Review
 from .models import Forum
@@ -13,7 +13,7 @@ from .models import Reminder
 from .models import Event
 
 
-admin.site.register(User)
+admin.site.register(Profile)
 admin.site.register(Home)
 admin.site.register(Review)
 admin.site.register(Forum)

@@ -20,8 +20,15 @@
 				<!-- SIDEBAR USER TITLE -->
 				<div class="profile-usertitle">
 					<div class="profile-usertitle-name">
-						{{ full_name }}
+						{{ username }}
 					</div>
+          {% if email %}
+            <p style="font-size:12px">
+              <a href="mailto:{{ email }}?Subject=Hello">
+                {{ email }}
+              </a>
+            </p>
+          {% endif %}
 					<div class="profile-usertitle-job">
 						{{ status }}
 					</div>
@@ -38,11 +45,13 @@
 					<ul>
 						<li class="active">
 							<a href="#">
-							Overview </a>
+							  Overview
+              </a>
 						</li>
 						<li>
-							<a href="#">
-							Finance History</a>
+  						<a href="#">
+  							Finance History
+              </a>
 						</li>
 					</ul>
 				</div>
@@ -50,9 +59,9 @@
 			</div>
 		</div>
 		<div class="col-md-9">
-            <div class="profile-content">
-			   {{ bio }}.
-            </div>
+      <div class="profile-content">
+			  {{ bio }}
+      </div>
 		</div>
 	</div>
 </div>
