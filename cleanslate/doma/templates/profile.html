@@ -8,17 +8,17 @@
   {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row profile">
-		<div class="col-md-3">
-			<div class="profile-sidebar">
-				<!-- SIDEBAR USERPIC -->
-				<div class="profile-userpic">
-					{% load static %}
-					<img src="{% static 'img/face.jpg' %}" class="img-responsive" alt="">
-				</div>
-				<!-- END SIDEBAR USERPIC -->
-				<!-- SIDEBAR USER TITLE -->
+	<div class="row">
+      <div class = "col s10 pull-s1 push-s1">
+          <div class = "card z-depth-5">
+			  <div class = "row">
+				  <div class = "col">
+					  <div class = "card">
+						  <div class="profile-sidebar">
+						<div class="profile-userpic">
+							{% load static %}
+							<img src="{% static 'img/face.jpg' %}" class="img-responsive" alt="">
+						</div>
 				<div class="profile-usertitle">
 					<div class="profile-usertitle-name">
 						{{ username }}
@@ -34,15 +34,10 @@
 						{{ status }}
 					</div>
 				</div>
-				<!-- END SIDEBAR USER TITLE -->
-				<!-- SIDEBAR BUTTONS -->
 				<div class="profile-userbuttons">
 					<button type="button" class="btn btn-success btn-sm">Message</button>
-          <a href="/doma/users/edit/{{ user.id }}" class="btn btn-success btn-sm">Edit</a> <!-- hacky fix this -->
-					<button type="button" onclick="goBack()" class="btn btn-danger btn-sm text-center">Back</button>
+         				 <a href="/doma/users/edit/{{ user.id }}" class="btn btn-success btn-sm">Edit</a> <!-- hacky fix this -->
 				</div>
-				<!-- END SIDEBAR BUTTONS -->
-				<!-- SIDEBAR MENU -->
 				<div class="profile-usermenu">
 					<ul>
 						<li class="active">
@@ -57,27 +52,20 @@
 						</li>
 					</ul>
 				</div>
-				<!-- END MENU -->
-			</div>
-		</div>
-		<div class="col-md-9">
-
-			  	<div class="profile-content">
+				  	<div class="profile-content">
 					{% if bio %}
 					  <p style = "color: black">{{ bio }}<p>
 					{% else %}
 					<p> <a class="nav-link" href="{% url 'login' %}">Login</a> to see content</p>
 					{% endif %}
 			  	</div>
+					  </div>
+				  </div>
+			  </div>
+
+			</div>
 		</div>
 	</div>
 </div>
 {% endblock %}
 
-{% block extra_js %}
-  <script>
-    function goBack() {
-      window.history.back()
-    }
-  </script>
-{% endblock %}

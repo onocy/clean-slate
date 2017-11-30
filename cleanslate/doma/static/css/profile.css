@@ -1,5 +1,5 @@
 body {
-  background: #F1F3FA;
+  background: #a1887f    ;
 }
 
 /* Profile container */
@@ -13,7 +13,7 @@ div {
 /* Profile sidebar */
 .profile-sidebar {
   padding: 20px 0 10px 0;
-  background: #fff;
+  background: #f1f8e9  ;
 }
 
 .profile-userpic img {
@@ -44,23 +44,6 @@ div {
   font-size: 12px;
   font-weight: 600;
   margin-bottom: 15px;
-}
-
-.profile-userbuttons {
-  text-align: center;
-  margin-top: 10px;
-}
-
-.profile-userbuttons .btn {
-  text-transform: uppercase;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 6px 15px;
-  margin-right: 5px;
-}
-
-.profile-userbuttons .btn:last-child {
-  margin-right: 20px;
 }
 
 .profile-usermenu {
@@ -100,11 +83,4 @@ div {
   color: #5b9bd1;
   background-color: #f6f9fb;
 
-}
-
-/* Profile Content */
-.profile-content {
-  padding: 20px;
-  background: #fff;
-  min-height: 460px;
 }
