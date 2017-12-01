@@ -46,6 +46,7 @@ def home(request):
         context={'num_topics': num_topics, 'users': users}
     )
 
+@login_required
 def profile(request):
     """
     View function for individual profiles on site.
@@ -133,6 +134,7 @@ def finance(request):
             }
     )
 
+@login_required
 def EditUserProfileView(request, pk):
     """
     View function for renewing a specific BookInstance by librarian
@@ -159,6 +161,7 @@ def EditUserProfileView(request, pk):
 
     return render(request, 'form.html', {'form': form})
 
+@login_required
 def edit_chore_deadline(request, pk):
     chore = get_object_or_404(Chore, pk = pk)
     if request.method == 'POST':
@@ -173,6 +176,7 @@ def edit_chore_deadline(request, pk):
         form = EditChoreForm(initial={'deadline': proposed_deadline,})
     return render(request, 'chore_edit_form.html', {'form': form, 'chore': chore})
 
+@login_required
 def create_chore(request):
     if request.method == 'POST':
         form = CreateChoreForm(request.POST)
@@ -191,6 +195,7 @@ def create_chore(request):
         form = CreateChoreForm(initial={'deadline': proposed_deadline,})
     return render(request, 'chore_create_form.html', {'form': form})
 
+@login_required
 def delete_chore(request, pk):
     if request.method == 'POST':
         chore = get_object_or_404(Chore, pk = pk)
