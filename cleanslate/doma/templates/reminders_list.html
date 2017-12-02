@@ -37,7 +37,6 @@
                 </div>
               </div>
             </article>
-
             {% endfor %}
            
             {% for transaction in transactions %}
@@ -71,7 +70,7 @@
             {% for chore in chores %}
                  <div class="card">
                 <span class="card-title">{{chore.title}}</span>
-                <button class = "waves-effect waves-light btn-flat"><a href="{% url 'edit-chore-deadline' chore.id %}"></a><i class="material-icons">edit</i></button>
+                   <button class = "waves-effect waves-light btn-flat"><a href="{% url 'edit-chore-deadline' chore.id %}"></a><i class="material-icons">edit</i></button>
                   <a class="btn-floating fab waves-effect waves-light teal right" id = "check"><i class="material-icons">check</i></a>
                  </hr>
                 <div class="card-content">
@@ -81,9 +80,8 @@
               </div>
             {% endfor %}
 
-
             <div class = "center">
-             <button class = "center btn-floating btn-large waves-effect waves-light teal"><a href="{% url 'create-chore' %}"></a><i class="large material-icons right ">add_circle_outline</i></button>
+             <a class = "center btn-floating btn-large waves-effect waves-light teal" href = "/doma/chore/create/"><i class="large material-icons right ">add_circle_outline</i></a>
             </div>
           </div>
       </div>

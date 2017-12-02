@@ -1,6 +1,11 @@
 {% extends "base.html" %}
-{% block content %}
+{% block extra_head %}
+  {% load static %}
+  <link href="{% static 'css/form.css' %}" rel="stylesheet">
+{% endblock %}
 
+{% block content %}
+<div class = "card z-depth-5 center">
     <h1>Edit: {{chore.title}}</h1>
     <p>Current deadline: {{chore.deadline}}</p>
     
@@ -11,5 +16,5 @@
         </table>
         <input type="submit" value="Submit" />
     </form>
-
+</div>
 {% endblock %}
