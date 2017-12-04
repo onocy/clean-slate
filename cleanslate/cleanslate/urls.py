@@ -20,6 +20,7 @@ from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
 from doma.views import home, profile, calendar, reminders, finance, edit_chore_deadline, create_chore, delete_chore, EditUserProfileView
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url(r'^$', home, name='doma/login/'),
@@ -33,6 +34,11 @@ urlpatterns = [
     url(r'^doma/chore/(?P<pk>[-\w]+)/edit/$', edit_chore_deadline, name = 'edit-chore-deadline'),
     url(r'^doma/chore/create/$', create_chore, name = 'create-chore'),
     url(r'^doma/chore/(?P<pk>[-\w]+)/delete/$', delete_chore, name = 'delete-chore'),
+    url(r'^password_reset/$', auth_views.password_reset, name='password_reset'),
+    url(r'^password_reset/done/$', auth_views.password_reset_done, name='password_reset_done'),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        auth_views.password_reset_confirm, name='password_reset_confirm'),
+    url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
 ]
 
 urlpatterns += [
