@@ -20,7 +20,7 @@ from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
-from doma.views import home, profile, calendar, reminders, finance, edit_chore_deadline, create_chore, delete_chore, EditUserProfileView
+from doma.views import home, profile, calendar, reminders, finance, edit_chore_deadline, create_chore, delete_chore, EditUserProfileView, edit_chore, create_account
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^doma/chore/(?P<pk>[-\w]+)/edit/$', edit_chore_deadline, name = 'edit-chore-deadline'),
     url(r'^doma/chore/create/$', create_chore, name = 'create-chore'),
     url(r'^doma/chore/(?P<pk>[-\w]+)/delete/$', delete_chore, name = 'delete-chore'),
+    url(r'^doma/create_account', create_account, name = 'create-account')
 ]
 
 urlpatterns += [

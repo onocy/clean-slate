@@ -130,7 +130,7 @@ class Transaction(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a transaction name')
     description = models.CharField(max_length=500, help_text='Enter description')
     created_on = models.DateField()
-    deadline = models.DateField(help_text='When is this transaction due?')
+    deadline = models.DateTimeField(help_text='When is this transaction due?')
     amount = models.IntegerField()
 
     # debtors
@@ -149,7 +149,7 @@ class Chore(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a chore name')
     description = models.CharField(max_length=500, help_text='Enter description')
     created_on = models.DateField()
-    deadline = models.DateField(help_text='When is this chore due?')
+    deadline = models.DateTimeField(help_text='When is this chore due?')
 
     #owners
 
@@ -164,7 +164,7 @@ class Reminder(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a reminder name')
     description = models.CharField(max_length=500, help_text='Enter description')
     created_on = models.DateField()
-    deadline = models.DateField(help_text='When is this reminder due?')
+    deadline = models.DateTimeField(help_text='When is this reminder due?')
 
     # owners
 
@@ -179,7 +179,7 @@ class Event(models.Model):
     title = models.CharField(max_length=200, help_text='Enter an event name')
     description = models.CharField(max_length=500, help_text='Enter description')
     created_on = models.DateField()
-    deadline = models.DateField(help_text='When is this event going to occur?')
+    deadline = models.DateTimeField(help_text='When is this event going to occur?')
 
     def __str__(self):
         return 'Event: %s' % self.title
