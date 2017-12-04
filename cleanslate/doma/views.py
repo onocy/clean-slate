@@ -202,3 +202,4 @@ def delete_chore(request, pk):
         chore.delete()
 
         return HttpResponseRedirect(reverse(reminders))
+    return render(request, 'chore_delete_form.html', {})
