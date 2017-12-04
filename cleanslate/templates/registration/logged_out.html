@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
+<title>Logged Out</title>
+
 {% block content %}
 <div style = "text-align: center">
-<p>Logged out!</p>
+<p>You have been logged out. Come back home soon!</p>
 
 <a href="{% url 'login'%}">Click here to login again.</a>
 {% endblock %}
