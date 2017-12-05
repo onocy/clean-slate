@@ -12,16 +12,12 @@ main {
     flex: 1 0 auto;
 }
 
-.name{
-    font-size: 1.25em;
-}
-
 .status{
     font-size: 1.5em;
 }
 
-.time{
-    font-size: 1.5em;
+.content-text{
+    font-size: 1.25em;
 }
 
 .column.small-centered {
