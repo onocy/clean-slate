@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row center-align">
+  <div class="row center-align mt">
     <div class="col s2 offset-s2 xl2 offset-xl5">
       {% if form.errors %}
         <p>Your username and password didn't match. Please try again.</p>
@@ -16,7 +16,7 @@
       <form class="col s12" method="post" action="{% url 'login' %}">
         {% csrf_token %}
         <div class="row">
-          <h3 class="center-align">Welcome Home</h3>
+          <img src = "{% static 'img/logo.png' %}" style = "width: 200px">
         </div>
         <div class="row">
           <div class="input-field">
