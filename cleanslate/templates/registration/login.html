@@ -3,31 +3,40 @@
 {% endblock %} {% block extra_head %} {% load static %}
 <link href="{% static 'css/login.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %} {% block content %}
-<div class="form">
-   <div id="login">
-      <h1>Welcome Home.</h1>
-      {% if form.errors %}
-      <p>Your username and password didn't match. Please try again.</p>
-      {% endif %} {% if next %} {% if user.is_authenticated %}
-      <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
-      {% else %}
-      <p>Please login.</p>
-      {% endif %} {% endif %}
-      <form method="post" action="{% url 'login' %}">
-         {% csrf_token %}
-         <div class="field-wrap">
-            <td>{{ form.username.label_tag }}</td>
-            <td>{{ form.username }}</td>
-         </div>
-         <div class="field-wrap">
-            <td>{{ form.password.label_tag }}</td>
-            <td>{{ form.password }}</td>
-         </div>
-         <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-         <button class="button button-block" />Log In</button>
-      </form>
-   </div>
-   <!-- tab-content -->
-</div>
+<!--<div class="row">-->
+      <!--<div class = "col s6 pull-s3 push-s3">-->
+          <div class = "card z-depth-5">
+            <div class="form center-block">
+               <div id="login">
+                  <img src = "{% static 'img/logo.png' %}" style = "width: 200px">
+                  <p class = "center">Welcome Home.</p>
+                  {% if form.errors %}
+                  <p>Your username and password didn't match. Please try again.</p>
+                  {% endif %} {% if next %} {% if user.is_authenticated %}
+                  <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
+                  {% else %}
+                  <p>Please login.</p>
+                  {% endif %} {% endif %}
+                  <form method="post" action="{% url 'login' %}">
+                     {% csrf_token %}
+                     <div class="field-wrap">
+                        <td class = "center">{{ form.username.label_tag }}</td>
+                        <td>{{ form.username }}</td>
+                     </div>
+                     <div class="field-wrap">
+                        <td>{{ form.password.label_tag }}</td>
+                        <td>{{ form.password }}</td>
+                     </div>
+                     <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+                     <div class = "center">
+                        <button class="btn" />Login</button>
+                     </div>
+                  </form>
+               </div>
+               <!-- tab-content -->
+            </div>
 <!-- /form -->
+          <!--</div>-->
+      <!--</div>-->
+</div>
 {% endblock %}
