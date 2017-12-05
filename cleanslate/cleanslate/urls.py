@@ -31,10 +31,10 @@ urlpatterns = [
     url(r'^doma/finance/$', finance, name='finance'),
     url(r'^doma/calendar/$', calendar, name='calendar'),
     url(r'^doma/users/edit/(?P<pk>\d+)/$', EditUserProfileView, name="edit-user-profile"),
+    url(r'^doma/create_account', create_account, name = 'create-account'),
     url(r'^doma/chore/(?P<pk>[-\w]+)/edit/$', edit_chore_deadline, name = 'edit-chore-deadline'),
     url(r'^doma/chore/create/$', create_chore, name = 'create-chore'),
     url(r'^doma/chore/(?P<pk>[-\w]+)/delete/$', delete_chore, name = 'delete-chore'),
-    url(r'^doma/create_account', create_account, name = 'create-account')
 ]
 
 urlpatterns += [
