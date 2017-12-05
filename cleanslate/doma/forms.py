@@ -10,14 +10,14 @@ class UserProfileForm(forms.Form):
         major = forms.CharField()
         status = forms.CharField(help_text='Enter a status for others to view')
         bio = forms.CharField(help_text='Enter a brief description of yourself')
-        # smokes = forms.BooleanField(initial=True, help_text='Do you smoke cigarettes?')
-        # bedtime = forms.TimeField(help_text='What is your usual sleep-time?')
-        # lastSeen = forms.DateField()
+        smokes = forms.BooleanField(initial=True, help_text='Do you smoke cigarettes?')
+        bedtime = forms.TimeField(help_text='What is your usual sleep-time?')
         email = forms.EmailField(help_text='Enter your email')
-        # pet_allergies = forms.NullBooleanField(help_text='Are you allergic to pets?')
+        pet_allergies = forms.NullBooleanField(help_text='Are you allergic to pets?')
 
 class EditChoreForm(forms.Form):
-    deadline = forms.DateField(help_text = 'When is this chore due?')
+    title = forms.CharField(help_text= 'What is this chore called?')
+    deadline = forms.DateField(help_text= 'When is this chore due?')
 
     def clean_deadline(self):
         data = self.cleaned_data['deadline']
@@ -26,11 +26,17 @@ class EditChoreForm(forms.Form):
             raise ValidationError(_('Invalid date - deadline cannot be in the past'))
         return data
 
+    def clean_title(self):
+        data = self.cleaned_data['title']
+        if len(data) > 200:
+            raise ValidationError(_('Invalid title - cannot be longer than 200 characters'))
+        return data
+
 class CreateChoreForm(forms.Form):
     title = forms.CharField(help_text = 'Enter a chore name')
     description = forms.CharField(help_text = 'Enter a description')
     created_on = forms.DateField()
-    deadline = forms.DateField(help_text = 'When is this chore due?')
+    deadline = forms.DateTimeField(help_text= 'When is this chore due?')
 
     def clean_title(self):
         data = self.cleaned_data['title']

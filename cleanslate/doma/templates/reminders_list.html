@@ -70,8 +70,8 @@
             {% for chore in chores %}
                  <div class="card">
                 <span class="card-title">{{chore.title}}</span>
-                   <a class="waves-effect waves-light btn-flat" href="{% url 'edit-chore-deadline' chore.id %}"><i class="material-icons">edit</i></button>
-                   <a class="btn-floating fab waves-effect waves-light teal right" id = "check" href="{% url 'delete-chore' chore.id %}"><i class="material-icons">check</i></a>
+                  <a class="waves-effect waves-light btn-flat" id = "edit" href = "{% url 'edit-chore' chore.id %}"><i class="material-icons">edit</i></a>
+                  <a class="btn-floating fab waves-effect waves-light teal right" id = "check"><i class="material-icons">check</i></a>
                  </hr>
                 <div class="card-content">
                   <p class = "teal-text" id = "deadline">{{chore.deadline}}</p>

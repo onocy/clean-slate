@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
-from .forms import UserProfileForm
+from .forms import UserProfileForm, EditChoreForm, CreateChoreForm
 from django.shortcuts import get_object_or_404
 from .models import Profile
 from django.http import HttpResponse
@@ -14,7 +14,9 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 import datetime
 
-from .forms import EditChoreForm, CreateChoreForm
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
 
 @login_required
 def home(request):
@@ -78,12 +80,6 @@ def profile(request):
                 'email': ""
                 }
         )
-
-    return render(
-        request,
-        'profile.html',
-        context={}
-    )
 
 
 @login_required
@@ -151,6 +147,9 @@ def EditUserProfileView(request, pk):
             profile.status = form.cleaned_data['status']
             profile.bio = form.cleaned_data['bio']
             profile.email = form.cleaned_data['email']
+            profile.pet_allergies = form.cleaned_data['pet_allergies']
+            profile.bedtime = form.cleaned_data['bedtime']
+            profile.smokes = form.cleaned_data['smokes']
             profile.save()
             return render(
                 request,
@@ -159,7 +158,22 @@ def EditUserProfileView(request, pk):
     else:
         form = UserProfileForm()
 
-    return render(request, 'form.html', {'form': form})
+    return render(request, 'form.html', {'form': form, 'profile': profile})
+
+@login_required
+def edit_chore(request, pk):
+    chore = get_object_or_404(Chore, pk = pk)
+    if request.method == 'POST':
+        form = EditChoreForm(request.POST)
+        if form.is_valid():
+            chore.title = form.clean_title()
+            chore.save()
+            return HttpResponseRedirect(reverse(reminders))
+        else:
+            proposed_deadline = datetime.date.today() + datetime.timedelta(weeks=1)
+            default_chore = 'Unnamed Chore'
+            form = EditChoreForm(initial={'deadline': proposed_deadline, 'title': default_chore})
+        return render(request, 'chore_edit_form.html', {'form': form, 'chore': chore})
 
 @login_required
 def edit_chore_deadline(request, pk):
@@ -167,7 +181,7 @@ def edit_chore_deadline(request, pk):
     if request.method == 'POST':
         form = EditChoreForm(request.POST)
         if form.is_valid():
-            chore.deadline = form.cleaned_data['deadline']
+            chore.deadline = form.cleaned_data()
             chore.save()
 
             return HttpResponseRedirect(reverse(reminders))
@@ -203,3 +217,18 @@ def delete_chore(request, pk):
 
         return HttpResponseRedirect(reverse(reminders))
     return render(request, 'chore_delete_form.html', {})
+
+def create_account(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect(home)
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})
+
