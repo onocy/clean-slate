@@ -154,10 +154,7 @@ def EditUserProfileView(request, pk):
             profile.bio = form.cleaned_data['bio']
             profile.email = form.cleaned_data['email']
             profile.save()
-            return render(
-                request,
-                'profile.html',
-                context={})
+            return HttpResponseRedirect('/doma/profile')
     else:
         form = UserProfileForm()
 
