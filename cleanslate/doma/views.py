@@ -37,13 +37,17 @@ def home(request):
     # showing only the ones who share a home with the user currently logged in
     # however, for now, we will show all users on the home page
     # users = User.objects.filter(home__exact=
-    users = User.objects.all()
+    from itertools import zip_longest
+    def grouper(iterable, n, fillvalue=None):
+        args = [iter(iterable)] * n
+        return zip_longest(*args, fillvalue=fillvalue)
+    user_groups = list(grouper(User.objects.all(), 4))
 
     # Render the HTML template home.html with the data in the context variable
     return render(
         request,
         'home.html',
-        context={'num_topics': num_topics, 'users': users}
+        context={'num_topics': num_topics, 'user_groups': user_groups}
     )
 
 def profile(request):

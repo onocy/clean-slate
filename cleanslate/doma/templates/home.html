@@ -1,35 +1,38 @@
-{% extends "./base.html" %}
+{% extends "base.html" %}
 
 {% block title %}<title>Home</title>{% endblock %}
 
 {% block extra_head %}
-    {% load static %}
-    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+  {% load static %}
+  <link href="{% static 'css/home.css' %}" rel="stylesheet">
 {% endblock %}
 
-
 {% block content %}
-    <div class="container-fluid">
-        {% for user in users %}
-  		<div class="row">
-            <div class="card large col s6">
+  <div class="container-fluid">
+    {% for group in user_groups %}
+      <div class="row">
+        {% for user in group %}
+          {% if user is not None %}
+            <div class="col s3">
+              <div class="card">
                 <div class="card-image">
                   {% load static %}
-					<img class = "img-responsive activator" src="{% static 'img/p1.jpg' %}">
-                    <span class="card-title black-text">{{user.username}}</span>
+                  <img class = "img-responsive activator" src="{% static 'img/p1.jpg' %}">
                 </div>
                 <div class="card-content activator">
-                    <i class="material-icons right">more_vert</i>
-                    <p class = "time">Last Seen: {{ user.profile.lastSeen }}</p>
+                  <i class="material-icons right">more_vert</i>
+                  <p class="content-text">{{user.username}} | Last Seen: {{ user.profile.lastSeen }}</p>
                 </div>
                 <div class="card-reveal">
                   <span class="card-title grey-text text-darken-4">{{user.username}}<i class="material-icons right">close</i></span>
-                    <p>{{ user.profile.status }}</p>
-                    <a href="#" class = "blue-text">Private Message </a>
+                  <p>{{ user.profile.status }}</p>
+                  <a href="#" class = "blue-text">Private Message </a>
                 </div>
+              </div>
             </div>
-        </div>
+          {% endif %}
         {% endfor %}
-    </div>
-
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}
