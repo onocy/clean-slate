@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-import datetime #for checking renewal date range.
+import datetime
 from .models import User, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event, Profile
 
 class UserProfileForm(forms.Form):
@@ -21,7 +21,7 @@ class EditChoreForm(forms.Form):
 
     def clean_deadline(self):
         data = self.cleaned_data['deadline']
-        # Check date is not in past. 
+        # Check date is not in past.
         if data < datetime.date.today():
             raise ValidationError(_('Invalid date - deadline cannot be in the past'))
         return data
@@ -45,17 +45,25 @@ class CreateChoreForm(forms.Form):
         if len(data) > 500:
             raise ValidationError(_('Invalid description - cannot be longer than 500 characters'))
         return data
-    
+
     def clean_created_on(self):
         data = self.cleaned_data['created_on']
-        # Check date is not in future. 
+        # Check date is not in future.
         if data > datetime.date.today():
             raise ValidationError(_('Invalid date - created_on cannot be in the future'))
         return data
 
     def clean_deadline(self):
         data = self.cleaned_data['deadline']
-        # Check date is not in past. 
+        # Check date is not in past.
         if data < datetime.date.today():
             raise ValidationError(_('Invalid date - deadline cannot be in the past'))
         return data
+
+class CreateUserForm(forms.Form):
+    username = forms.CharField(help_text = 'Enter a username')
+    email = forms.EmailField(help_text = 'Enter an email')
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = User

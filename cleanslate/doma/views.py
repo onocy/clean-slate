@@ -1,20 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
-from .forms import UserProfileForm
-from django.shortcuts import get_object_or_404
-from .models import Profile
-from django.http import HttpResponse
-
-# Create your views here.
-from .models import User, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event
-
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from .forms import UserProfileForm, EditChoreForm, CreateChoreForm, CreateUserForm
+from .models import User, Profile, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event
 import datetime
-
-from .forms import EditChoreForm, CreateChoreForm
 
 @login_required
 def home(request):
@@ -89,7 +80,6 @@ def profile(request):
         context={}
     )
 
-
 @login_required
 def calendar(request):
     """
@@ -102,7 +92,6 @@ def calendar(request):
         'calendar.html',
         context={'events': events}
     )
-
 
 @login_required
 def reminders(request):
@@ -204,3 +193,13 @@ def delete_chore(request, pk):
 
         return HttpResponseRedirect(reverse(reminders))
     return render(request, 'chore_delete_form.html', {})
+
+def create_user(request):
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(username = form.cleaned_data['username'], email = form.cleaned_data['email'], password = form.cleaned_data['password'])
+            return HttpResponseRedirect(reverse(profile))
+    else:
+        form = CreateUserForm()
+    return render(request, 'form.html', {'form': form})
