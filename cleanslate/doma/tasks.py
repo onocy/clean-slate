@@ -26,6 +26,9 @@ def send_sms_reminder(event_id):
 
     message = client.messages.create(
         body=body,
-        to=appointment.phone_number,
-        from_=settings.TWILIO_NUMBER,
+        # TODO: fill in with a phone number from the db
+        # mboneil10's twilio phone number
+        to="+14132764806",
+        # "magic number" from Twilio tutorial
+        from_="+15005550006",
     )
