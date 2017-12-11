@@ -3,8 +3,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from .forms import UserProfileForm, EditChoreForm, CreateChoreForm, CreateUserForm
+from .forms import UserProfileForm, EditChoreForm, CreateChoreForm, CreateUserForm, CreateHomeForm
 from .models import User, Profile, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event
+from django.forms.models import model_to_dict
 import datetime
 
 @login_required
@@ -147,7 +148,7 @@ def EditUserProfileView(request, pk):
             profile.save()
             return HttpResponseRedirect('/doma/profile')
     else:
-        form = UserProfileForm()
+        form = UserProfileForm(initial=model_to_dict(profile))
 
     return render(request, 'form.html', {'form': form})
 
@@ -202,4 +203,22 @@ def create_user(request):
             return HttpResponseRedirect(reverse(profile))
     else:
         form = CreateUserForm()
+    return render(request, 'form.html', {'form': form})
+
+@login_required
+def create_home(request):
+    if request.method == 'POST':
+        form = CreateHomeForm(request.POST)
+        if form.is_valid():
+            new_home = Home.objects.create(name = "", address = "", created_by = request.user.profile)
+            new_home.name = form.cleaned_data['name']
+            new_home.address = form.cleaned_data['address']
+            new_home.leaseStart = form.cleaned_data['leaseStart']
+            new_home.leaseEnds = form.cleaned_data['leaseEnds']
+            new_home.save()
+            request.user.profile.home = new_home
+            request.user.profile.save()
+            return HttpResponseRedirect(reverse(home))
+    else:
+        form = CreateHomeForm()
     return render(request, 'form.html', {'form': form})

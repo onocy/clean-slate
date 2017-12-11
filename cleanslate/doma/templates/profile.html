@@ -1,11 +1,11 @@
-{% extends "./base.html" %}
+{% extends "base.html" %}
 
 {% block title %}<title>Profile</title>{% endblock %}
 
-  {% block extra_head %}
-    {% load static %}
-    <link href="{% static 'css/profile.css' %}" rel="stylesheet">
-  {% endblock %}
+{% block extra_head %}
+  {% load static %}
+  <link href="{% static 'css/profile.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
   {% if not user.profile.has_home %}
@@ -16,69 +16,64 @@
             <span class="card-title">Remember</span>
             <p>
               You need to add yourself to a home to unlock functionality in the app.
+              <a href="{% url 'create-home' %}"></a>
             </p>
           </div>
         </div>
       </div>
     </div>
   {% endif %}
-	<div class="row">
-      <div class = "col s10 pull-s1 push-s1">
-          <div class = "card z-depth-5">
-			  <div class = "row">
-				  <div class = "col">
-					  <div class = "card">
-						  <div class="profile-sidebar">
-						<div class="profile-userpic">
-							{% load static %}
-							<img src="{% static 'img/face.jpg' %}" class="img-responsive" alt="">
-						</div>
-				<div class="profile-usertitle">
-					<div class="profile-usertitle-name">
-						{{ username }}
-					</div>
-				  {% if email %}
-					<p style="font-size:12px">
-					  <a href="mailto:{{ email }}?Subject=Hello">
-						{{ email }}
-					  </a>
-					</p>
-				  {% endif %}
-					<div class="profile-usertitle-job">
-						{{ status }}
-					</div>
-				</div>
-				<div class="profile-userbuttons">
-					<button type="button" class="btn">Message</button>
-					<a href="/doma/users/edit/{{ user.id }}" class="btn">Edit</a> <!-- hacky fix this -->
-				</div>
-				<div class="profile-usermenu">
-					<ul>
-						<li class="active">
-							<a href="#">
-							  Overview
-              				</a>
-						</li>
-						<li>
-  						<a href="#">
-  							Finance History
-              			</a>
-						</li>
-					</ul>
-				</div>
-				  	<div class="profile-content">
-					{% if bio %}
-					  <p style = "color: black">{{ bio }}<p>
-					{% else %}
-					<p> <a class="nav-link" href="{% url 'login' %}">Login</a> to see content</p>
-					{% endif %}
-			  	</div>
-					  </div>
-				  </div>
-			  </div>
-
-			</div>
-		</div>
-	</div>
-</div>
+  <div class="row">
+    <div class = "col s10 pull-s1 push-s1">
+      <div class = "card z-depth-5">
+        <div class = "row">
+          <div class = "col">
+            <div class = "card">
+              <div class="profile-sidebar">
+                <div class="profile-userpic">
+                  <img src="{% static 'img/face.jpg' %}" class="img-responsive" alt="">
+                </div>
+                <div class="profile-usertitle">
+                  <div class="profile-usertitle-name">
+                    {{ username }}
+                  </div>
+                  {% if email %}
+                    <p style="font-size:12px">
+                      <a href="mailto:{{ email }}?Subject=Hello">
+                        {{ email }}
+                      </a>
+                    </p>
+                  {% endif %}
+                  <div class="profile-usertitle-job">
+                    {{ status }}
+                  </div>
+                </div>
+                <div class="profile-userbuttons">
+                  <button type="button" class="btn">Message</button>
+                  <a href="/doma/users/edit/{{ user.id }}" class="btn">Edit</a> <!-- hacky fix this -->
+                </div>
+                <div class="profile-usermenu">
+                  <ul>
+                    <li class="active">
+                      <a href="#">Overview</a>
+                    </li>
+                    <li>
+                      <a href="#">Finance History</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="profile-content">
+                  {% if bio %}
+                    <p style = "color: black">{{ bio }}<p>
+                  {% else %}
+                    <p><a class="nav-link" href="{% url 'login' %}">Login</a> to see content</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

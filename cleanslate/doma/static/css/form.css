@@ -10,12 +10,19 @@
     -ms-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    overflow-y: scroll;
 }
-p{
+
+p {
     font-size: 2em;
 }
-form{
+
+form  {
     margin-top: 40px;
     margin-left: 40px;
     margin-right: 40px;
+}
+
+select {
+  display: block;
 }

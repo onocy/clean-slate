@@ -5,16 +5,20 @@ import datetime
 from .models import User, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event, Profile
 
 class UserProfileForm(forms.Form):
-        phone = forms.CharField(help_text='Enter your phone number')
-        yog = forms.CharField(help_text='Enter your graduation date')
-        major = forms.CharField()
-        status = forms.CharField(help_text='Enter a status for others to view')
-        bio = forms.CharField(help_text='Enter a brief description of yourself')
-        # smokes = forms.BooleanField(initial=True, help_text='Do you smoke cigarettes?')
-        # bedtime = forms.TimeField(help_text='What is your usual sleep-time?')
-        # lastSeen = forms.DateField()
-        email = forms.EmailField(help_text='Enter your email')
-        # pet_allergies = forms.NullBooleanField(help_text='Are you allergic to pets?')
+    phone = forms.CharField(help_text='Enter your phone number')
+    yog = forms.CharField(help_text='Enter your graduation date')
+    major = forms.CharField()
+    status = forms.CharField(help_text='Enter a status for others to view')
+    bio = forms.CharField(help_text='Enter a brief description of yourself', widget=forms.Textarea)
+    # smokes = forms.BooleanField(initial=True, help_text='Do you smoke cigarettes?')
+    # bedtime = forms.TimeField(help_text='What is your usual sleep-time?')
+    # lastSeen = forms.DateField()
+    email = forms.EmailField(help_text='Enter your email')
+    # pet_allergies = forms.NullBooleanField(help_text='Are you allergic to pets?')
+    HOMES = []
+    for home in Home.objects.all():
+        HOMES += [(home.id, home.name)]
+    home = forms.ChoiceField(help_text='Which home do you want to be in?', choices=HOMES)
 
 class EditChoreForm(forms.Form):
     deadline = forms.DateField(help_text = 'When is this chore due?')
@@ -67,3 +71,9 @@ class CreateUserForm(forms.Form):
 
     class Meta:
         model = User
+
+class CreateHomeForm(forms.Form):
+    name = forms.CharField(max_length=100, help_text='Enter your Home Name')
+    address = forms.CharField(max_length=100, help_text='Enter your Address')
+    leaseStart = forms.DateField()
+    leaseEnds = forms.DateField()

@@ -48,22 +48,19 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
-
 class Home(models.Model):
-    created_by = models.ForeignKey('Profile', null=False, default=1, related_name="home_created_by")
-    forum = models.OneToOneField('Forum', on_delete=models.CASCADE, null=False, default=1)
+    created_by = models.ForeignKey('Profile', null=False, related_name="home_created_by")
     name = models.CharField(max_length=100, help_text='Enter your Home Name')
     address = models.CharField(max_length=100, help_text='Enter your Address', null=True)
-    leaseStart = models.DateTimeField(null=True, blank=True)
-    leaseEnds = models.DateTimeField()
-    village = models.ForeignKey('Village', on_delete=models.SET_NULL, null=True, blank=True)
+    leaseStart = models.DateField(null=True, blank=True)
+    leaseEnds = models.DateField(null=True, blank=True)
+    #village = models.ForeignKey('Village', on_delete=models.SET_NULL, null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('home-detail', args=[str(self.id)])
 
     def __str__(self):
         return 'Home: %s' % self.name
-
 
 class Topic(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a topic name")
@@ -78,7 +75,6 @@ class Topic(models.Model):
     def get_absolute_url(self):
         return reverse('topic-detail', args=[str(self.id)])
 
-
 class Village(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a village name")
     forum = models.OneToOneField('Forum', on_delete=models.CASCADE, null=False, default=1)
@@ -88,7 +84,6 @@ class Village(models.Model):
 
     def get_absolute_url(self):
         return reverse('village-detail', args=[str(self.id)])
-
 
 class Review(models.Model):
     reviewed = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, related_name='reviewed_user')
@@ -101,12 +96,10 @@ class Review(models.Model):
     def __str__(self):
         return '%s reviewed %s' % (self.reviewedBy, self.reviewed)
 
-
 class Forum(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a forum name")
     description = models.TextField(max_length=1000, help_text='Enter a description for this forum')
-    created_by = models.ForeignKey('Profile', null=False, default=1, related_name="forum_created_by")
-    created_on = models.DateField()
+    home = models.OneToOneField('Home', on_delete=models.CASCADE)
 
     def get_absolute_url(self):
         return reverse('forum-detail', args=[str(self.id)])
@@ -114,6 +107,14 @@ class Forum(models.Model):
     def __str__(self):
         return self.title
 
+@receiver(post_save, sender=Home)
+def create_home_forum(sender, instance, created, **kwargs):
+    if created:
+        Forum.objects.create(home=instance)
+
+@receiver(post_save, sender=Home)
+def save_home_forum(sender, instance, **kwargs):
+    instance.forum.save()
 
 class Post(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a post name')
@@ -127,7 +128,6 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post-detail', args=[str(self.id)])
-
 
 class Transaction(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a transaction name')
@@ -147,7 +147,6 @@ class Transaction(models.Model):
     def get_absolute_url(self):
         return reverse('transaction-detail', args=[str(self.id)])
 
-
 class Chore(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a chore name')
     description = models.CharField(max_length=500, help_text='Enter description')
@@ -162,7 +161,6 @@ class Chore(models.Model):
     def get_absolute_url(self):
         return reverse('chore-detail', args=[str(self.id)])
 
-
 class Reminder(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a reminder name')
     description = models.CharField(max_length=500, help_text='Enter description')
@@ -176,7 +174,6 @@ class Reminder(models.Model):
 
     def get_absolute_url(self):
         return reverse('reminder-detail', args=[str(self.id)])
-
 
 class Event(models.Model):
     title = models.CharField(max_length=200, help_text='Enter an event name')
