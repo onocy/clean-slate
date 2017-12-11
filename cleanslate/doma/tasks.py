@@ -2,20 +2,20 @@ from __future__ import absolute_import
 
 from celery import shared_task
 from django.conf import settings
+import twilio
 from twilio.rest import Client
 
 from .models import Event
 
-
-# Uses credentials from the TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN
-# environment variables
-client = Client()
+account_sid = "AC3c7a087cae83e671986819994e5cd5c9"
+auth_token = "269e1c35ee3f9778732275985fc6c1b5"
+client = Client(account_sid, auth_token)
 
 @shared_task
 def send_sms_reminder(event_id):
     """Send a reminder to a phone using Twilio SMS"""
     try:
-        event = Event.objects.get(pk=event.id)
+        event = Event.objects.get(pk=event_id)
     except Event.DoesNotExist:
         return
 
