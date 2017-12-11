@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+BROKER_URL = 'redis://localhost:6379/0'
+BROKER_POOL_LIMIT = 8
 
 # Application definition
 
