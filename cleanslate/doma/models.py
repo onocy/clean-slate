@@ -30,6 +30,9 @@ class Profile(models.Model):
     def is_admin(self):
         return self.role in 'a'
 
+    def has_home(self):
+        return self.home is not None
+
     def get_absolute_url(self):
         return reverse('profile-detail', args=[str(self.id)])
 
