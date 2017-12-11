@@ -8,7 +8,7 @@ from twilio.rest import Client
 from .models import Event
 
 account_sid = "AC3c7a087cae83e671986819994e5cd5c9"
-auth_token = "269e1c35ee3f9778732275985fc6c1b5"
+auth_token = ""
 client = Client(account_sid, auth_token)
 
 @shared_task
