@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'cleanslate.middleware.last_seen_middleware.UpdateLastActivityMiddleware',
 ]
 
 ROOT_URLCONF = 'cleanslate.urls'
