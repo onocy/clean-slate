@@ -11,6 +11,26 @@
   <div class="row center-align mt">
     <div class="col s2 offset-s2 xl2 offset-xl5">
       {% if form.errors %}
+
+      <p>Your username and password didn't match. Please try again.</p>
+      {% endif %} {% if next %} {% if user.is_authenticated %}
+      <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
+      {% else %}
+      <p>Please login.</p>
+      {% endif %} {% endif %}
+      <form method="post" action="{% url 'login' %}">
+         {% csrf_token %}
+         <div class="field-wrap">
+            <td>{{ form.username.label_tag }}</td>
+            <td>{{ form.username }}</td>
+         </div>
+         <div class="field-wrap">
+            <td>{{ form.password.label_tag }}</td>
+            <td>{{ form.password }}</td>
+         </div>
+         <button class="button button-block" />Log In</button>
+        <button class="button button-block" style="background-color:green;" /><a href="{% url 'password_reset' %}">Lost password?</a></button>
+
         <p>Your username and password didn't match. Please try again.</p>
       {% endif %}
       <form class="col s12" method="post" action="{% url 'login' %}">
