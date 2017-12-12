@@ -3,9 +3,13 @@
 <link href="{% static 'css/logged_out.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
+<title>Logged Out</title>
+
 {% block content %}
+<div style = "text-align: center">
+
       <div class = "card z-depth-5">
-        <p>Logged out!</p>
-        <a href="{% url 'login'%}">Return to Login Page</a>
+          <p>You have been logged out. Come back home soon!</p>
+          <a href="{% url 'login'%}">Click here to login again.</a>
       </div>
 {% endblock %}
