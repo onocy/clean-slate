@@ -2,7 +2,7 @@
     background: #f1f8e9;
     position: absolute;
     width: 30%;
-    height: 10%;
+    height: 30%;
     text-align: center;
     left: 50%;
     top: 50%;
@@ -14,5 +14,5 @@
 }
 
 p{
-    padding-top: 15px;
+    padding-top: 95px;
 }
