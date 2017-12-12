@@ -19,50 +19,71 @@
   </head>
 
   <body>
-  <main>
-    {% if user.is_authenticated %}
-    <nav class = "brown lighten-3">
-    <div class="nav-wrapper">
+    <main>
       {% if user.is_authenticated %}
-      <div class = "col s2">
-       <ul class="left col s1 black-text">
-         <li style = "padding-left: 20px">{{user.username}}</li>
-       </ul>
-      </div>
+        <nav class = "brown lighten-3">
+        <div class="nav-wrapper">
+          {% if user.is_authenticated %}
+          <div class = "col s2">
+           <ul class="left col s1 black-text">
+             <li style = "padding-left: 20px">{{user.username}}</li>
+           </ul>
+          </div>
+          {% endif %}
+          {% load static %}
+            <div class = "col s2">
+              {% if user.profile.has_home %}
+                <a href="/" class="brand-logo center"><img src="{% static 'img/logo.png' %}" style="width: 120px"></a>
+              {% else %}
+                <img src="{% static 'img/logo.png' %}" style="width: 120px" class="brand-logo center">
+              {% endif %}
+            </div>
+            <ul class="right">
+              <li><a href="{% url 'profile' %}"><i class="material-icons black-text">sentiment_very_satisfied</i></a></li>
+              {% if user.profile.has_home %}
+                <li><a href="{% url 'calendar' %}"><i class="material-icons black-text">apps</i></a></li>
+                <li><a href="{% url 'reminder' %}"><i class="material-icons black-text">check</i></a></li>
+                <li><a href="{% url 'finance' %}"><i class="material-icons black-text">attach_money</i></a></li>
+              {% endif %}
+              {% if user.is_authenticated %}
+              <li><a href="{% url 'logout' %}" class = "black-text"><i class="material-icons left black-text">person</i>Logout</a></li>
+              {% else %}
+              <li><a href="{% url 'login' %} " class = "black-text"><i class="material-icons left black-text">person</i>Login</a></li>
+              {% endif %}
+            </ul>
+          </div>
+        </nav>
       {% endif %}
-      {% load static %}
-        <div class = "col s2">
-      <a href="/" class="brand-logo center"><img src = "{% static 'img/logo.png' %}" style = "width: 120px"></a>
-        </div>
-        <ul class="right">
-         <!--<li><a href="/"><i class="material-icons black-text">home</i></a></li> replaced with logo click-->
-        <li><a href="{% url 'calendar' %}"><i class="material-icons black-text">apps</i></a></li>
-        <li><a href="{% url 'profile' %}"><i class="material-icons black-text">sentiment_very_satisfied</i></a></li>
-        <li><a href="{% url 'reminder' %}"><i class="material-icons black-text">check</i></a></li>
-        <li><a href="{% url 'finance' %}"><i class="material-icons black-text">attach_money</i></a></li>
-        {% if user.is_authenticated %}
-        <li><a href="{% url 'logout' %}" class = "black-text"><i class="material-icons left black-text">person</i>Logout</a></li>
-        {% else %}
-        <li><a href="{% url 'login' %} " class = "black-text"><i class="material-icons left black-text">person</i>Login</a></li>
-        {% endif %}
-      </ul>
-    </div>
-  </nav>
-    {% endif %}
-    {% block content %}
-    {% endblock %}
-  </main>
+      {% if messages %}
+        {% for message in messages %}
+          <div class="row center-align">
+            <div class="col s10 pull-s1 push-s1">
+              <div class="card {{ message.tags }} lighten-3">
+                <div id="messages" class="card-content">
+                  <ul>
+                    <li class="card-content"><p>{{message}}</p></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+      {% block content %}
+      {% endblock %}
+    </main>
   </body>
-{% if user.is_authenticated %}
-  <!-- footer potentially unnecessary -->
- <footer class="page-footer brown lighten-3">
-        <div class="footer-copyright">
-          <div class="container">
+
+  {% if user.is_authenticated %}
+    <!-- footer potentially unnecessary -->
+    <footer class="page-footer brown lighten-3">
+      <div class="footer-copyright">
+        <div class="container">
           © 2017 Copyright Text
           <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-          </div>
         </div>
- </footer>
+      </div>
+    </footer>
   {% endif %}
 
   <!-- Bootstrap core JavaScript -->
@@ -71,5 +92,4 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
   {% block extra_js %}{% endblock %}
-
 </html>

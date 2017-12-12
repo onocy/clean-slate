@@ -37,13 +37,21 @@
             <i class="material-icons right">send</i>
           </button>
         </div>
-        <div class="row center-align">
-          <a href="{% url 'password_reset' %}">
-            <a class="btn waves-effect waves-light col s11 offset-s1" href="{% url 'password_reset' %}">Lost Password?
-              <i class="material-icons right">help</i>
-          </a>
-        </div>
       </form>
+      <div class="row center-align">
+        <a href="{% url 'password_reset' %}">
+          <button class="btn waves-effect waves-light col s11 offset-s1">Forgot Password?
+            <i class="material-icons right">help</i>
+          </button>
+        </a>
+      </div>
+      <div class="row center-align">
+        <a href="{% url 'create-user' %}">
+          <button class="btn waves-effect waves-light col s11 offset-s1">Register
+            <i class="material-icons right">person</i>
+          </button>
+        </a>
+      </div>
     </div>
   </div>
 {% endblock %}
