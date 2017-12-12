@@ -21,6 +21,12 @@ main {
 }
 
 .column.small-centered {
-margin-left: auto;
-margin-right: auto;
-float: none !important; }
+  margin-left: auto;
+  margin-right: auto;
+  float: none !important;
+}
+
+.message-card {
+  height: 150px;
+  padding-top: 20px;
+}
