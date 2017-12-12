@@ -32,12 +32,16 @@
             {{ form.password }}
           </div>
         </div>
-        <div class="row center-align">
-          <button class="btn waves-effect waves-light col s11 offset-s1" type="submit" name="action">Submit
-            <i class="material-icons right">send</i>
-          </button>
-        </div>
+        <input type="submit" id="submitbtn" style="display: none;">
       </form>
+        
+      <div class="row center-align">
+        <label for="submitbtn" role="button" class="btn waves-effect waves-light col s11 offset-s1" tabindex="0" name="action">
+        Submit
+        <i class="material-icons right">send</i>
+        </label>
+      </div>
+        
       <div class="row center-align">
         <a href="{% url 'password_reset' %}">
           <button class="btn waves-effect waves-light col s11 offset-s1">Forgot Password?
