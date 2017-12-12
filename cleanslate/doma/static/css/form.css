@@ -1,4 +1,4 @@
-.card {
+#form-card {
     background: #f1f8e9;
     position: absolute;
     width: 70%;
@@ -14,7 +14,7 @@
     overflow-y: auto;
 }
 
-p {
+#form-card > p {
     font-size: 2em;
 }
 

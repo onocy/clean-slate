@@ -8,6 +8,7 @@ from doma.models import User, Profile, Home, Review, Forum, Post, Topic, Village
 from django.forms.models import model_to_dict
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
+from django.db import IntegrityError
 import datetime
 
 @login_required
@@ -204,11 +205,16 @@ def create_user(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            new_user = User.objects.create_user(username = form.cleaned_data['username'], email = form.cleaned_data['email'], password = form.cleaned_data['password'])
-            messages.success(request, 'You successfully created a new user. Sign in now.')
-            return HttpResponseRedirect(reverse(profile))
+            try:
+                new_user = User.objects.create_user(username = form.cleaned_data['username'], email = form.cleaned_data['email'], password = form.cleaned_data['password'])
+                messages.success(request, 'You successfully created a new user. Sign in now.')
+                return HttpResponseRedirect(reverse(profile))
+            except IntegrityError as e:
+                messages.error(request, "You have not met Django's built in attribute requirements. Try using a stronger password and a longer username.")
+                return render(request, 'form.html', {'form': form})
         else:
             messages.error(request, 'Please correct the errors in the form.')
+            return render(request, 'form.html', {'form': form})
     else:
         form = CreateUserForm()
     return render(request, 'form.html', {'form': form})

@@ -16,3 +16,15 @@ img {
 .card.success.lighten-3 {
   background-color: lightgreen;
 }
+
+.card.error.lighten-3 {
+  background-color: orangered;
+}
+
+.lighten-3 {
+  font-size: 22px;
+}
+
+#messages {
+  padding: 0px;
+}
