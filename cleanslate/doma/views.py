@@ -50,9 +50,9 @@ def profile(request):
     if request.user.is_authenticated:
         chosen_user = User.objects.get(pk=request.user.id)
 
-        status = chosen_user.profile.status
+        status = chosen_user.lastSeen
         bio = chosen_user.profile.bio
-        email = chosen_user.profile.email
+        email = chosen_user.email
         return render(
             request,
             'profile.html',

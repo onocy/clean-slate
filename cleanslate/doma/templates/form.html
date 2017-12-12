@@ -11,8 +11,17 @@
       <table>
         {{ form }}
       </table>
-      <button class = "btn" type = "submit" value = "Submit">Submit</button>
+      <button class="btn" type="submit" value="Submit">Submit</button>
+      <button class="btn" onclick="goBack()">Cancel</button>
       <br><br>
     </form>
   </div>
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+  </script>
 {% endblock %}

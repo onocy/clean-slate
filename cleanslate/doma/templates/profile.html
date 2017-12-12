@@ -58,9 +58,10 @@
                   </div>
                 </div>
                 <div class="profile-userbuttons">
-                  <button type="button" class="btn">Message</button>
+                  <!-- <button type="button" class="btn">Message</button> -->
                   <a href="/doma/users/edit/{{ user.id }}" class="btn">Edit</a> <!-- hacky fix this -->
                 </div>
+                <!--
                 <div class="profile-usermenu">
                   <ul>
                     <li class="active">
@@ -71,12 +72,9 @@
                     </li>
                   </ul>
                 </div>
+              -->
                 <div class="profile-content">
-                  {% if bio %}
-                    <p style = "color: black">{{ bio }}<p>
-                  {% else %}
-                    <p><a class="nav-link" href="{% url 'login' %}">Login</a> to see content</p>
-                  {% endif %}
+                  <p style = "color: black">{{ bio }}<p>
                 </div>
               </div>
             </div>
