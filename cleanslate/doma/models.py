@@ -13,10 +13,10 @@ class Profile(models.Model):
     )
 
     STATUSES = (
-        ('online', 'Online'),
-        ('offline', 'Offline'),
-        ('busy', 'Busy'),
-        ('vacation', 'On Vacation')
+        ('Online', 'online'),
+        ('Offline', 'offline'),
+        ('Busy', 'busy'),
+        ('On Vacation', 'vacation')
     )
     # make hidden
     phone = models.CharField(max_length=10, help_text='Enter your phone number', null=True, blank=True)
