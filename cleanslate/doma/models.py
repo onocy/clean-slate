@@ -65,12 +65,12 @@ class Home(models.Model):
         return reverse('home-detail', args=[str(self.id)])
 
     def __str__(self):
-        return 'Home: %s' % self.name
+        return "Home: {}".format(self.name)
 
 class Topic(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a topic name")
     content = models.CharField(max_length=500, blank= True)
-    forum = models.ForeignKey('Forum', on_delete=models.CASCADE, null=False, default=1)
+    forum = models.ForeignKey('Forum', on_delete=models.CASCADE, null=False, related_name='topics')
     created_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True)
     created_on = models.DateField()
 
@@ -119,6 +119,7 @@ def create_home_forum(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Home)
 def save_home_forum(sender, instance, **kwargs):
+    instance.forum.title = instance.name
     instance.forum.save()
 
 class Post(models.Model):

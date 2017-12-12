@@ -18,30 +18,55 @@
         </div>
       </div>
     </div>
-    {% for group in user_groups %}
-      <div class="row">
-        {% for profile in group %}
-          {% if profile is not None %}
-            <div class="col s3">
-              <div class="card">
-                <div class="card-image">
-                  {% load static %}
-                  <img class = "img-responsive activator" src="{% static 'img/p1.jpg' %}">
+    <div class="row">
+      <div class="col s6">
+        <h3 class="center-align">Housemates</h3>
+        {% for group in user_groups %}
+          <div class="row">
+            {% for profile in group %}
+              {% if profile is not None %}
+                <div class="col s6">
+                  <div class="card">
+                    <div class="card-image">
+                      {% load static %}
+                      <img class = "img-responsive activator" src="{% static 'img/p1.jpg' %}">
+                    </div>
+                    <div class="card-content activator">
+                      <i class="material-icons right">more_vert</i>
+                      <p class="content-text">{{profile.user.username}} | Last Seen: {{ profile.lastSeen }}</p>
+                    </div>
+                    <div class="card-reveal">
+                      <span class="card-title grey-text text-darken-4">{{username}}<i class="material-icons right">close</i></span>
+                      <p>{{ profile.status }}</p>
+                      <a href="#" class = "blue-text">Private Message </a>
+                    </div>
+                  </div>
                 </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+      <div class="col s6">
+        <h3 class="center-align">Message Board</h3>
+        {% for topic in message_board.topics.all %}
+          <div class="row">
+            <div class="col s10 pull-s1 push-s1">
+              <div class="card">
                 <div class="card-content activator">
                   <i class="material-icons right">more_vert</i>
-                  <p class="content-text">{{profile.user.username}} | Last Seen: {{ profile.lastSeen }}</p>
+                  <p class="card-title grey-text text-darken-4">{{ topic.title }}</p>
                 </div>
                 <div class="card-reveal">
-                  <span class="card-title grey-text text-darken-4">{{username}}<i class="material-icons right">close</i></span>
-                  <p>{{ profile.status }}</p>
-                  <a href="#" class = "blue-text">Private Message </a>
+                  <span class="card-title grey-text text-darken-4">
+                  <i class="material-icons right">close</i></span>
+                  <p>{{ topic.content }}</p>
                 </div>
               </div>
             </div>
-          {% endif %}
+          </div>
         {% endfor %}
       </div>
-    {% endfor %}
+    </div>
   </div>
 {% endblock %}
