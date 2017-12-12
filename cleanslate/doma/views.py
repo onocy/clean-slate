@@ -50,6 +50,18 @@ def home(request):
     )
 
 @login_required
+def forum(request):
+    message_board = request.user.profile.home.forum
+    topics = Topic.objects.filter(forum = message_board).order_by('-created_on')
+    # Render the HTML template home.html with the data in the context variable
+    return render(
+        request,
+        'message_board.html',
+        context={'topics': topics}
+    )
+
+
+@login_required
 def profile(request):
     """
     View function for individual profiles on site.
