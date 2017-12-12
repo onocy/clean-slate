@@ -161,19 +161,20 @@ def edit_user_profile(request, pk):
     return render(request, 'form.html', {'form': form})
 
 @login_required
-def edit_chore_deadline(request, pk):
-    chore = get_object_or_404(Chore, pk = pk)
+def edit_chore(request, pk):
+    updated_chore = get_object_or_404(Chore, pk = pk)
     if request.method == 'POST':
         form = EditChoreForm(request.POST)
         if form.is_valid():
-            chore.deadline = form.cleaned_data['deadline']
-            chore.save()
+            updated_chore.title = form.cleaned_data['title']
+            updated_chore.description = form.cleaned_data['description']
+            updated_chore.deadline = form.cleaned_data['deadline']
+            updated_chore.save()
 
             return HttpResponseRedirect(reverse(reminders))
     else:
-        proposed_deadline = datetime.date.today() + datetime.timedelta(weeks=1)
-        form = EditChoreForm(initial={'deadline': proposed_deadline,})
-    return render(request, 'chore_edit_form.html', {'form': form, 'chore': chore})
+        form = EditChoreForm(initial=model_to_dict(updated_chore))
+    return render(request, 'form.html', {'form': form, 'chore': chore})
 
 @login_required
 def create_chore(request):

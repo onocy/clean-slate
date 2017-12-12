@@ -31,7 +31,10 @@ class EditChoreForm(forms.Form):
     deadline = forms.DateField(help_text = 'When is this chore due?')
 
     def clean_deadline(self):
-        data = self.cleaned_data['deadline']
+        title = forms.CharField(help_text = 'Enter a chore name')
+        description = forms.CharField(help_text = 'Enter a description')
+        deadline = forms.DateField(help_text = 'When is this chore due?', widget=forms.DateInput(attrs={'type': 'date'}))
+
         # Check date is not in past.
         if data < datetime.date.today():
             raise ValidationError(_('Invalid date - deadline cannot be in the past'))
@@ -40,7 +43,6 @@ class EditChoreForm(forms.Form):
 class CreateChoreForm(forms.Form):
     title = forms.CharField(help_text = 'Enter a chore name')
     description = forms.CharField(help_text = 'Enter a description')
-    created_on = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     deadline = forms.DateField(help_text = 'When is this chore due?', widget=forms.DateInput(attrs={'type': 'date'}))
 
     def clean_title(self):

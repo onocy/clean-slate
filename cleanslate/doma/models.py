@@ -6,31 +6,27 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # reviews, forums, topics, and posts are one to many relations, so user will be foreign key in those models
     role_choices = (
         ('a', 'Admin'),
         ('u', 'User')
     )
-
     STATUSES = (
         ('Online', 'online'),
         ('Offline', 'offline'),
         ('Busy', 'busy'),
         ('On Vacation', 'vacation')
     )
-    # make hidden
     phone = models.CharField(max_length=10, help_text='Enter your phone number', null=True, blank=True)
     yog = models.CharField(max_length=100, help_text='Enter your graduation date', null=True, blank=True)
     major = models.CharField(max_length=100, null=True, blank=True)
     role = models.CharField(max_length=1, choices=role_choices, default='u')
     status = models.CharField(max_length=8, help_text='Select a status for others to view', default='online', choices=STATUSES)
     bio = models.TextField(max_length=1000, help_text='Enter a brief description of yourself', blank=True)
-    smokes = models.BooleanField(default=False, help_text='Do you smoke cigarettes?')
-    bedtime = models.TimeField(null=True, blank=True, help_text='What is your usual sleep-time?')
     lastSeen = models.DateTimeField(null=True)
-
-    pet_allergies = models.NullBooleanField(null=True, blank=True, help_text='Are you allergic to pets?')
     home = models.ForeignKey('Home', on_delete=models.CASCADE, null=True, blank=True)
+    #smokes = models.BooleanField(default=False, help_text='Do you smoke cigarettes?')
+    #bedtime = models.TimeField(null=True, blank=True, help_text='What is your usual sleep-time?')
+    #pet_allergies = models.NullBooleanField(null=True, blank=True, help_text='Are you allergic to pets?')
 
     def is_admin(self):
         return self.role in 'a'
@@ -141,7 +137,6 @@ class Transaction(models.Model):
     created_on = models.DateField()
     deadline = models.DateField(help_text='When is this transaction due?')
     amount = models.IntegerField()
-
     # debtors
     # creditors
     # change 'amount' issue with whole numbers
@@ -158,7 +153,6 @@ class Chore(models.Model):
     description = models.CharField(max_length=500, help_text='Enter description')
     created_on = models.DateField()
     deadline = models.DateField(help_text='When is this chore due?')
-
     #owners
 
     def __str__(self):
@@ -172,7 +166,6 @@ class Reminder(models.Model):
     description = models.CharField(max_length=500, help_text='Enter description')
     created_on = models.DateField()
     deadline = models.DateField(help_text='When is this reminder due?')
-
     # owners
 
     def __str__(self):
