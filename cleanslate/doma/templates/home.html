@@ -54,16 +54,17 @@
       </div>
       <div class="col s6">
         <div class="row valign-wrapper">
-          <div class="col s6">
-            <h3 class="center-align">
-              <i class="small material-icons">message</i>
-                Message Board
-                <a href="{% url 'message-board' %}">
-                  <i class="small material-icons">launch</i>
-                </a>
-            </h3>
+          <div class="col s3">
+            <a href="{% url 'message-board' %}">
+              <button class="btn waves-effect waves-light col s11 offset-s1">See More
+                <i class="small material-icons right">launch</i>
+              </button>
+            </a>
           </div>
-          <div class="col s3 pull-s2">
+          <div class="col s6">
+            <h3 class="center-align"><i class="small material-icons">message</i> Message Board </h3>
+          </div>
+          <div class="col s3">
             <a href="{% url 'create-topic' %}">
               <button class="btn waves-effect waves-light col s11 offset-s1">New Topic
                 <i class="material-icons right">insert_drive_file</i>
