@@ -80,7 +80,7 @@
                 <div class="card-reveal">
                   <span class="card-title grey-text text-darken-4">
                   <i class="material-icons right">close</i></span>
-                  <p>{{ markdownx.utils.markdownify topic.content }}</p>
+                  <p class="markdownx-preview">{{ topic.formatted_markdown|safe }}</p>
                 </div>
               </div>
             </div>

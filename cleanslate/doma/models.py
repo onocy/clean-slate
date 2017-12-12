@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from markdownx.models import MarkdownxField
+from markdownx.utils import markdownify
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -70,6 +71,10 @@ class Topic(models.Model):
     forum = models.ForeignKey('Forum', on_delete=models.CASCADE, null=False, related_name='topics')
     created_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True)
     created_on = models.DateTimeField()
+
+    @property
+    def formatted_markdown(self):
+        return markdownify(self.content)
 
     def __str__(self):
         return 'Topic: %s' % self.title

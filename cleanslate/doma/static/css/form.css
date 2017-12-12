@@ -27,3 +27,7 @@ form  {
 select {
   display: block;
 }
+
+textarea {
+  height: 200px;
+}

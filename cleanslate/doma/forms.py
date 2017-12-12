@@ -98,11 +98,11 @@ class CreateHomeForm(forms.Form):
 
 class CreateTopicForm(forms.Form):
     title = forms.CharField(help_text='Enter a topic name')
-    content = MarkdownxFormField()
+    content = MarkdownxFormField(help_text='Enter the content of the topic. You can use markdown (e.g. ###H3 Header)')
 
 class EditTopicForm(forms.Form):
     title = forms.CharField(help_text='Enter a topic name')
-    content = forms.CharField(widget=forms.Textarea)
+    content = MarkdownxFormField(help_text='Enter the content of the topic. You can use markdown (e.g. ###H3 Header)')
 
 class CreateEventForm(forms.Form):
     title = forms.CharField(help_text='Enter an event name')
