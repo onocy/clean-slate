@@ -21,7 +21,7 @@ class Profile(models.Model):
     bio = models.TextField(max_length=1000, help_text='Enter a brief description of yourself', blank=True)
     smokes = models.BooleanField(default=False, help_text='Do you smoke cigarettes?')
     bedtime = models.TimeField(null=True, blank=True, help_text='What is your usual sleep-time?')
-    lastSeen = models.DateField(null=True)
+    lastSeen = models.DateTimeField(null=True)
     email = models.EmailField(help_text='Enter your email', blank=True)
 
     pet_allergies = models.NullBooleanField(null=True, blank=True, help_text='Are you allergic to pets?')
