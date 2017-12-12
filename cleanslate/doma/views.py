@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from .forms import EditProfileForm, EditChoreForm, CreateChoreForm, CreateUserForm, CreateHomeForm, EditUserForm, CreateTopicForm, EditTopicForm
+from .forms import EditProfileForm, EditChoreForm, CreateChoreForm, CreateUserForm, CreateHomeForm, EditUserForm, CreateTopicForm, EditTopicForm, CreateEventForm
 from doma.models import User, Profile, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event
 from django.forms.models import model_to_dict
 from django.contrib import messages
@@ -180,19 +180,20 @@ def create_chore(request):
     if request.method == 'POST':
         form = CreateChoreForm(request.POST)
         if form.is_valid():
-            chore = Chore.objects.create(title="", description="", created_on="2017-11-27", deadline="2017-12-04")
-            chore.title = form.cleaned_data['title']
-            chore.description = form.cleaned_data['description']
-            chore.created_on = form.cleaned_data['created_on']
-            chore.deadline = form.cleaned_data['deadline']
-
+            chore = Chore.objects.create(
+                title = form.cleaned_data['title'],
+                description = form.cleaned_data['description'],
+                created_on = timezone.now(),
+                deadline = form.cleaned_data['deadline']
+            )
             chore.save()
-
+            messages.success(request, 'You successfully created a chore.')
             return HttpResponseRedirect(reverse(reminders))
+        else:
+            messages.error(request, 'Please correct the errors in the form.')
     else:
-        proposed_deadline = datetime.date.today() + datetime.timedelta(weeks=1)
-        form = CreateChoreForm(initial={'deadline': proposed_deadline,})
-    return render(request, 'chore_create_form.html', {'form': form})
+        form = CreateChoreForm()
+    return render(request, 'form.html', {'form': form})
 
 @login_required
 def delete_chore(request, pk):
@@ -293,4 +294,26 @@ def edit_topic(request, pk):
             messages.error(request, 'Please correct the errors in the form.')
     else:
         form = EditTopicForm(initial = model_to_dict(updated_topic))
+    return render(request, 'form.html', {'form': form})
+
+@login_required
+def create_event(request):
+    if request.method == 'POST':
+        form = CreateEventForm(request.POST)
+        if form.is_valid():
+            new_event = Event.objects.create(
+                title = form.cleaned_data['title'],
+                description = form.cleaned_data['description'],
+                start_time = form.cleaned_data['start_time'],
+                end_time = form.cleaned_data['end_time'],
+                home = request.user.profile.home,
+                created_on = timezone.now()
+            )
+            new_event.save()
+            messages.success(request, 'You successfully created a new event.')
+            return HttpResponseRedirect(reverse(calendar))
+        else:
+            messages.error(request, 'Please correct the errors in the form')
+    else:
+        form = CreateEventForm()
     return render(request, 'form.html', {'form': form})

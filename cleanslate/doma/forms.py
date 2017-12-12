@@ -40,8 +40,8 @@ class EditChoreForm(forms.Form):
 class CreateChoreForm(forms.Form):
     title = forms.CharField(help_text = 'Enter a chore name')
     description = forms.CharField(help_text = 'Enter a description')
-    created_on = forms.DateField()
-    deadline = forms.DateField(help_text = 'When is this chore due?')
+    created_on = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    deadline = forms.DateField(help_text = 'When is this chore due?', widget=forms.DateInput(attrs={'type': 'date'}))
 
     def clean_title(self):
         data = self.cleaned_data['title']
@@ -90,13 +90,19 @@ class EditUserForm(forms.Form):
 class CreateHomeForm(forms.Form):
     name = forms.CharField(max_length=100, help_text='Enter your Home Name')
     address = forms.CharField(max_length=100, help_text='Enter your Address')
-    leaseStart = forms.DateField()
-    leaseEnds = forms.DateField()
+    leaseStart = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    leaseEnds = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
 
 class CreateTopicForm(forms.Form):
-    title = forms.CharField(help_text="Enter a topic name")
+    title = forms.CharField(help_text='Enter a topic name')
     content = forms.CharField(widget=forms.Textarea)
 
 class EditTopicForm(forms.Form):
-    title = forms.CharField(help_text="Enter a topic name")
-    content = forms.CharField(widget=forms.Textarea) 
+    title = forms.CharField(help_text='Enter a topic name')
+    content = forms.CharField(widget=forms.Textarea)
+
+class CreateEventForm(forms.Form):
+    title = forms.CharField(help_text='Enter an event name')
+    description = forms.CharField(widget=forms.Textarea, help_text='Enter a description of the event')
+    start_time = forms.DateField(help_text='When is this event going to start?', widget=forms.DateInput(attrs={'type': 'date'}))
+    end_time = forms.DateField(help_text='When is this event going to end?', widget=forms.DateInput(attrs={'type': 'date'}))

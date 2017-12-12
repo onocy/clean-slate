@@ -14,7 +14,18 @@
       <div class = "col s10 pull-s1 push-s1">
         <div class = "card z-depth-5">
           <div class="container">
+            <br>
+            <div class="row center-align valign-wrapper">
+              <div class="col s2 offset-s5">
+              <a href="{% url 'create-event' %}">
+                <button class="btn waves-effect waves-light col s11 offset-s1">New Event
+                  <i class="material-icons right">insert_drive_file</i>
+                </button>
+              </a>
+            </div>
+            </div>
             <div id='calendar'></div>
+            <br>
           </div>
         </div>
       </div>
@@ -31,11 +42,12 @@
             {% for event in events %}
               {
                 title: '{{ event.title }}',
-                start: '{{ event.created_on }}',
-                end: '{{ event.deadline }}'
+                start: '{{ event.start_time }}',
+                end: '{{ event.end_time }}',
               },
             {% endfor %}
-          ]
+          ],
+          displayEventTime: false
         })
       });
     </script>

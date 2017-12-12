@@ -184,8 +184,10 @@ class Reminder(models.Model):
 class Event(models.Model):
     title = models.CharField(max_length=200, help_text='Enter an event name')
     description = models.CharField(max_length=500, help_text='Enter description')
-    created_on = models.DateField()
-    deadline = models.DateField(help_text='When is this event going to occur?')
+    created_on = models.DateTimeField()
+    start_time = models.DateField(help_text='When is this event going to start?')
+    end_time = models.DateField(help_text='When is this event going to end?')
+    home = models.ForeignKey('Home', on_delete=models.CASCADE, related_name='events')
 
     def __str__(self):
         return 'Event: %s' % self.title
