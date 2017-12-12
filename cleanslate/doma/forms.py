@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime
 from .models import User, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event, Profile
+from markdownx.fields import MarkdownxFormField
 
 class EditProfileForm(forms.Form):
     phone = forms.CharField(help_text='Enter your phone number')
@@ -97,7 +98,7 @@ class CreateHomeForm(forms.Form):
 
 class CreateTopicForm(forms.Form):
     title = forms.CharField(help_text='Enter a topic name')
-    content = forms.CharField(widget=forms.Textarea)
+    content = MarkdownxFormField()
 
 class EditTopicForm(forms.Form):
     title = forms.CharField(help_text='Enter a topic name')

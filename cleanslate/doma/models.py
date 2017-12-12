@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from markdownx.models import MarkdownxField
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -65,7 +66,7 @@ class Home(models.Model):
 
 class Topic(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a topic name")
-    content = models.CharField(max_length=500, blank= True)
+    content = MarkdownxField()
     forum = models.ForeignKey('Forum', on_delete=models.CASCADE, null=False, related_name='topics')
     created_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True)
     created_on = models.DateTimeField()

@@ -43,4 +43,5 @@ urlpatterns = [
 
 urlpatterns += [
     url(r'^doma/', include('django.contrib.auth.urls')),
+    url(r'^markdownx/', include('markdownx.urls')),
 ]
