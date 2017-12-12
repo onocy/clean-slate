@@ -54,12 +54,24 @@
                     </p>
                   {% endif %}
                   <div class="profile-usertitle-job">
-                    Last Seen: {{ status }}
+                    Status: {{ status }} | Last Seen: {{ lastSeen }}
                   </div>
                 </div>
-                <div class="profile-userbuttons">
-                  <!-- <button type="button" class="btn">Message</button> -->
-                  <a href="/doma/users/edit/{{ user.id }}" class="btn">Edit</a> <!-- hacky fix this -->
+                <div class="row center-align">
+                  <div class="col s2 offset-s4">
+                    <a href="{% url 'edit-user-profile' request.user.profile.id %}">
+                      <button class="btn waves-effect waves-light col s11 offset-s1">Edit Profile
+                        <i class="material-icons right">settings</i>
+                      </button>
+                    </a>
+                  </div>
+                  <div class="col s2">
+                    <a href="{% url 'edit-user' request.user.id %}">
+                      <button class="btn waves-effect waves-light col s11 offset-s1">Account Settings
+                        <i class="material-icons left">settings</i>
+                      </button>
+                    </a>
+                  </div>
                 </div>
                 <!--
                 <div class="profile-usermenu">

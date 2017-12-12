@@ -11,18 +11,23 @@ class Profile(models.Model):
         ('a', 'Admin'),
         ('u', 'User')
     )
+
+    STATUSES = (
+        ('online', 'Online'),
+        ('offline', 'Offline'),
+        ('busy', 'Busy'),
+        ('vacation', 'On Vacation')
+    )
     # make hidden
     phone = models.CharField(max_length=10, help_text='Enter your phone number', null=True, blank=True)
     yog = models.CharField(max_length=100, help_text='Enter your graduation date', null=True, blank=True)
     major = models.CharField(max_length=100, null=True, blank=True)
     role = models.CharField(max_length=1, choices=role_choices, default='u')
-
-    status = models.TextField(max_length=1000, help_text='Enter a status for others to view')
+    status = models.CharField(max_length=8, help_text='Select a status for others to view', default='online', choices=STATUSES)
     bio = models.TextField(max_length=1000, help_text='Enter a brief description of yourself', blank=True)
     smokes = models.BooleanField(default=False, help_text='Do you smoke cigarettes?')
     bedtime = models.TimeField(null=True, blank=True, help_text='What is your usual sleep-time?')
     lastSeen = models.DateTimeField(null=True)
-    email = models.EmailField(help_text='Enter your email', blank=True)
 
     pet_allergies = models.NullBooleanField(null=True, blank=True, help_text='Are you allergic to pets?')
     home = models.ForeignKey('Home', on_delete=models.CASCADE, null=True, blank=True)

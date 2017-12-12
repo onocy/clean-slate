@@ -1,11 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from .forms import UserProfileForm, EditChoreForm, CreateChoreForm, CreateUserForm, CreateHomeForm
-from .models import User, Profile, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event
+from .forms import EditProfileForm, EditChoreForm, CreateChoreForm, CreateUserForm, CreateHomeForm, EditUserForm
+from doma.models import User, Profile, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event
 from django.forms.models import model_to_dict
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
 import datetime
 
 @login_required
@@ -50,7 +52,8 @@ def profile(request):
     if request.user.is_authenticated:
         chosen_user = User.objects.get(pk=request.user.id)
 
-        status = chosen_user.profile.lastSeen
+        status = chosen_user.profile.status
+        lastSeen = chosen_user.profile.lastSeen
         bio = chosen_user.profile.bio
         email = chosen_user.email
         return render(
@@ -61,6 +64,7 @@ def profile(request):
                 'status' : status,
                 'bio': bio,
                 'email': email,
+                'lastSeen': lastSeen,
             }
         )
     else:
@@ -129,26 +133,27 @@ def finance(request):
     )
 
 @login_required
-def EditUserProfileView(request, pk):
+def edit_user_profile(request, pk):
     """
     View function for renewing a specific BookInstance by librarian
     """
-    profile=get_object_or_404(Profile, pk = pk)
-
+    new_profile=get_object_or_404(Profile, pk = pk)
     if request.method == 'POST':
-        form = UserProfileForm(request.POST)
-
+        form = EditProfileForm(request.POST)
         if form.is_valid():
-            profile.phone = form.cleaned_data['phone']
-            profile.yog = form.cleaned_data['yog']
-            profile.major = form.cleaned_data['major']
-            profile.status = form.cleaned_data['status']
-            profile.bio = form.cleaned_data['bio']
-            profile.email = form.cleaned_data['email']
-            profile.save()
-            return HttpResponseRedirect('/doma/profile')
+            new_profile.phone = form.cleaned_data['phone']
+            new_profile.yog = form.cleaned_data['yog']
+            new_profile.major = form.cleaned_data['major']
+            new_profile.status = form.cleaned_data['status']
+            new_profile.bio = form.cleaned_data['bio']
+            new_profile.home = Home.objects.get(pk = form.cleaned_data['home'])
+            new_profile.save()
+            messages.success(request, 'You successfully updated your profile settings.')
+            return HttpResponseRedirect(reverse(profile))
+        else:
+            messages.error(request, 'Please correct the errors in the form.')
     else:
-        form = UserProfileForm(initial=model_to_dict(profile))
+        form = EditProfileForm(initial=model_to_dict(new_profile))
 
     return render(request, 'form.html', {'form': form})
 
@@ -199,10 +204,31 @@ def create_user(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            user = User.objects.create_user(username = form.cleaned_data['username'], email = form.cleaned_data['email'], password = form.cleaned_data['password'])
+            new_user = User.objects.create_user(username = form.cleaned_data['username'], email = form.cleaned_data['email'], password = form.cleaned_data['password'])
+            messages.success(request, 'You successfully created a new user. Sign in now.')
             return HttpResponseRedirect(reverse(profile))
+        else:
+            messages.error(request, 'Please correct the errors in the form.')
     else:
         form = CreateUserForm()
+    return render(request, 'form.html', {'form': form})
+
+def edit_user(request, pk):
+    updated_user = User.objects.filter(pk = pk)[0]
+    if request.method == 'POST':
+        form = EditUserForm(request.POST)
+        if form.is_valid():
+            updated_user.username = form.cleaned_data['username']
+            updated_user.email = form.cleaned_data['email']
+            updated_user.set_password(form.cleaned_data['password'])
+            updated_user.save()
+            update_session_auth_hash(request, updated_user)
+            messages.success(request, 'You successfully updated your account settings.')
+            return HttpResponseRedirect(reverse(profile))
+        else:
+            messages.error(request, 'Please correct the errors in the form.')
+    else:
+        form = EditUserForm(initial = model_to_dict(updated_user))
     return render(request, 'form.html', {'form': form})
 
 @login_required

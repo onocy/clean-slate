@@ -4,17 +4,24 @@ from django.utils.translation import ugettext_lazy as _
 import datetime
 from .models import User, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event, Profile
 
-class UserProfileForm(forms.Form):
+class EditProfileForm(forms.Form):
     phone = forms.CharField(help_text='Enter your phone number')
     yog = forms.CharField(help_text='Enter your graduation date')
     major = forms.CharField()
-    status = forms.CharField(help_text='Enter a status for others to view')
+
+    STATUSES = (
+        ('online', 'Online'),
+        ('offline', 'Offline'),
+        ('busy', 'Busy'),
+        ('vacation', 'On Vacation')
+    )
+
     bio = forms.CharField(help_text='Enter a brief description of yourself', widget=forms.Textarea)
     # smokes = forms.BooleanField(initial=True, help_text='Do you smoke cigarettes?')
     # bedtime = forms.TimeField(help_text='What is your usual sleep-time?')
     # lastSeen = forms.DateField()
-    email = forms.EmailField(help_text='Enter your email')
     # pet_allergies = forms.NullBooleanField(help_text='Are you allergic to pets?')
+    status = forms.ChoiceField(help_text='Select a status for others to view', choices=STATUSES)
     HOMES = []
     for home in Home.objects.all():
         HOMES += [(home.id, home.name)]
@@ -65,6 +72,14 @@ class CreateChoreForm(forms.Form):
         return data
 
 class CreateUserForm(forms.Form):
+    username = forms.CharField(help_text = 'Enter a username')
+    email = forms.EmailField(help_text = 'Enter an email')
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+
+class EditUserForm(forms.Form):
     username = forms.CharField(help_text = 'Enter a username')
     email = forms.EmailField(help_text = 'Enter an email')
     password = forms.CharField(widget=forms.PasswordInput)
