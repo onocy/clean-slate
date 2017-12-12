@@ -33,7 +33,7 @@ def home(request):
     def grouper(iterable, n, fillvalue=None):
         args = [iter(iterable)] * n
         return zip_longest(*args, fillvalue=fillvalue)
-    user_groups = list(grouper(User.objects.all(), 4))
+    user_groups = list(grouper(Profile.objects.filter(home = request.user.profile.home), 4))
 
     # Render the HTML template home.html with the data in the context variable
     return render(

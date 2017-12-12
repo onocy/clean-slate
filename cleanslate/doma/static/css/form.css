@@ -2,7 +2,8 @@
     background: #f1f8e9;
     position: absolute;
     width: 70%;
-    height: 70%;
+    min-height: 20%;
+    max-height: 70%;
     left: 50%;
     top: 50%;
     -moz-transform: translate(-50%, -50%);
@@ -10,7 +11,7 @@
     -ms-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 p {

@@ -11,8 +11,8 @@
   <div class="container-fluid">
     {% for group in user_groups %}
       <div class="row">
-        {% for user in group %}
-          {% if user is not None %}
+        {% for profile in group %}
+          {% if profile is not None %}
             <div class="col s3">
               <div class="card">
                 <div class="card-image">
@@ -21,11 +21,11 @@
                 </div>
                 <div class="card-content activator">
                   <i class="material-icons right">more_vert</i>
-                  <p class="content-text">{{user.username}} | Last Seen: {{ user.profile.lastSeen }}</p>
+                  <p class="content-text">{{profile.user.username}} | Last Seen: {{ profile.lastSeen }}</p>
                 </div>
                 <div class="card-reveal">
-                  <span class="card-title grey-text text-darken-4">{{user.username}}<i class="material-icons right">close</i></span>
-                  <p>{{ user.profile.status }}</p>
+                  <span class="card-title grey-text text-darken-4">{{username}}<i class="material-icons right">close</i></span>
+                  <p>{{ profile.status }}</p>
                   <a href="#" class = "blue-text">Private Message </a>
                 </div>
               </div>
