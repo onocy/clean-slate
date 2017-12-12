@@ -3,12 +3,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from .forms import EditProfileForm, EditChoreForm, CreateChoreForm, CreateUserForm, CreateHomeForm, EditUserForm
+from .forms import EditProfileForm, EditChoreForm, CreateChoreForm, CreateUserForm, CreateHomeForm, EditUserForm, CreateTopicForm, EditTopicForm
 from doma.models import User, Profile, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event
 from django.forms.models import model_to_dict
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.db import IntegrityError
+from django.utils import timezone
 import datetime
 
 @login_required
@@ -254,4 +255,42 @@ def create_home(request):
             return HttpResponseRedirect(reverse(home))
     else:
         form = CreateHomeForm()
+    return render(request, 'form.html', {'form': form})
+
+@login_required
+def create_topic(request):
+    if request.method == 'POST':
+        form = CreateTopicForm(request.POST)
+        if form.is_valid():
+            new_topic = Topic.objects.create(
+                title = form.cleaned_data['title'],
+                content = form.cleaned_data['content'],
+                forum = request.user.profile.home.forum,
+                created_by = request.user.profile,
+                created_on = timezone.now()
+            )
+            new_topic.save()
+            messages.success(request, 'You successfully created a new topic.')
+            return HttpResponseRedirect(reverse(home))
+        else:
+            messages.error(request, 'Please correct the errors in the form.')
+    else:
+        form = CreateTopicForm()
+    return render(request, 'form.html', {'form': form})
+
+@login_required
+def edit_topic(request, pk):
+    updated_topic = Topic.objects.filter(pk = pk)[0]
+    if request.method == 'POST':
+        form = EditTopicForm(request.POST)
+        if form.is_valid():
+            updated_topic.title = form.cleaned_data['title']
+            updated_topic.content = form.cleaned_data['content']
+            updated_topic.save()
+            messages.success(request, 'You successfully updated the topic.')
+            return HttpResponseRedirect(reverse(home))
+        else:
+            messages.error(request, 'Please correct the errors in the form.')
+    else:
+        form = EditTopicForm(initial = model_to_dict(updated_topic))
     return render(request, 'form.html', {'form': form})

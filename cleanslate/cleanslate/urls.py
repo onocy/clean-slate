@@ -19,7 +19,7 @@ from django.conf.urls import include
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
-from doma.views import home, profile, calendar, reminders, finance, edit_chore_deadline, create_chore, delete_chore, edit_user_profile, create_user, edit_user, create_home
+from doma.views import home, profile, calendar, reminders, finance, edit_chore_deadline, create_chore, delete_chore, edit_user_profile, create_user, edit_user, create_home, create_topic, edit_topic
 
 urlpatterns = [
     url(r'^$', home, name='doma/login/'),
@@ -33,9 +33,11 @@ urlpatterns = [
     url(r'^doma/chore/(?P<pk>[-\w]+)/edit/$', edit_chore_deadline, name = 'edit-chore-deadline'),
     url(r'^doma/chore/create/$', create_chore, name = 'create-chore'),
     url(r'^doma/chore/(?P<pk>[-\w]+)/delete/$', delete_chore, name = 'delete-chore'),
-    url(r'^doma/user/create/$', create_user, name = 'create-user'),
+    url(r'^doma/user/create/$', create_user, name='create-user'),
     url(r'^doma/user/(?P<pk>[-\w]+)/edit/$', edit_user, name='edit-user'),
-    url(r'^doma/home/create/$', create_home, name = 'create-home'),
+    url(r'^doma/home/create/$', create_home, name='create-home'),
+    url(r'^doma/topic/create/$', create_topic, name='create-topic'),
+    url(r'^doma/topic/(?P<pk>[-\w]+)/edit/$', edit_topic, name='edit-topic'),
 ]
 
 urlpatterns += [

@@ -92,3 +92,11 @@ class CreateHomeForm(forms.Form):
     address = forms.CharField(max_length=100, help_text='Enter your Address')
     leaseStart = forms.DateField()
     leaseEnds = forms.DateField()
+
+class CreateTopicForm(forms.Form):
+    title = forms.CharField(help_text="Enter a topic name")
+    content = forms.CharField(widget=forms.Textarea)
+
+class EditTopicForm(forms.Form):
+    title = forms.CharField(help_text="Enter a topic name")
+    content = forms.CharField(widget=forms.Textarea) 

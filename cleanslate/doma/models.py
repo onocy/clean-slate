@@ -72,7 +72,7 @@ class Topic(models.Model):
     content = models.CharField(max_length=500, blank= True)
     forum = models.ForeignKey('Forum', on_delete=models.CASCADE, null=False, related_name='topics')
     created_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True)
-    created_on = models.DateField()
+    created_on = models.DateTimeField()
 
     def __str__(self):
         return 'Topic: %s' % self.title
