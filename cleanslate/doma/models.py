@@ -11,24 +11,32 @@ class Profile(models.Model):
         ('a', 'Admin'),
         ('u', 'User')
     )
+
+    STATUSES = (
+        ('Online', 'online'),
+        ('Offline', 'offline'),
+        ('Busy', 'busy'),
+        ('On Vacation', 'vacation')
+    )
     # make hidden
     phone = models.CharField(max_length=10, help_text='Enter your phone number', null=True, blank=True)
     yog = models.CharField(max_length=100, help_text='Enter your graduation date', null=True, blank=True)
     major = models.CharField(max_length=100, null=True, blank=True)
     role = models.CharField(max_length=1, choices=role_choices, default='u')
-
-    status = models.TextField(max_length=1000, help_text='Enter a status for others to view')
+    status = models.CharField(max_length=8, help_text='Select a status for others to view', default='online', choices=STATUSES)
     bio = models.TextField(max_length=1000, help_text='Enter a brief description of yourself', blank=True)
     smokes = models.BooleanField(default=False, help_text='Do you smoke cigarettes?')
     bedtime = models.TimeField(null=True, blank=True, help_text='What is your usual sleep-time?')
-    lastSeen = models.DateField(null=True)
-    email = models.EmailField(help_text='Enter your email', blank=True)
+    lastSeen = models.DateTimeField(null=True)
 
     pet_allergies = models.NullBooleanField(null=True, blank=True, help_text='Are you allergic to pets?')
     home = models.ForeignKey('Home', on_delete=models.CASCADE, null=True, blank=True)
 
     def is_admin(self):
         return self.role in 'a'
+
+    def has_home(self):
+        return self.home is not None
 
     def get_absolute_url(self):
         return reverse('profile-detail', args=[str(self.id)])
@@ -45,36 +53,32 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
-
 class Home(models.Model):
-    created_by = models.ForeignKey('Profile', null=False, default=1, related_name="home_created_by")
-    forum = models.OneToOneField('Forum', on_delete=models.CASCADE, null=False, default=1)
+    created_by = models.ForeignKey('Profile', null=False, related_name="home_created_by")
     name = models.CharField(max_length=100, help_text='Enter your Home Name')
     address = models.CharField(max_length=100, help_text='Enter your Address', null=True)
-    leaseStart = models.DateTimeField(null=True, blank=True)
-    leaseEnds = models.DateTimeField()
-    village = models.ForeignKey('Village', on_delete=models.SET_NULL, null=True, blank=True)
+    leaseStart = models.DateField(null=True, blank=True)
+    leaseEnds = models.DateField(null=True, blank=True)
+    #village = models.ForeignKey('Village', on_delete=models.SET_NULL, null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('home-detail', args=[str(self.id)])
 
     def __str__(self):
-        return 'Home: %s' % self.name
-
+        return "Home: {}".format(self.name)
 
 class Topic(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a topic name")
     content = models.CharField(max_length=500, blank= True)
-    forum = models.ForeignKey('Forum', on_delete=models.CASCADE, null=False, default=1)
+    forum = models.ForeignKey('Forum', on_delete=models.CASCADE, null=False, related_name='topics')
     created_by = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True)
-    created_on = models.DateField()
+    created_on = models.DateTimeField()
 
     def __str__(self):
         return 'Topic: %s' % self.title
 
     def get_absolute_url(self):
         return reverse('topic-detail', args=[str(self.id)])
-
 
 class Village(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a village name")
@@ -85,7 +89,6 @@ class Village(models.Model):
 
     def get_absolute_url(self):
         return reverse('village-detail', args=[str(self.id)])
-
 
 class Review(models.Model):
     reviewed = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, related_name='reviewed_user')
@@ -98,12 +101,10 @@ class Review(models.Model):
     def __str__(self):
         return '%s reviewed %s' % (self.reviewedBy, self.reviewed)
 
-
 class Forum(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a forum name")
     description = models.TextField(max_length=1000, help_text='Enter a description for this forum')
-    created_by = models.ForeignKey('Profile', null=False, default=1, related_name="forum_created_by")
-    created_on = models.DateField()
+    home = models.OneToOneField('Home', on_delete=models.CASCADE)
 
     def get_absolute_url(self):
         return reverse('forum-detail', args=[str(self.id)])
@@ -111,6 +112,15 @@ class Forum(models.Model):
     def __str__(self):
         return self.title
 
+@receiver(post_save, sender=Home)
+def create_home_forum(sender, instance, created, **kwargs):
+    if created:
+        Forum.objects.create(home=instance)
+
+@receiver(post_save, sender=Home)
+def save_home_forum(sender, instance, **kwargs):
+    instance.forum.title = instance.name
+    instance.forum.save()
 
 class Post(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a post name')
@@ -124,7 +134,6 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post-detail', args=[str(self.id)])
-
 
 class Transaction(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a transaction name')
@@ -144,7 +153,6 @@ class Transaction(models.Model):
     def get_absolute_url(self):
         return reverse('transaction-detail', args=[str(self.id)])
 
-
 class Chore(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a chore name')
     description = models.CharField(max_length=500, help_text='Enter description')
@@ -158,7 +166,6 @@ class Chore(models.Model):
 
     def get_absolute_url(self):
         return reverse('chore-detail', args=[str(self.id)])
-
 
 class Reminder(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a reminder name')
@@ -174,12 +181,13 @@ class Reminder(models.Model):
     def get_absolute_url(self):
         return reverse('reminder-detail', args=[str(self.id)])
 
-
 class Event(models.Model):
     title = models.CharField(max_length=200, help_text='Enter an event name')
     description = models.CharField(max_length=500, help_text='Enter description')
-    created_on = models.DateField()
-    deadline = models.DateField(help_text='When is this event going to occur?')
+    created_on = models.DateTimeField()
+    start_time = models.DateField(help_text='When is this event going to start?')
+    end_time = models.DateField(help_text='When is this event going to end?')
+    home = models.ForeignKey('Home', on_delete=models.CASCADE, related_name='events')
 
     def __str__(self):
         return 'Event: %s' % self.title

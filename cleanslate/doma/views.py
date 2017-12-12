@@ -1,20 +1,16 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
-from .forms import UserProfileForm
-from django.shortcuts import get_object_or_404
-from .models import Profile
-from django.http import HttpResponse
-
-# Create your views here.
-from .models import User, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event
-
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from .forms import EditProfileForm, EditChoreForm, CreateChoreForm, CreateUserForm, CreateHomeForm, EditUserForm, CreateTopicForm, EditTopicForm, CreateEventForm
+from doma.models import User, Profile, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event
+from django.forms.models import model_to_dict
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.db import IntegrityError
+from django.utils import timezone
 import datetime
-
-from .forms import EditChoreForm, CreateChoreForm
 
 @login_required
 def home(request):
@@ -41,13 +37,14 @@ def home(request):
     def grouper(iterable, n, fillvalue=None):
         args = [iter(iterable)] * n
         return zip_longest(*args, fillvalue=fillvalue)
-    user_groups = list(grouper(User.objects.all(), 4))
+    user_groups = list(grouper(Profile.objects.filter(home = request.user.profile.home), 2))
 
+    message_board = request.user.profile.home.forum
     # Render the HTML template home.html with the data in the context variable
     return render(
         request,
         'home.html',
-        context={'num_topics': num_topics, 'user_groups': user_groups}
+        context={'num_topics': num_topics, 'user_groups': user_groups, 'message_board': message_board}
     )
 
 @login_required
@@ -59,8 +56,9 @@ def profile(request):
         chosen_user = User.objects.get(pk=request.user.id)
 
         status = chosen_user.profile.status
+        lastSeen = chosen_user.profile.lastSeen
         bio = chosen_user.profile.bio
-        email = chosen_user.profile.email
+        email = chosen_user.email
         return render(
             request,
             'profile.html',
@@ -69,6 +67,7 @@ def profile(request):
                 'status' : status,
                 'bio': bio,
                 'email': email,
+                'lastSeen': lastSeen,
             }
         )
     else:
@@ -89,7 +88,6 @@ def profile(request):
         context={}
     )
 
-
 @login_required
 def calendar(request):
     """
@@ -102,7 +100,6 @@ def calendar(request):
         'calendar.html',
         context={'events': events}
     )
-
 
 @login_required
 def reminders(request):
@@ -139,26 +136,27 @@ def finance(request):
     )
 
 @login_required
-def EditUserProfileView(request, pk):
+def edit_user_profile(request, pk):
     """
     View function for renewing a specific BookInstance by librarian
     """
-    profile=get_object_or_404(Profile, pk = pk)
-
+    new_profile=get_object_or_404(Profile, pk = pk)
     if request.method == 'POST':
-        form = UserProfileForm(request.POST)
-
+        form = EditProfileForm(request.POST)
         if form.is_valid():
-            profile.phone = form.cleaned_data['phone']
-            profile.yog = form.cleaned_data['yog']
-            profile.major = form.cleaned_data['major']
-            profile.status = form.cleaned_data['status']
-            profile.bio = form.cleaned_data['bio']
-            profile.email = form.cleaned_data['email']
-            profile.save()
-            return HttpResponseRedirect('/doma/profile')
+            new_profile.phone = form.cleaned_data['phone']
+            new_profile.yog = form.cleaned_data['yog']
+            new_profile.major = form.cleaned_data['major']
+            new_profile.status = form.cleaned_data['status']
+            new_profile.bio = form.cleaned_data['bio']
+            new_profile.home = Home.objects.get(pk = form.cleaned_data['home'])
+            new_profile.save()
+            messages.success(request, 'You successfully updated your profile settings.')
+            return HttpResponseRedirect(reverse(profile))
+        else:
+            messages.error(request, 'Please correct the errors in the form.')
     else:
-        form = UserProfileForm()
+        form = EditProfileForm(initial=model_to_dict(new_profile))
 
     return render(request, 'form.html', {'form': form})
 
@@ -182,19 +180,20 @@ def create_chore(request):
     if request.method == 'POST':
         form = CreateChoreForm(request.POST)
         if form.is_valid():
-            chore = Chore.objects.create(title="", description="", created_on="2017-11-27", deadline="2017-12-04")
-            chore.title = form.cleaned_data['title']
-            chore.description = form.cleaned_data['description']
-            chore.created_on = form.cleaned_data['created_on']
-            chore.deadline = form.cleaned_data['deadline']
-
+            chore = Chore.objects.create(
+                title = form.cleaned_data['title'],
+                description = form.cleaned_data['description'],
+                created_on = timezone.now(),
+                deadline = form.cleaned_data['deadline']
+            )
             chore.save()
-
+            messages.success(request, 'You successfully created a chore.')
             return HttpResponseRedirect(reverse(reminders))
+        else:
+            messages.error(request, 'Please correct the errors in the form.')
     else:
-        proposed_deadline = datetime.date.today() + datetime.timedelta(weeks=1)
-        form = CreateChoreForm(initial={'deadline': proposed_deadline,})
-    return render(request, 'chore_create_form.html', {'form': form})
+        form = CreateChoreForm()
+    return render(request, 'form.html', {'form': form})
 
 @login_required
 def delete_chore(request, pk):
@@ -204,3 +203,117 @@ def delete_chore(request, pk):
 
         return HttpResponseRedirect(reverse(reminders))
     return render(request, 'chore_delete_form.html', {})
+
+def create_user(request):
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            try:
+                new_user = User.objects.create_user(username = form.cleaned_data['username'], email = form.cleaned_data['email'], password = form.cleaned_data['password'])
+                messages.success(request, 'You successfully created a new user. Sign in now.')
+                return HttpResponseRedirect(reverse(profile))
+            except IntegrityError as e:
+                messages.error(request, "You have not met Django's built in attribute requirements. Try using a stronger password and a longer username.")
+                return render(request, 'form.html', {'form': form})
+        else:
+            messages.error(request, 'Please correct the errors in the form.')
+            return render(request, 'form.html', {'form': form})
+    else:
+        form = CreateUserForm()
+    return render(request, 'form.html', {'form': form})
+
+def edit_user(request, pk):
+    updated_user = User.objects.filter(pk = pk)[0]
+    if request.method == 'POST':
+        form = EditUserForm(request.POST)
+        if form.is_valid():
+            updated_user.username = form.cleaned_data['username']
+            updated_user.email = form.cleaned_data['email']
+            updated_user.set_password(form.cleaned_data['password'])
+            updated_user.save()
+            update_session_auth_hash(request, updated_user)
+            messages.success(request, 'You successfully updated your account settings.')
+            return HttpResponseRedirect(reverse(profile))
+        else:
+            messages.error(request, 'Please correct the errors in the form.')
+    else:
+        form = EditUserForm(initial = model_to_dict(updated_user))
+    return render(request, 'form.html', {'form': form})
+
+@login_required
+def create_home(request):
+    if request.method == 'POST':
+        form = CreateHomeForm(request.POST)
+        if form.is_valid():
+            new_home = Home.objects.create(name = "", address = "", created_by = request.user.profile)
+            new_home.name = form.cleaned_data['name']
+            new_home.address = form.cleaned_data['address']
+            new_home.leaseStart = form.cleaned_data['leaseStart']
+            new_home.leaseEnds = form.cleaned_data['leaseEnds']
+            new_home.save()
+            request.user.profile.home = new_home
+            request.user.profile.save()
+            return HttpResponseRedirect(reverse(home))
+    else:
+        form = CreateHomeForm()
+    return render(request, 'form.html', {'form': form})
+
+@login_required
+def create_topic(request):
+    if request.method == 'POST':
+        form = CreateTopicForm(request.POST)
+        if form.is_valid():
+            new_topic = Topic.objects.create(
+                title = form.cleaned_data['title'],
+                content = form.cleaned_data['content'],
+                forum = request.user.profile.home.forum,
+                created_by = request.user.profile,
+                created_on = timezone.now()
+            )
+            new_topic.save()
+            messages.success(request, 'You successfully created a new topic.')
+            return HttpResponseRedirect(reverse(home))
+        else:
+            messages.error(request, 'Please correct the errors in the form.')
+    else:
+        form = CreateTopicForm()
+    return render(request, 'form.html', {'form': form})
+
+@login_required
+def edit_topic(request, pk):
+    updated_topic = Topic.objects.filter(pk = pk)[0]
+    if request.method == 'POST':
+        form = EditTopicForm(request.POST)
+        if form.is_valid():
+            updated_topic.title = form.cleaned_data['title']
+            updated_topic.content = form.cleaned_data['content']
+            updated_topic.save()
+            messages.success(request, 'You successfully updated the topic.')
+            return HttpResponseRedirect(reverse(home))
+        else:
+            messages.error(request, 'Please correct the errors in the form.')
+    else:
+        form = EditTopicForm(initial = model_to_dict(updated_topic))
+    return render(request, 'form.html', {'form': form})
+
+@login_required
+def create_event(request):
+    if request.method == 'POST':
+        form = CreateEventForm(request.POST)
+        if form.is_valid():
+            new_event = Event.objects.create(
+                title = form.cleaned_data['title'],
+                description = form.cleaned_data['description'],
+                start_time = form.cleaned_data['start_time'],
+                end_time = form.cleaned_data['end_time'],
+                home = request.user.profile.home,
+                created_on = timezone.now()
+            )
+            new_event.save()
+            messages.success(request, 'You successfully created a new event.')
+            return HttpResponseRedirect(reverse(calendar))
+        else:
+            messages.error(request, 'Please correct the errors in the form')
+    else:
+        form = CreateEventForm()
+    return render(request, 'form.html', {'form': form})
