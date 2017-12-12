@@ -23,10 +23,10 @@ class EditProfileForm(forms.Form):
     # lastSeen = forms.DateField()
     # pet_allergies = forms.NullBooleanField(help_text='Are you allergic to pets?')
     status = forms.ChoiceField(help_text='Select a status for others to view', choices=STATUSES)
-    HOMES = []
+    HOMES = [(None, '')]
     for home in Home.objects.all():
         HOMES += [(home.id, home.name)]
-    home = forms.ChoiceField(help_text='Which home do you want to be in?', choices=HOMES)
+    home = forms.ChoiceField(help_text='Which home do you want to be in?', choices=HOMES, required=False)
 
 class EditChoreForm(forms.Form):
     deadline = forms.DateField(help_text = 'When is this chore due?')

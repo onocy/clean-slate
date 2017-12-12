@@ -163,7 +163,8 @@ def edit_user_profile(request, pk):
             new_profile.major = form.cleaned_data['major']
             new_profile.status = form.cleaned_data['status']
             new_profile.bio = form.cleaned_data['bio']
-            new_profile.home = Home.objects.get(pk = form.cleaned_data['home'])
+            if form.cleaned_data['home']:
+                new_profile.home = Home.objects.get(pk = form.cleaned_data['home'])
             if new_profile.save():
                 messages.success(request, 'You successfully updated your profile settings.')
             return HttpResponseRedirect(reverse(profile))
