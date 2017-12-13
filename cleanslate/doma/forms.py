@@ -3,7 +3,7 @@ from django.core.files.images import get_image_dimensions
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime
-from .models import User, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event, Profile
+from .models import User, Home, Forum, Topic, Chore, Event, Profile # Village, Transaction, Review, Reminder, Post, 
 from markdownx.fields import MarkdownxFormField
 
 class EditProfileForm(forms.ModelForm):
@@ -31,7 +31,7 @@ class EditProfileForm(forms.ModelForm):
                     raise forms.ValidationError(
                         "Please use a JPEG, GIF or PNG image."
                     )
-                if len(avatar) > (50 * 1024):
+                if len(avatar) > (1000 * 1024):
                     raise forms.ValidationError(
                         u'Avatar file size may not exceed 50k.')
             except AttributeError:
@@ -45,17 +45,14 @@ class EditProfileForm(forms.ModelForm):
             return None
 
 class EditChoreForm(forms.Form):
-    deadline = forms.DateField(help_text = 'When is this chore due?')
+    title = forms.CharField(help_text = 'Enter a chore name')
+    description = forms.CharField(help_text = 'Enter a description')
+    deadline = forms.DateField(help_text = 'When is this chore due?', widget=forms.DateInput(attrs={'type': 'date'}))
 
     def clean_deadline(self):
-        title = forms.CharField(help_text = 'Enter a chore name')
-        description = forms.CharField(help_text = 'Enter a description')
-        deadline = forms.DateField(help_text = 'When is this chore due?', widget=forms.DateInput(attrs={'type': 'date'}))
-
-        # Check date is not in past.
-        if data < datetime.date.today():
+        if self.cleaned_data['deadline'] < datetime.date.today():
             raise ValidationError(_('Invalid date - deadline cannot be in the past'))
-        return data
+        return self.cleaned_data['deadline']
 
 class CreateChoreForm(forms.Form):
     title = forms.CharField(help_text = 'Enter a chore name')
@@ -107,6 +104,12 @@ class EditUserForm(forms.Form):
         model = User
 
 class CreateHomeForm(forms.Form):
+    name = forms.CharField(max_length=100, help_text='Enter your Home Name')
+    address = forms.CharField(max_length=100, help_text='Enter your Address')
+    leaseStart = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    leaseEnds = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+
+class EditHomeForm(forms.Form):
     name = forms.CharField(max_length=100, help_text='Enter your Home Name')
     address = forms.CharField(max_length=100, help_text='Enter your Address')
     leaseStart = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
