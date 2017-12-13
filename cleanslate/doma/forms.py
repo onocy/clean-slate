@@ -3,7 +3,7 @@ from django.core.files.images import get_image_dimensions
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime
-from .models import User, Home, Forum, Topic, Chore, Event, Profile # Village, Transaction, Review, Reminder, Post, 
+from .models import User, Home, Forum, Topic, Chore, Event, Profile # Village, Transaction, Review, Reminder, Post,
 from markdownx.fields import MarkdownxFormField
 
 class EditProfileForm(forms.ModelForm):
@@ -124,6 +124,12 @@ class EditTopicForm(forms.Form):
     content = MarkdownxFormField(help_text='Enter the content of the topic. You can use markdown (e.g. ###H3 Header)')
 
 class CreateEventForm(forms.Form):
+    title = forms.CharField(help_text='Enter an event name')
+    description = forms.CharField(widget=forms.Textarea, help_text='Enter a description of the event')
+    start_time = forms.DateField(help_text='When is this event going to start?', widget=forms.DateInput(attrs={'type': 'date'}))
+    end_time = forms.DateField(help_text='When is this event going to end?', widget=forms.DateInput(attrs={'type': 'date'}))
+
+class EditEventForm(forms.Form):
     title = forms.CharField(help_text='Enter an event name')
     description = forms.CharField(widget=forms.Textarea, help_text='Enter a description of the event')
     start_time = forms.DateField(help_text='When is this event going to start?', widget=forms.DateInput(attrs={'type': 'date'}))
