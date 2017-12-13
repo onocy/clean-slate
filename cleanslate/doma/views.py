@@ -92,7 +92,7 @@ def calendar(request):
     """
     View function for Calendar
     """
-    events = Event.objects.all()
+    events = Event.objects.filter(home = request.user.profile.home)
     return render(
         request,
         'calendar.html',
