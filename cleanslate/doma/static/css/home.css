@@ -30,3 +30,11 @@ main {
   height: 150px;
   padding-top: 20px;
 }
+
+#house-title {
+  color: white;
+}
+
+#house-title:hover {
+  text-decoration: underline;
+}

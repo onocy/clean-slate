@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from .forms import EditProfileForm, EditChoreForm, CreateChoreForm, CreateUserForm, CreateHomeForm, EditUserForm, CreateTopicForm, EditTopicForm, CreateEventForm
+from .forms import EditProfileForm, EditChoreForm, CreateChoreForm, CreateUserForm, CreateHomeForm, EditUserForm, CreateTopicForm, EditTopicForm, CreateEventForm, EditHomeForm
 from doma.models import User, Profile, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event
 from django.forms.models import model_to_dict
 from django.contrib import messages
@@ -187,13 +187,14 @@ def edit_chore(request, pk):
         if form.is_valid():
             updated_chore.title = form.cleaned_data['title']
             updated_chore.description = form.cleaned_data['description']
-            updated_chore.deadline = form.cleaned_data['deadline']
+            if form.clean_deadline():
+                updated_chore.deadline = form.clean_deadline()
             updated_chore.save()
 
             return HttpResponseRedirect(reverse(reminders))
     else:
         form = EditChoreForm(initial=model_to_dict(updated_chore))
-    return render(request, 'form.html', {'form': form, 'chore': chore})
+    return render(request, 'form.html', {'form': form, 'chore': updated_chore})
 
 @login_required
 def create_chore(request):
@@ -276,6 +277,25 @@ def create_home(request):
             return HttpResponseRedirect(reverse(home))
     else:
         form = CreateHomeForm()
+    return render(request, 'form.html', {'form': form})
+
+@login_required
+def edit_home(request, pk):
+    updated_home = Home.objects.filter(pk = pk)[0]
+    if request.method == 'POST':
+        form = EditHomeForm(request.POST)
+        if form.is_valid():
+            updated_home.name = form.cleaned_data['name']
+            updated_home.address = form.cleaned_data['address']
+            updated_home.leaseStart = form.cleaned_data['leaseStart']
+            updated_home.leaseEnds = form.cleaned_data['leaseEnd']
+            if updated_home.save():
+                messages.success(request, 'You successfully updated the home.')
+            return HttpResponseRedirect(reverse(home))
+        else:
+            messages.error(request, 'Please correct the errors in the form.')
+    else:
+        form = EditHomeForm(initial = model_to_dict(updated_home))
     return render(request, 'form.html', {'form': form})
 
 @login_required
