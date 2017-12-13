@@ -1,32 +1,48 @@
 from django import forms
+from django.core.files.images import get_image_dimensions
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime
 from .models import User, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event, Profile
 from markdownx.fields import MarkdownxFormField
 
-class EditProfileForm(forms.Form):
-    phone = forms.CharField(help_text='Enter your phone number')
-    yog = forms.CharField(help_text='Enter your graduation date')
-    major = forms.CharField()
-
-    STATUSES = (
-        ('online', 'Online'),
-        ('offline', 'Offline'),
-        ('busy', 'Busy'),
-        ('vacation', 'On Vacation')
-    )
-
-    bio = forms.CharField(help_text='Enter a brief description of yourself', widget=forms.Textarea)
-    # smokes = forms.BooleanField(initial=True, help_text='Do you smoke cigarettes?')
-    # bedtime = forms.TimeField(help_text='What is your usual sleep-time?')
-    # lastSeen = forms.DateField()
-    # pet_allergies = forms.NullBooleanField(help_text='Are you allergic to pets?')
-    status = forms.ChoiceField(help_text='Select a status for others to view', choices=STATUSES)
-    HOMES = []
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['phone', 'yog', 'major', 'bio', 'status']
+    HOMES = [(None, '')]
     for home in Home.objects.all():
         HOMES += [(home.id, home.name)]
-    home = forms.ChoiceField(help_text='Which home do you want to be in?', choices=HOMES)
+    home = forms.ChoiceField(help_text='Which home do you want to be in?', choices=HOMES, required=False)
+    avatar = forms.ImageField(required=False)
+
+    def clean_avatar(self):
+        if self.cleaned_data['avatar']:
+            avatar = self.cleaned_data['avatar']
+            try:
+                w, h = get_image_dimensions(avatar)
+                max_width = max_height = 250
+                if w > max_width or h > max_height:
+                    raise forms.ValidationError(
+                        "Please use an image that is {} x {} pixels or smaller.".format(max_width, max_height)
+                    )
+                main, sub = avatar.content_type.split('/')
+                if not (main == 'image' and sub in ['jpeg', 'gif', 'png']):
+                    raise forms.ValidationError(
+                        "Please use a JPEG, GIF or PNG image."
+                    )
+                if len(avatar) > (50 * 1024):
+                    raise forms.ValidationError(
+                        u'Avatar file size may not exceed 50k.')
+            except AttributeError:
+                """
+                Handles case when we are updating the user profile
+                and do not supply a new avatar
+                """
+                pass
+            return avatar
+        else:
+            return None
 
 class EditChoreForm(forms.Form):
     deadline = forms.DateField(help_text = 'When is this chore due?')
@@ -98,11 +114,11 @@ class CreateHomeForm(forms.Form):
 
 class CreateTopicForm(forms.Form):
     title = forms.CharField(help_text='Enter a topic name')
-    content = MarkdownxFormField()
+    content = MarkdownxFormField(help_text='Enter the content of the topic. You can use markdown (e.g. ###H3 Header)')
 
 class EditTopicForm(forms.Form):
     title = forms.CharField(help_text='Enter a topic name')
-    content = forms.CharField(widget=forms.Textarea)
+    content = MarkdownxFormField(help_text='Enter the content of the topic. You can use markdown (e.g. ###H3 Header)')
 
 class CreateEventForm(forms.Form):
     title = forms.CharField(help_text='Enter an event name')

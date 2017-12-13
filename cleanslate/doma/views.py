@@ -40,12 +40,26 @@ def home(request):
     user_groups = list(grouper(Profile.objects.filter(home = request.user.profile.home), 2))
 
     message_board = request.user.profile.home.forum
+    topics = Topic.objects.filter(forum = message_board).order_by('-created_on')
+    topics = topics[:3]
     # Render the HTML template home.html with the data in the context variable
     return render(
         request,
         'home.html',
-        context={'num_topics': num_topics, 'user_groups': user_groups, 'message_board': message_board}
+        context={'num_topics': num_topics, 'user_groups': user_groups, 'topics': topics}
     )
+
+@login_required
+def forum(request):
+    message_board = request.user.profile.home.forum
+    topics = Topic.objects.filter(forum = message_board).order_by('-created_on')
+    # Render the HTML template home.html with the data in the context variable
+    return render(
+        request,
+        'message_board.html',
+        context={'topics': topics}
+    )
+
 
 @login_required
 def profile(request):
@@ -59,6 +73,7 @@ def profile(request):
         lastSeen = chosen_user.profile.lastSeen
         bio = chosen_user.profile.bio
         email = chosen_user.email
+        avatar = chosen_user.profile.avatar
         return render(
             request,
             'profile.html',
@@ -68,6 +83,7 @@ def profile(request):
                 'bio': bio,
                 'email': email,
                 'lastSeen': lastSeen,
+                'avatar': avatar,
             }
         )
     else:
@@ -142,16 +158,19 @@ def edit_user_profile(request, pk):
     """
     new_profile=get_object_or_404(Profile, pk = pk)
     if request.method == 'POST':
-        form = EditProfileForm(request.POST)
+        form = EditProfileForm(request.POST, request.FILES)
         if form.is_valid():
             new_profile.phone = form.cleaned_data['phone']
             new_profile.yog = form.cleaned_data['yog']
             new_profile.major = form.cleaned_data['major']
             new_profile.status = form.cleaned_data['status']
             new_profile.bio = form.cleaned_data['bio']
-            new_profile.home = Home.objects.get(pk = form.cleaned_data['home'])
-            new_profile.save()
-            messages.success(request, 'You successfully updated your profile settings.')
+            if form.cleaned_data['home']:
+                new_profile.home = Home.objects.get(pk = form.cleaned_data['home'])
+            if form.clean_avatar():
+                new_profile.avatar = form.clean_avatar()
+            if new_profile.save():
+                messages.success(request, 'You successfully updated your profile settings.')
             return HttpResponseRedirect(reverse(profile))
         else:
             messages.error(request, 'Please correct the errors in the form.')
@@ -187,8 +206,8 @@ def create_chore(request):
                 created_on = timezone.now(),
                 deadline = form.cleaned_data['deadline']
             )
-            chore.save()
-            messages.success(request, 'You successfully created a chore.')
+            if chore.save():
+                messages.success(request, 'You successfully created a chore.')
             return HttpResponseRedirect(reverse(reminders))
         else:
             messages.error(request, 'Please correct the errors in the form.')
@@ -231,9 +250,9 @@ def edit_user(request, pk):
             updated_user.username = form.cleaned_data['username']
             updated_user.email = form.cleaned_data['email']
             updated_user.set_password(form.cleaned_data['password'])
-            updated_user.save()
-            update_session_auth_hash(request, updated_user)
-            messages.success(request, 'You successfully updated your account settings.')
+            if updated_user.save():
+                update_session_auth_hash(request, updated_user)
+                messages.success(request, 'You successfully updated your account settings.')
             return HttpResponseRedirect(reverse(profile))
         else:
             messages.error(request, 'Please correct the errors in the form.')
@@ -271,8 +290,8 @@ def create_topic(request):
                 created_by = request.user.profile,
                 created_on = timezone.now()
             )
-            new_topic.save()
-            messages.success(request, 'You successfully created a new topic.')
+            if new_topic.save():
+                messages.success(request, 'You successfully created a new topic.')
             return HttpResponseRedirect(reverse(home))
         else:
             messages.error(request, 'Please correct the errors in the form.')
@@ -288,8 +307,8 @@ def edit_topic(request, pk):
         if form.is_valid():
             updated_topic.title = form.cleaned_data['title']
             updated_topic.content = form.cleaned_data['content']
-            updated_topic.save()
-            messages.success(request, 'You successfully updated the topic.')
+            if updated_topic.save():
+                messages.success(request, 'You successfully updated the topic.')
             return HttpResponseRedirect(reverse(home))
         else:
             messages.error(request, 'Please correct the errors in the form.')
@@ -310,8 +329,8 @@ def create_event(request):
                 home = request.user.profile.home,
                 created_on = timezone.now()
             )
-            new_event.save()
-            messages.success(request, 'You successfully created a new event.')
+            if new_event.save():
+                messages.success(request, 'You successfully created a new event.')
             return HttpResponseRedirect(reverse(calendar))
         else:
             messages.error(request, 'Please correct the errors in the form')
