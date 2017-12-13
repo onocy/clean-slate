@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from markdownx.models import MarkdownxField
 from markdownx.utils import markdownify
+from django.utils import timezone
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -111,6 +112,13 @@ class Chore(models.Model):
     deadline = models.DateField(help_text='When is this chore due?')
     #owners
 
+    @property
+    def almost_due(self):
+        if (self.deadline - timezone.now().date()).days < 2:
+            return True
+        else:
+            return False
+
     def __str__(self):
         return 'Chore: %s' % self.title
 
@@ -124,6 +132,13 @@ class Event(models.Model):
     start_time = models.DateField(help_text='When is this event going to start?')
     end_time = models.DateField(help_text='When is this event going to end?')
     home = models.ForeignKey('Home', on_delete=models.CASCADE, related_name='events')
+
+    @property
+    def almost_due(self):
+        if (self.end_time - self.start_time).days < 2:
+            return True
+        else:
+            return False
 
     def __str__(self):
         return 'Event: %s' % self.title
