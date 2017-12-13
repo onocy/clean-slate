@@ -45,4 +45,4 @@ urlpatterns = [
 urlpatterns += [
     url(r'^doma/', include('django.contrib.auth.urls')),
     url(r'^markdownx/', include('markdownx.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

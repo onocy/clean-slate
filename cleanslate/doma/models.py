@@ -13,10 +13,10 @@ class Profile(models.Model):
         ('u', 'User')
     )
     STATUSES = (
-        ('Online', 'online'),
-        ('Offline', 'offline'),
-        ('Busy', 'busy'),
-        ('On Vacation', 'vacation')
+        ('online', 'Online'),
+        ('offline', 'Offline'),
+        ('busy', 'Busy'),
+        ('vacation', 'On Vacation')
     )
     phone = models.CharField(max_length=10, help_text='Enter your phone number', null=True, blank=True)
     yog = models.CharField(max_length=100, help_text='Enter your graduation date', null=True, blank=True)
@@ -26,6 +26,7 @@ class Profile(models.Model):
     bio = models.TextField(max_length=1000, help_text='Enter a brief description of yourself', blank=True)
     lastSeen = models.DateTimeField(null=True)
     home = models.ForeignKey('Home', on_delete=models.CASCADE, null=True, blank=True)
+    avatar = models.ImageField(upload_to='avatars/upload/', default='avatars/default.png', blank=True)
     #smokes = models.BooleanField(default=False, help_text='Do you smoke cigarettes?')
     #bedtime = models.TimeField(null=True, blank=True, help_text='What is your usual sleep-time?')
     #pet_allergies = models.NullBooleanField(null=True, blank=True, help_text='Are you allergic to pets?')

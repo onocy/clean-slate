@@ -29,7 +29,7 @@
                   <div class="card">
                     <div class="card-image">
                       {% load static %}
-                      <img class = "img-responsive activator" src="{% static 'img/p1.jpg' %}">
+                      <img class = "img-responsive activator" src="/media/{{ profile.avatar }}">
                       <span class="card-title">{{ profile.user.username }}</span>
                     </div>
                     <div class="card-content activator">

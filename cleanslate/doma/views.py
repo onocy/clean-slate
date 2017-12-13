@@ -73,6 +73,7 @@ def profile(request):
         lastSeen = chosen_user.profile.lastSeen
         bio = chosen_user.profile.bio
         email = chosen_user.email
+        avatar = chosen_user.profile.avatar
         return render(
             request,
             'profile.html',
@@ -82,6 +83,7 @@ def profile(request):
                 'bio': bio,
                 'email': email,
                 'lastSeen': lastSeen,
+                'avatar': avatar,
             }
         )
     else:
@@ -156,7 +158,7 @@ def edit_user_profile(request, pk):
     """
     new_profile=get_object_or_404(Profile, pk = pk)
     if request.method == 'POST':
-        form = EditProfileForm(request.POST)
+        form = EditProfileForm(request.POST, request.FILES)
         if form.is_valid():
             new_profile.phone = form.cleaned_data['phone']
             new_profile.yog = form.cleaned_data['yog']
@@ -165,6 +167,8 @@ def edit_user_profile(request, pk):
             new_profile.bio = form.cleaned_data['bio']
             if form.cleaned_data['home']:
                 new_profile.home = Home.objects.get(pk = form.cleaned_data['home'])
+            if form.clean_avatar():
+                new_profile.avatar = form.clean_avatar()
             if new_profile.save():
                 messages.success(request, 'You successfully updated your profile settings.')
             return HttpResponseRedirect(reverse(profile))
