@@ -83,27 +83,6 @@ class Topic(models.Model):
     def get_absolute_url(self):
         return reverse('topic-detail', args=[str(self.id)])
 
-class Village(models.Model):
-    title = models.CharField(max_length=200, help_text="Enter a village name")
-    forum = models.OneToOneField('Forum', on_delete=models.CASCADE, null=False, default=1)
-
-    def __str__(self):
-        return 'Village: %s' % self.title
-
-    def get_absolute_url(self):
-        return reverse('village-detail', args=[str(self.id)])
-
-class Review(models.Model):
-    reviewed = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, related_name='reviewed_user')
-    reviewedBy = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='reviewer') # added blank option for anonyomous reviews. Maybe changed later
-    review = models.TextField(max_length=1000, help_text='Enter your review here', default='')
-
-    def get_absolute_url(self):
-        return reverse('home-detail', args=[str(self.id)])
-
-    def __str__(self):
-        return '%s reviewed %s' % (self.reviewedBy, self.reviewed)
-
 class Forum(models.Model):
     title = models.CharField(max_length=200, help_text="Enter a forum name")
     description = models.TextField(max_length=1000, help_text='Enter a description for this forum')
@@ -125,36 +104,6 @@ def save_home_forum(sender, instance, **kwargs):
     instance.forum.title = instance.name
     instance.forum.save()
 
-class Post(models.Model):
-    title = models.CharField(max_length=200, help_text='Enter a post name')
-    content = models.CharField(max_length=500, help_text='Enter content')
-    topic = models.ForeignKey('Topic', on_delete=models.SET_NULL, null=True)
-    created_by = models.ForeignKey('Profile', on_delete=models.CASCADE, null=False, related_name='op')
-    created_on = models.DateTimeField()
-
-    def __str__(self):
-        return 'Post: %s' % self.title
-
-    def get_absolute_url(self):
-        return reverse('post-detail', args=[str(self.id)])
-
-class Transaction(models.Model):
-    title = models.CharField(max_length=200, help_text='Enter a transaction name')
-    description = models.CharField(max_length=500, help_text='Enter description')
-    created_on = models.DateField()
-    deadline = models.DateField(help_text='When is this transaction due?')
-    amount = models.IntegerField()
-    # debtors
-    # creditors
-    # change 'amount' issue with whole numbers
-    # transaction split
-
-    def __str__(self):
-        return 'Transaction: %s' % self.title
-
-    def get_absolute_url(self):
-        return reverse('transaction-detail', args=[str(self.id)])
-
 class Chore(models.Model):
     title = models.CharField(max_length=200, help_text='Enter a chore name')
     description = models.CharField(max_length=500, help_text='Enter description')
@@ -167,19 +116,6 @@ class Chore(models.Model):
 
     def get_absolute_url(self):
         return reverse('chore-detail', args=[str(self.id)])
-
-class Reminder(models.Model):
-    title = models.CharField(max_length=200, help_text='Enter a reminder name')
-    description = models.CharField(max_length=500, help_text='Enter description')
-    created_on = models.DateField()
-    deadline = models.DateField(help_text='When is this reminder due?')
-    # owners
-
-    def __str__(self):
-        return 'Reminder: %s' % self.title
-
-    def get_absolute_url(self):
-        return reverse('reminder-detail', args=[str(self.id)])
 
 class Event(models.Model):
     title = models.CharField(max_length=200, help_text='Enter an event name')
@@ -194,3 +130,69 @@ class Event(models.Model):
 
     def get_absolute_url(self):
         return reverse('event-detail', args=[str(self.id)])
+
+# Unfinished / unimplemented models
+
+#class Post(models.Model):
+#    title = models.CharField(max_length=200, help_text='Enter a post name')
+#    content = models.CharField(max_length=500, help_text='Enter content')
+#    topic = models.ForeignKey('Topic', on_delete=models.SET_NULL, null=True)
+#    created_by = models.ForeignKey('Profile', on_delete=models.CASCADE, null=False, related_name='op')
+#    created_on = models.DateTimeField()
+
+#    def __str__(self):
+#        return 'Post: %s' % self.title
+
+#    def get_absolute_url(self):
+#        return reverse('post-detail', args=[str(self.id)])
+
+#class Transaction(models.Model):
+#    title = models.CharField(max_length=200, help_text='Enter a transaction name')
+#    description = models.CharField(max_length=500, help_text='Enter description')
+#    created_on = models.DateField()
+#    deadline = models.DateField(help_text='When is this transaction due?')
+#    amount = models.IntegerField()
+    # debtors
+    # creditors
+    # change 'amount' issue with whole numbers
+    # transaction split
+
+#    def __str__(self):
+#        return 'Transaction: %s' % self.title
+
+#    def get_absolute_url(self):
+#        return reverse('transaction-detail', args=[str(self.id)])
+
+#class Reminder(models.Model):
+#    title = models.CharField(max_length=200, help_text='Enter a reminder name')
+#    description = models.CharField(max_length=500, help_text='Enter description')
+#    created_on = models.DateField()
+#    deadline = models.DateField(help_text='When is this reminder due?')
+    # owners
+
+#    def __str__(self):
+#        return 'Reminder: %s' % self.title
+
+#    def get_absolute_url(self):
+#        return reverse('reminder-detail', args=[str(self.id)])
+
+#class Village(models.Model):
+#    title = models.CharField(max_length=200, help_text="Enter a village name")
+#    forum = models.OneToOneField('Forum', on_delete=models.CASCADE, null=False, default=1)
+
+#    def __str__(self):
+#        return 'Village: %s' % self.title
+
+#    def get_absolute_url(self):
+#        return reverse('village-detail', args=[str(self.id)])
+
+#class Review(models.Model):
+#    reviewed = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, related_name='reviewed_user')
+#    reviewedBy = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='reviewer') # added blank option for anonyomous reviews. Maybe changed later
+#    review = models.TextField(max_length=1000, help_text='Enter your review here', default='')
+
+#    def get_absolute_url(self):
+#        return reverse('home-detail', args=[str(self.id)])
+
+#    def __str__(self):
+#        return '%s reviewed %s' % (self.reviewedBy, self.reviewed)

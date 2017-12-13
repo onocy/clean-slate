@@ -3,7 +3,7 @@ from django.core.files.images import get_image_dimensions
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import datetime
-from .models import User, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event, Profile
+from .models import User, Home, Forum, Topic, Chore, Event, Profile # Village, Transaction, Review, Reminder, Post, 
 from markdownx.fields import MarkdownxFormField
 
 class EditProfileForm(forms.ModelForm):

@@ -43,7 +43,7 @@
               {% if user.profile.has_home %}
                 <li><a href="{% url 'calendar' %}"><i class="material-icons black-text">apps</i></a></li>
                 <li><a href="{% url 'reminder' %}"><i class="material-icons black-text">check</i></a></li>
-                <li><a href="{% url 'finance' %}"><i class="material-icons black-text">attach_money</i></a></li>
+                <!--<li><a href="#"><i class="material-icons black-text">attach_money</i></a></li>-->
               {% endif %}
               {% if user.is_authenticated %}
               <li><a href="{% url 'logout' %}" class = "black-text"><i class="material-icons left black-text">person</i>Logout</a></li>

@@ -11,7 +11,7 @@
   <div class="row">
     <div class = "col s10 pull-s1 push-s1">
       <div class = "card z-depth-5">
-        
+
         <h3> Events </h3>
         {% for event in events %}
             <div class="card">
@@ -22,8 +22,9 @@
             </div>
           </div>
         {% endfor %}
-        
-        <h3> Transactions </h3>  
+
+        <!--
+        <h3> Transactions </h3>
         {% for transaction in transactions %}
             <div class="card">
             <span class="card-title">{{transaction.title}}</span>
@@ -34,7 +35,8 @@
             </div>
           </div>
         {% endfor %}
-      
+        -->
+
         <h3> Chores </h3>
         {% for chore in chores %}
             <div class="card">

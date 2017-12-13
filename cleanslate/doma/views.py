@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .forms import EditProfileForm, EditChoreForm, CreateChoreForm, CreateUserForm, CreateHomeForm, EditUserForm, CreateTopicForm, EditTopicForm, CreateEventForm, EditHomeForm
-from doma.models import User, Profile, Home, Review, Forum, Post, Topic, Village, Transaction, Chore, Reminder, Event
+from doma.models import User, Profile, Home, Forum, Topic, Chore, Event#,Review, Reminder, Transaction, Village, Post,
 from django.forms.models import model_to_dict
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
@@ -17,22 +17,6 @@ def home(request):
     """
     View function for home page of site.
     """
-    # Generate counts of some of the main objects, this is how you send data to the view...
-
-    # num_users = User.objects.all().count()
-    # num_villages = Village.objects.all().count()
-    # num_posts = Post.objects.all().count()
-    num_topics = Topic.objects.all().count()
-    # num_reviews = Review.objects.all().count()
-
-
-    # Things that are needed on the homepage
-    # Name, picture (filler for now) status and last seen fields of user. So we will pass in user
-    # in the future, when the application supports multiple users, we will need to
-    # filter which users we are showing on the home page based on their home value
-    # showing only the ones who share a home with the user currently logged in
-    # however, for now, we will show all users on the home page
-    # users = User.objects.filter(home__exact=
     from itertools import zip_longest
     def grouper(iterable, n, fillvalue=None):
         args = [iter(iterable)] * n
@@ -42,18 +26,19 @@ def home(request):
     message_board = request.user.profile.home.forum
     topics = Topic.objects.filter(forum = message_board).order_by('-created_on')
     topics = topics[:3]
-    # Render the HTML template home.html with the data in the context variable
     return render(
         request,
         'home.html',
-        context={'num_topics': num_topics, 'user_groups': user_groups, 'topics': topics}
+        context = {
+        #'num_topics': num_topics, 
+        'user_groups': user_groups,
+        'topics': topics}
     )
 
 @login_required
 def forum(request):
     message_board = request.user.profile.home.forum
     topics = Topic.objects.filter(forum = message_board).order_by('-created_on')
-    # Render the HTML template home.html with the data in the context variable
     return render(
         request,
         'message_board.html',
@@ -68,7 +53,6 @@ def profile(request):
     """
     if request.user.is_authenticated:
         chosen_user = User.objects.get(pk=request.user.id)
-
         status = chosen_user.profile.status
         lastSeen = chosen_user.profile.lastSeen
         bio = chosen_user.profile.bio
@@ -97,7 +81,6 @@ def profile(request):
                 'email': ""
                 }
         )
-
     return render(
         request,
         'profile.html',
@@ -110,7 +93,6 @@ def calendar(request):
     View function for Calendar
     """
     events = Event.objects.all()
-
     return render(
         request,
         'calendar.html',
@@ -122,17 +104,15 @@ def reminders(request):
     """
     View function for reminders (Later- not a separate page)
     """
-
     events = Event.objects.all()
-    transactions = Transaction.objects.all()
+    #transactions = Transaction.objects.all()
     chores = Chore.objects.all()
-
     return render(
         request,
         'reminders_list.html',
         context={
                 'events': events,
-                'transactions':transactions,
+                #'transactions':transactions,
                 'chores':chores
             }
     )
@@ -288,7 +268,7 @@ def edit_home(request, pk):
             updated_home.name = form.cleaned_data['name']
             updated_home.address = form.cleaned_data['address']
             updated_home.leaseStart = form.cleaned_data['leaseStart']
-            updated_home.leaseEnds = form.cleaned_data['leaseEnd']
+            updated_home.leaseEnds = form.cleaned_data['leaseEnds']
             if updated_home.save():
                 messages.success(request, 'You successfully updated the home.')
             return HttpResponseRedirect(reverse(home))
