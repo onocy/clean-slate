@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from .forms import EditProfileForm, EditChoreForm, CreateChoreForm, CreateUserForm, CreateHomeForm, EditUserForm, CreateTopicForm, EditTopicForm, CreateEventForm, EditHomeForm
+from .forms import EditProfileForm, EditChoreForm, CreateChoreForm, CreateUserForm, CreateHomeForm, EditUserForm, CreateTopicForm, EditTopicForm, CreateEventForm, EditHomeForm, EditEventForm
 from doma.models import User, Profile, Home, Forum, Topic, Chore, Event#,Review, Reminder, Transaction, Village, Post,
 from django.forms.models import model_to_dict
 from django.contrib import messages
@@ -30,7 +30,7 @@ def home(request):
         request,
         'home.html',
         context = {
-        #'num_topics': num_topics, 
+        #'num_topics': num_topics,
         'user_groups': user_groups,
         'topics': topics}
     )
@@ -336,4 +336,23 @@ def create_event(request):
             messages.error(request, 'Please correct the errors in the form')
     else:
         form = CreateEventForm()
+    return render(request, 'form.html', {'form': form})
+
+@login_required
+def edit_event(request, pk):
+    updated_event = Event.objects.filter(pk = pk)[0]
+    if request.method == 'POST':
+        form = EditEventForm(request.POST)
+        if form.is_valid():
+            updated_event.title = form.cleaned_data['title']
+            updated_event.description = form.cleaned_data['description']
+            updated_event.start_time = form.cleaned_data['start_time']
+            updated_event.end_time = form.cleaned_data['end_time']
+            if updated_event.save():
+                messages.success(request, 'You successfully updated the event.')
+            return HttpResponseRedirect(reverse(reminders))
+        else:
+            messages.error(request, 'Please correct the errors in the form.')
+    else:
+        form = EditEventForm(initial = model_to_dict(updated_event))
     return render(request, 'form.html', {'form': form})

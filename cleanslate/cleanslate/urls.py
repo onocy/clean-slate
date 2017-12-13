@@ -19,7 +19,7 @@ from django.conf.urls import include
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
-from doma.views import home, profile, reminders, calendar, edit_chore, create_chore, delete_chore, edit_user_profile, create_user, edit_user, create_home, create_topic, edit_topic, create_event, forum, edit_home
+from doma.views import home, profile, reminders, calendar, edit_chore, create_chore, delete_chore, edit_user_profile, create_user, edit_user, create_home, create_topic, edit_topic, create_event, forum, edit_home, edit_event
 #reminders, finance,
 
 urlpatterns = [
@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^doma/topic/create/$', create_topic, name='create-topic'),
     url(r'^doma/topic/(?P<pk>[-\w]+)/edit/$', edit_topic, name='edit-topic'),
     url(r'^doma/event/create/$', create_event, name='create-event'),
+    url(r'^doma/event/(?P<pk>[-\w]+)/edit/$', edit_event, name='edit-event'),
 ]
 
 urlpatterns += [
